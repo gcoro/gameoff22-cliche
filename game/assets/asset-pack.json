@@ -2,9 +2,84 @@
     "section1": {
         "files": [
             {
+                "url": "assets/animations.json",
+                "type": "animation",
+                "key": "animations"
+            },
+            {
+                "url": "assets/armor_idle_1.png",
+                "type": "image",
+                "key": "armor_idle_1"
+            },
+            {
+                "url": "assets/armor_idle_2.png",
+                "type": "image",
+                "key": "armor_idle_2"
+            },
+            {
+                "url": "assets/armor_idle_3.png",
+                "type": "image",
+                "key": "armor_idle_3"
+            },
+            {
+                "url": "assets/armor_turn_1.png",
+                "type": "image",
+                "key": "armor_turn_1"
+            },
+            {
+                "url": "assets/armor_turn_2.png",
+                "type": "image",
+                "key": "armor_turn_2"
+            },
+            {
+                "url": "assets/armor_turn_3.png",
+                "type": "image",
+                "key": "armor_turn_3"
+            },
+            {
+                "url": "assets/armor_walk_1.png",
+                "type": "image",
+                "key": "armor_walk_1"
+            },
+            {
+                "url": "assets/armor_walk_2.png",
+                "type": "image",
+                "key": "armor_walk_2"
+            },
+            {
+                "url": "assets/armor_walk_3.png",
+                "type": "image",
+                "key": "armor_walk_3"
+            },
+            {
+                "url": "assets/armor_walk_4.png",
+                "type": "image",
+                "key": "armor_walk_4"
+            },
+            {
+                "url": "assets/armor_walk_5.png",
+                "type": "image",
+                "key": "armor_walk_5"
+            },
+            {
+                "url": "assets/armor_walk_6.png",
+                "type": "image",
+                "key": "armor_walk_6"
+            },
+            {
+                "url": "assets/checkered-floor-4327693_640.png",
+                "type": "image",
+                "key": "checkered-floor-4327693_640"
+            },
+            {
                 "url": "assets/dino.png",
                 "key": "dino",
                 "type": "image"
+            },
+            {
+                "url": "src/components/StartAnimation.js",
+                "type": "script",
+                "key": "StartAnimation"
             }
         ]
     },
@@ -12,6 +87,7 @@
         "app": "Phaser Editor 2D - Asset Pack Editor",
         "contentType": "phasereditor2d.pack.core.AssetContentType",
         "url": "https://phasereditor2d.com",
-        "version": 2
+        "version": 2,
+        "showAllFilesInBlocks": false
     }
 }

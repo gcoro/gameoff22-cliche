@@ -1,0 +1,96 @@
+{
+    "anims": [
+        {
+            "key": "armor_idle",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "armor_idle_1",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_idle_2",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_idle_3",
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 10,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "armor_turn",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "armor_turn_1",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_turn_2",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_turn_3",
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 10,
+            "skipMissedFrames": true,
+            "repeat": -1
+        },
+        {
+            "key": "armor_walk",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "armor_walk_1",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_walk_2",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_walk_3",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_walk_4",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_walk_5",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_walk_6",
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 5,
+            "skipMissedFrames": true,
+            "repeat": -1
+        }
+    ],
+    "globalTimeScale": 1,
+    "meta": {
+        "app": "Phaser Editor 2D v3",
+        "contentType": "Phaser v3 Animations"
+    }
+}
