@@ -29,9 +29,9 @@
             "body.bounce.x": 1,
             "body.bounce.y": 1,
             "collideWorldBounds": true,
-            "body.width": -2.221459089577176,
+            "body.width": 500,
             "body.height": 3.6601282095296224,
-            "body.offset.x": 108,
+            "body.offset.x": -150,
             "body.offset.y": 414
         },
         {

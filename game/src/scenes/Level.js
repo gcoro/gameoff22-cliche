@@ -27,8 +27,8 @@ class Level extends Phaser.Scene {
 		armor_idle_1.body.bounce.x = 1;
 		armor_idle_1.body.bounce.y = 1;
 		armor_idle_1.body.collideWorldBounds = true;
-		armor_idle_1.body.setOffset(108, 414);
-		armor_idle_1.body.setSize(-2.221459089577176, 3.6601282095296224, false);
+		armor_idle_1.body.setOffset(-150, 414);
+		armor_idle_1.body.setSize(500, 3.6601282095296224, false);
 
 		// checkered_floor_4327693_640
 		/** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
@@ -72,6 +72,7 @@ class Level extends Phaser.Scene {
 	}
 
 	onWorldBounds(body,up,down, left, right) {
+		console.log(this.armor_idle_1);
 		if (right)
 		this.armor_idle_1.flipX = true;
 		if (left)
