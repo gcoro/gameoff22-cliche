@@ -29,14 +29,13 @@ class PushOnClick extends UserComponent {
 	awake() {
 
 		this.gameObject.setInteractive().on("pointerdown", () => {
-
-			this.scene.add.tween({
-				targets: this.gameObject,
-				scaleX: "*=0.8",
-				scaleY: "*=0.8",
-				duration: 80,
-				yoyo: true
-			});
+			// stops
+			this.gameObject.anims.pause()
+            this.gameObject.body.velocity.x = 0;
+			// sets idle animation
+			const anim = new StartAnimation(this.gameObject);
+			anim.animationKey = "armor_idle";
+			// todo inizia a parlare
 		});
 	}
 

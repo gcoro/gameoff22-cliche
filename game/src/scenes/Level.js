@@ -28,7 +28,7 @@ class Level extends Phaser.Scene {
 		armor_idle_1.body.bounce.y = 1;
 		armor_idle_1.body.collideWorldBounds = true;
 		armor_idle_1.body.setOffset(-150, 414);
-		armor_idle_1.body.setSize(500, 3.6601282095296224, false);
+		armor_idle_1.body.setSize(61.10264191253769, 1.0305029623226554, false);
 
 		// checkered_floor_4327693_640
 		/** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
@@ -38,12 +38,7 @@ class Level extends Phaser.Scene {
 		checkered_floor_4327693_640.body.moves = false;
 		checkered_floor_4327693_640.body.allowGravity = false;
 		checkered_floor_4327693_640.body.setOffset(-115, 356);
-		checkered_floor_4327693_640.body.setSize(847.3349564038695, 360, false);
-
-		// jail_layer
-		const jail_layer = this.add.image(344, 273, "jail-layer");
-		jail_layer.scaleX = 1.7498729756102644;
-		jail_layer.scaleY = 1.225793019203924;
+		checkered_floor_4327693_640.body.setSize(1319.8097947499032, 360, false);
 
 		// collider
 		this.physics.add.collider(armor_idle_1, checkered_floor_4327693_640);
@@ -51,6 +46,7 @@ class Level extends Phaser.Scene {
 		// armor_idle_1 (components)
 		const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1);
 		armor_idle_1StartAnimation.animationKey = "armor_walk";
+		new PushOnClick(armor_idle_1);
 
 		this.armor_idle_1 = armor_idle_1;
 
@@ -69,7 +65,7 @@ class Level extends Phaser.Scene {
 		this.armor_idle_1
 		this.armor_idle_1.body.onWorldBounds = true;
 		this.physics.world.on('worldbounds', this.onWorldBounds, this)
-	}
+			}
 
 	onWorldBounds(body,up,down, left, right) {
 		console.log(this.armor_idle_1);
