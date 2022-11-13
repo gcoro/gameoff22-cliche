@@ -32,9 +32,15 @@ class PushOnClick extends UserComponent {
 			// stops
 			this.gameObject.anims.pause()
             this.gameObject.body.velocity.x = 0;
-			// sets idle animation
-			const anim = new StartAnimation(this.gameObject);
-			anim.animationKey = "armor_idle";
+			// sets turn animation
+			const animTurn = new StartAnimation(this.gameObject);
+			animTurn.animationKey = "armor_turn_reverse";
+			animTurn.gameObject.on("animationcomplete", () => {
+				// sets idle animation
+				const animIdle = new StartAnimation(this.gameObject);
+				animIdle.animationKey = "armor_idle";
+			})
+		
 			// todo inizia a parlare
 		});
 	}

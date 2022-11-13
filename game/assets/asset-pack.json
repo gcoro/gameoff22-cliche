@@ -37,6 +37,21 @@
                 "key": "armor_turn_3"
             },
             {
+                "url": "assets/armor_turn_reverse_1.png",
+                "type": "image",
+                "key": "armor_turn_reverse_1"
+            },
+            {
+                "url": "assets/armor_turn_reverse_2.png",
+                "type": "image",
+                "key": "armor_turn_reverse_2"
+            },
+            {
+                "url": "assets/armor_turn_reverse_3.png",
+                "type": "image",
+                "key": "armor_turn_reverse_3"
+            },
+            {
                 "url": "assets/armor_walk_1.png",
                 "type": "image",
                 "key": "armor_walk_1"
@@ -77,14 +92,14 @@
                 "type": "image"
             },
             {
-                "url": "src/components/StartAnimation.js",
-                "type": "script",
-                "key": "StartAnimation"
-            },
-            {
                 "url": "assets/jail.png",
                 "type": "image",
                 "key": "jail-layer"
+            },
+            {
+                "url": "src/components/StartAnimation.js",
+                "type": "script",
+                "key": "StartAnimation"
             }
         ]
     },

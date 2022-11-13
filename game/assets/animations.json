@@ -44,9 +44,8 @@
                     "keyframe": false
                 }
             ],
-            "frameRate": 10,
-            "skipMissedFrames": true,
-            "repeat": -1
+            "frameRate": 3,
+            "skipMissedFrames": true
         },
         {
             "key": "armor_walk",
@@ -86,6 +85,29 @@
             "frameRate": 5,
             "skipMissedFrames": true,
             "repeat": -1
+        },
+        {
+            "key": "armor_turn_reverse",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "armor_turn_reverse_1",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_turn_reverse_2",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "armor_turn_reverse_3",
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 3,
+            "skipMissedFrames": true
         }
     ],
     "globalTimeScale": 1,
