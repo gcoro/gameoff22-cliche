@@ -40,6 +40,11 @@ class Level extends Phaser.Scene {
 		checkered_floor_4327693_640.body.setOffset(-115, 356);
 		checkered_floor_4327693_640.body.setSize(847.3349564038695, 360, false);
 
+		// jail_layer
+		const jail_layer = this.add.image(344, 273, "jail-layer");
+		jail_layer.scaleX = 1.7498729756102644;
+		jail_layer.scaleY = 1.225793019203924;
+
 		// collider
 		this.physics.add.collider(armor_idle_1, checkered_floor_4327693_640);
 
@@ -47,17 +52,31 @@ class Level extends Phaser.Scene {
 		const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1);
 		armor_idle_1StartAnimation.animationKey = "armor_walk";
 
+		this.armor_idle_1 = armor_idle_1;
+
 		this.events.emit("scene-awake");
 	}
+
+	/** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
+	armor_idle_1;
 
 	/* START-USER-CODE */
 
 	// Write more your code here
 
 	create() {
-
 		this.editorCreate();
+		this.armor_idle_1
+		this.armor_idle_1.body.onWorldBounds = true;
+		this.physics.world.on('worldbounds', this.onWorldBounds, this)
 	}
+
+	onWorldBounds(body,up,down, left, right) {
+		if (right)
+		this.armor_idle_1.flipX = true;
+		if (left)
+		this.armor_idle_1.flipX = false;
+}
 
 	/* END-USER-CODE */
 }

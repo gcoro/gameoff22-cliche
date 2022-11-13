@@ -51,6 +51,19 @@
             "body.height": 360,
             "body.offset.x": -115,
             "body.offset.y": 356
+        },
+        {
+            "type": "Image",
+            "id": "aaff5e8b-b967-4f7b-be00-7926ee446a06",
+            "label": "jail_layer",
+            "components": [],
+            "texture": {
+                "key": "jail-layer"
+            },
+            "x": 344,
+            "y": 273,
+            "scaleX": 1.7498729756102644,
+            "scaleY": 1.225793019203924
         }
     ],
     "plainObjects": [

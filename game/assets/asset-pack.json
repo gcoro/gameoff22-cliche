@@ -80,6 +80,11 @@
                 "url": "src/components/StartAnimation.js",
                 "type": "script",
                 "key": "StartAnimation"
+            },
+            {
+                "url": "assets/jail.png",
+                "type": "image",
+                "key": "jail-layer"
             }
         ]
     },
