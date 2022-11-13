@@ -11,6 +11,7 @@
             "type": "Sprite",
             "id": "445aa288-9488-4144-959b-1c60d11dfdbd",
             "label": "armor_idle_1",
+            "scope": "PUBLIC",
             "components": [
                 "StartAnimation"
             ],
