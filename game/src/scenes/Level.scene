@@ -21,7 +21,7 @@
                 "key": "armor_idle_1"
             },
             "x": 168,
-            "y": 400,
+            "y": 407,
             "scaleX": 0.3495787233586669,
             "scaleY": 0.28154832380997097,
             "ArcadeComponent.active": true,
@@ -30,10 +30,10 @@
             "body.bounce.x": 1,
             "body.bounce.y": 1,
             "collideWorldBounds": true,
-            "body.width": 61.10264191253769,
-            "body.height": 1.0305029623226554,
-            "body.offset.x": -150,
-            "body.offset.y": 414
+            "body.width": 407,
+            "body.height": 425,
+            "body.offset.x": -97,
+            "body.offset.y": -2
         },
         {
             "type": "Image",

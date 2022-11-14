@@ -18,7 +18,7 @@ class Level extends Phaser.Scene {
 
 		// armor_idle_1
 		/** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
-		const armor_idle_1 = this.add.sprite(168, 400, "armor_idle_1");
+		const armor_idle_1 = this.add.sprite(168, 407, "armor_idle_1");
 		armor_idle_1.scaleX = 0.3495787233586669;
 		armor_idle_1.scaleY = 0.28154832380997097;
 		this.physics.add.existing(armor_idle_1, false);
@@ -27,8 +27,8 @@ class Level extends Phaser.Scene {
 		armor_idle_1.body.bounce.x = 1;
 		armor_idle_1.body.bounce.y = 1;
 		armor_idle_1.body.collideWorldBounds = true;
-		armor_idle_1.body.setOffset(-150, 414);
-		armor_idle_1.body.setSize(61.10264191253769, 1.0305029623226554, false);
+		armor_idle_1.body.setOffset(-97, -2);
+		armor_idle_1.body.setSize(407, 425, false);
 
 		// checkered_floor_4327693_640
 		/** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
@@ -65,15 +65,37 @@ class Level extends Phaser.Scene {
 		this.armor_idle_1
 		this.armor_idle_1.body.onWorldBounds = true;
 		this.physics.world.on('worldbounds', this.onWorldBounds, this)
+	}
+	originalVelocity;
+	isAnimatingTurn = false;
+	onWorldBounds(body, up, down, left, right) {
+		if (this.isAnimatingTurn)
+		return;
+		this.isAnimatingTurn = true;
+		// stops
+		this.armor_idle_1.anims.pause()
+		this.originalVelocity = this.armor_idle_1.body.velocity.x || this.originalVelocity;
+		this.armor_idle_1.body.velocity.x = 0;
+		// sets turn animation
+		const animTurn = new StartAnimation(this.armor_idle_1);
+		animTurn.animationKey = "armor_turn_reverse" ;
+		animTurn.gameObject.once("animationcomplete", () => {
+			if (right) {
+				this.armor_idle_1.flipX = true;
 			}
+			if (left) {
+				this.armor_idle_1.flipX = false;
+			}
+			const animTurn2 = new StartAnimation(this.armor_idle_1);
+			animTurn2.animationKey = "armor_turn";
+			animTurn2.gameObject.once("animationcomplete", () => {
+				this.armor_idle_1.anims.play("armor_walk")
+				this.armor_idle_1.body.velocity.x = this.originalVelocity;
+				this.isAnimatingTurn = false;
+			})
+		})
 
-	onWorldBounds(body,up,down, left, right) {
-		console.log(this.armor_idle_1);
-		if (right)
-		this.armor_idle_1.flipX = true;
-		if (left)
-		this.armor_idle_1.flipX = false;
-}
+	}
 
 	/* END-USER-CODE */
 }

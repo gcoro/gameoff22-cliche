@@ -41,7 +41,7 @@ class PushOnClick extends UserComponent {
 				animIdle.animationKey = "armor_idle";
 				
 				setTimeout(() => {
-					this.createSpeechBubble(10,10, 400, 50, 'ciaooo sono scp-2020 e ti narro una storiella :)')
+					this.createSpeechBubble(this.gameObject.body.position.x + this.gameObject.body.halfWidth,(this.gameObject.body.position.y - this.gameObject.body.halfHeight) , 400, 50, 'ciaooo sono scp-2020 e ti narro una storiella :)')
 				},500);
 			})
 		
