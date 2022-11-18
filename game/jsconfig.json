@@ -4,5 +4,11 @@
     ],
     "compilerOptions": {
         "target": "esnext"
-    }
+    },
+    "typeRoots": [
+        "./node_modules/phaser/types"
+    ],
+    "types": [
+        "Phaser"
+    ]
 }

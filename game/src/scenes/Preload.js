@@ -15,7 +15,6 @@ class Preload extends Phaser.Scene {
 
 	/** @returns {void} */
 	editorPreload() {
-
 		this.load.pack("asset-pack", "assets/asset-pack.json");
 	}
 
@@ -46,10 +45,9 @@ class Preload extends Phaser.Scene {
 	preload() {
 
 		this.editorCreate();
-
 		this.editorPreload();
 
-		this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Level"));
+		this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Scp173"));
 	}
 
 	/* END-USER-CODE */
