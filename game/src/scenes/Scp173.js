@@ -19,10 +19,12 @@ class Scp173 extends Phaser.Scene {
 		const map = this.make.tilemap({key: 'tilemap'})
 		const tileset = map.addTilesetImage('standard_tiles', 'base_tiles', 16, 16)
 
-		const backgroundLayer = map.createLayer('background', tileset, 0,-23400) //pixels offset
-		const wallsLayer = map.createLayer('walls', tileset, 0,-23400) //pixels offset
+		const backgroundLayer = map.createLayer('background', tileset, 0, -map.heightInPixels+700) //pixels offset
+		const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
 
 		this.createPlayer()
+		//this.cameras.main.setBounds(0, 0);
+		this.cameras.main.startFollow(this.player);
 	}
 
 
@@ -97,6 +99,6 @@ class Scp173 extends Phaser.Scene {
 		});
 
 		this.player = this.physics.add.sprite(110, 540, 'alien');
-		this.player.setCollideWorldBounds(true)
+		//this.player.setCollideWorldBounds(true)
 	}
 }
