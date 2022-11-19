@@ -82,9 +82,24 @@
                 "key": "armor_walk_6"
             },
             {
-                "url": "assets/checkered-floor-4327693_640.png",
+                "url": "assets/scp2020/back-structures.png",
                 "type": "image",
-                "key": "checkered-floor-4327693_640"
+                "key": "back-structures"
+            },
+            {
+                "url": "assets/scp2020/background.png",
+                "type": "image",
+                "key": "background"
+            },
+            {
+                "url": "assets/scp2020/background_alien.png",
+                "type": "image",
+                "key": "background_alien"
+            },
+            {
+                "url": "assets/scp2020/background_scifi_interior.png",
+                "type": "image",
+                "key": "background_scifi_interior"
             },
             {
                 "url": "assets/dino.png",
@@ -92,9 +107,29 @@
                 "type": "image"
             },
             {
+                "url": "assets/scp2020/door_blue.png",
+                "type": "image",
+                "key": "door_blue"
+            },
+            {
+                "url": "assets/scp2020/door_red.png",
+                "type": "image",
+                "key": "door_red"
+            },
+            {
                 "url": "assets/jail.png",
                 "type": "image",
                 "key": "jail-layer"
+            },
+            {
+                "url": "assets/scp2020/pavement.png",
+                "type": "image",
+                "key": "pavement"
+            },
+            {
+                "url": "assets/scp2020/pavement_full.png",
+                "type": "image",
+                "key": "pavement_full"
             },
             {
                 "url": "src/components/StartAnimation.js",

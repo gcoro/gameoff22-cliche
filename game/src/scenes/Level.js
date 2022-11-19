@@ -16,9 +16,33 @@ class Level extends Phaser.Scene {
 	/** @returns {void} */
 	editorCreate() {
 
+		// background_scifi_interior
+		const background_scifi_interior = this.add.image(392, 236, "background_scifi_interior");
+		background_scifi_interior.scaleX = 3.961963856772153;
+		background_scifi_interior.scaleY = 4.659316663023215;
+
+		// door_blue
+		const door_blue = this.add.image(616, 406, "door_blue");
+		door_blue.scaleX = 2.0268395681818867;
+		door_blue.scaleY = 2.094852315770696;
+
+		// back_structures
+		const back_structures = this.add.image(451, 262, "back-structures");
+		back_structures.scaleX = 2.490125549146286;
+		back_structures.scaleY = 3.1615983195492015;
+
+		// floor
+		/** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
+		const floor = this.add.image(399, 527, "pavement_full");
+		floor.scaleX = 1.2962686223732702;
+		this.physics.add.existing(floor, false);
+		floor.body.moves = false;
+		floor.body.allowGravity = false;
+		floor.body.setSize(1075.3998984636773, 160, false);
+
 		// armor_idle_1
 		/** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
-		const armor_idle_1 = this.add.sprite(168, 407, "armor_idle_1");
+		const armor_idle_1 = this.add.sprite(168, 379, "armor_idle_1");
 		armor_idle_1.scaleX = 0.3495787233586669;
 		armor_idle_1.scaleY = 0.28154832380997097;
 		this.physics.add.existing(armor_idle_1, false);
@@ -27,21 +51,10 @@ class Level extends Phaser.Scene {
 		armor_idle_1.body.bounce.x = 1;
 		armor_idle_1.body.bounce.y = 1;
 		armor_idle_1.body.collideWorldBounds = true;
-		armor_idle_1.body.setOffset(-97, -2);
-		armor_idle_1.body.setSize(407, 425, false);
-
-		// checkered_floor_4327693_640
-		/** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
-		const checkered_floor_4327693_640 = this.add.image(410, 425, "checkered-floor-4327693_640");
-		checkered_floor_4327693_640.scaleX = 1.2480388707092542;
-		this.physics.add.existing(checkered_floor_4327693_640, false);
-		checkered_floor_4327693_640.body.moves = false;
-		checkered_floor_4327693_640.body.allowGravity = false;
-		checkered_floor_4327693_640.body.setOffset(-115, 356);
-		checkered_floor_4327693_640.body.setSize(1319.8097947499032, 360, false);
+		armor_idle_1.body.setSize(26.029725454741055, 120.50268259066758, false);
 
 		// collider
-		this.physics.add.collider(armor_idle_1, checkered_floor_4327693_640);
+		this.physics.add.collider(armor_idle_1, floor);
 
 		// armor_idle_1 (components)
 		const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1);

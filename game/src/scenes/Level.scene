@@ -8,6 +8,62 @@
     },
     "displayList": [
         {
+            "type": "Image",
+            "id": "60f7d8db-c508-4d6a-81af-ce492d820a60",
+            "label": "background_scifi_interior",
+            "components": [],
+            "texture": {
+                "key": "background_scifi_interior"
+            },
+            "x": 392,
+            "y": 236,
+            "scaleX": 3.961963856772153,
+            "scaleY": 4.659316663023215
+        },
+        {
+            "type": "Image",
+            "id": "85469d60-2ab5-49d2-9175-35b78e7a9f43",
+            "label": "door_blue",
+            "components": [],
+            "texture": {
+                "key": "door_blue"
+            },
+            "x": 616,
+            "y": 406,
+            "scaleX": 2.0268395681818867,
+            "scaleY": 2.094852315770696
+        },
+        {
+            "type": "Image",
+            "id": "d9e1e16b-973b-49c0-99b1-37921bdc781c",
+            "label": "back_structures",
+            "components": [],
+            "texture": {
+                "key": "back-structures"
+            },
+            "x": 451,
+            "y": 262,
+            "scaleX": 2.490125549146286,
+            "scaleY": 3.1615983195492015
+        },
+        {
+            "type": "Image",
+            "id": "013cc1aa-5322-4c66-abd7-fc5ea59e6e74",
+            "label": "floor",
+            "components": [],
+            "texture": {
+                "key": "pavement_full"
+            },
+            "x": 399,
+            "y": 527,
+            "scaleX": 1.2962686223732702,
+            "ArcadeComponent.active": true,
+            "moves": false,
+            "allowGravity": false,
+            "body.width": 1075.3998984636773,
+            "body.height": 160
+        },
+        {
             "type": "Sprite",
             "id": "445aa288-9488-4144-959b-1c60d11dfdbd",
             "label": "armor_idle_1",
@@ -21,7 +77,7 @@
                 "key": "armor_idle_1"
             },
             "x": 168,
-            "y": 407,
+            "y": 379,
             "scaleX": 0.3495787233586669,
             "scaleY": 0.28154832380997097,
             "ArcadeComponent.active": true,
@@ -30,29 +86,8 @@
             "body.bounce.x": 1,
             "body.bounce.y": 1,
             "collideWorldBounds": true,
-            "body.width": 407,
-            "body.height": 425,
-            "body.offset.x": -97,
-            "body.offset.y": -2
-        },
-        {
-            "type": "Image",
-            "id": "013cc1aa-5322-4c66-abd7-fc5ea59e6e74",
-            "label": "checkered_floor_4327693_640",
-            "components": [],
-            "texture": {
-                "key": "checkered-floor-4327693_640"
-            },
-            "x": 410,
-            "y": 425,
-            "scaleX": 1.2480388707092542,
-            "ArcadeComponent.active": true,
-            "moves": false,
-            "allowGravity": false,
-            "body.width": 1319.8097947499032,
-            "body.height": 360,
-            "body.offset.x": -115,
-            "body.offset.y": 356
+            "body.width": 26.029725454741055,
+            "body.height": 120.50268259066758
         }
     ],
     "plainObjects": [
@@ -62,7 +97,8 @@
             "label": "collider",
             "scope": "METHOD",
             "object1": "armor_idle_1",
-            "object2": "checkered_floor_4327693_640"
+            "object2": "floor",
+            "overlapOnly": true
         }
     ],
     "meta": {
