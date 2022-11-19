@@ -1,0 +1,687 @@
+{
+	"frames": [
+		{
+			"filename": "Covid1.png",
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid10.png",
+			"frame": {
+				"x": 225,
+				"y": 1,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid11.png",
+			"frame": {
+				"x": 449,
+				"y": 1,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid12.png",
+			"frame": {
+				"x": 673,
+				"y": 1,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid13.png",
+			"frame": {
+				"x": 897,
+				"y": 1,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid14.png",
+			"frame": {
+				"x": 1,
+				"y": 249,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid15.png",
+			"frame": {
+				"x": 225,
+				"y": 249,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid16.png",
+			"frame": {
+				"x": 449,
+				"y": 249,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid17.png",
+			"frame": {
+				"x": 673,
+				"y": 249,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid18.png",
+			"frame": {
+				"x": 897,
+				"y": 249,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid19.png",
+			"frame": {
+				"x": 1,
+				"y": 497,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid2.png",
+			"frame": {
+				"x": 225,
+				"y": 497,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid20.png",
+			"frame": {
+				"x": 449,
+				"y": 497,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid21.png",
+			"frame": {
+				"x": 673,
+				"y": 497,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid22.png",
+			"frame": {
+				"x": 897,
+				"y": 497,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid23.png",
+			"frame": {
+				"x": 1,
+				"y": 745,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid24.png",
+			"frame": {
+				"x": 225,
+				"y": 745,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid25.png",
+			"frame": {
+				"x": 449,
+				"y": 745,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid26.png",
+			"frame": {
+				"x": 673,
+				"y": 745,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid27.png",
+			"frame": {
+				"x": 897,
+				"y": 745,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid28.png",
+			"frame": {
+				"x": 1,
+				"y": 993,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid29.png",
+			"frame": {
+				"x": 225,
+				"y": 993,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid3.png",
+			"frame": {
+				"x": 449,
+				"y": 993,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid30.png",
+			"frame": {
+				"x": 673,
+				"y": 993,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid31.png",
+			"frame": {
+				"x": 897,
+				"y": 993,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid32.png",
+			"frame": {
+				"x": 1121,
+				"y": 1,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid4.png",
+			"frame": {
+				"x": 1121,
+				"y": 249,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid5.png",
+			"frame": {
+				"x": 1121,
+				"y": 497,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid6.png",
+			"frame": {
+				"x": 1121,
+				"y": 745,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid7.png",
+			"frame": {
+				"x": 1121,
+				"y": 993,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid8.png",
+			"frame": {
+				"x": 1,
+				"y": 1241,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		},
+		{
+			"filename": "Covid9.png",
+			"frame": {
+				"x": 225,
+				"y": 1241,
+				"w": 222,
+				"h": 246
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 222,
+				"h": 246
+			},
+			"sourceSize": {
+				"w": 222,
+				"h": 246
+			}
+		}
+	],
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 1344,
+			"h": 1488
+		},
+		"scale": "1"
+	}
+}
