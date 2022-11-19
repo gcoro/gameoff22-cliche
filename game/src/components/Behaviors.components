@@ -4,7 +4,18 @@
             "name": "PushOnClick",
             "baseClass": "UserComponent",
             "gameObjectType": "Phaser.GameObjects.Image",
-            "properties": []
+            "properties": [
+                {
+                    "name": "sceneToStartKey",
+                    "label": "sceneToStartKey",
+                    "tooltip": "scene to start key",
+                    "defValue": "",
+                    "customDefinition": false,
+                    "type": {
+                        "id": "string"
+                    }
+                }
+            ]
         },
         {
             "name": "PreloadText",
@@ -14,8 +25,8 @@
         }
     ],
     "meta": {
-        "app": "Phaser Editor 2D - Object Script Editor",
+        "app": "Phaser Editor 2D - User Components Editor",
         "url": "https://phasereditor2d.com",
-        "contentType": "phasereditor2d.core.scene.SceneContentType"
+        "contentType": "phasereditor2d.core.scene.UserComponents"
     }
 }

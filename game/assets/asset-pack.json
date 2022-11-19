@@ -87,11 +87,6 @@
                 "key": "back-structures"
             },
             {
-                "url": "assets/scp2020/background.png",
-                "type": "image",
-                "key": "background"
-            },
-            {
                 "url": "assets/scp2020/background_alien.png",
                 "type": "image",
                 "key": "background_alien"

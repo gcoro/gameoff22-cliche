@@ -24,7 +24,10 @@
             "type": "Image",
             "id": "85469d60-2ab5-49d2-9175-35b78e7a9f43",
             "label": "door_blue",
-            "components": [],
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "scp173",
             "texture": {
                 "key": "door_blue"
             },
@@ -60,7 +63,7 @@
             "ArcadeComponent.active": true,
             "moves": false,
             "allowGravity": false,
-            "body.width": 1075.3998984636773,
+            "body.width": 8572.945439012012,
             "body.height": 160
         },
         {
@@ -86,8 +89,8 @@
             "body.bounce.x": 1,
             "body.bounce.y": 1,
             "collideWorldBounds": true,
-            "body.width": 26.029725454741055,
-            "body.height": 120.50268259066758
+            "body.width": 0.005805364910478932,
+            "body.height": 0.7571963287628788
         }
     ],
     "plainObjects": [
@@ -97,8 +100,7 @@
             "label": "collider",
             "scope": "METHOD",
             "object1": "armor_idle_1",
-            "object2": "floor",
-            "overlapOnly": true
+            "object2": "floor"
         }
     ],
     "meta": {

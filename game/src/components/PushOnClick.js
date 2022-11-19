@@ -3,6 +3,9 @@
 
 /* START OF COMPILED CODE */
 
+/* START-USER-IMPORTS */
+/* END-USER-IMPORTS */
+
 class PushOnClick extends UserComponent {
 
 	constructor(gameObject) {
@@ -12,7 +15,9 @@ class PushOnClick extends UserComponent {
 		gameObject["__PushOnClick"] = this;
 
 		/* START-USER-CTR-CODE */
-		// Write your code here.
+		
+		this.strings = this.scene.cache.json.get('strings');
+
 		/* END-USER-CTR-CODE */
 	}
 
@@ -23,35 +28,75 @@ class PushOnClick extends UserComponent {
 
 	/** @type {Phaser.GameObjects.Image} */
 	gameObject;
+	/** @type {string} */
+	sceneToStartKey = "";
 
 	/* START-USER-CODE */
+	
+	// user strings
+	strings = {};
 
 	awake() {
-
-		this.gameObject.setInteractive().on("pointerdown", () => {
-			// stops
-			this.gameObject.anims.pause()
-            this.gameObject.body.velocity.x = 0;
-			// sets turn animation
-			const animTurn = new StartAnimation(this.gameObject);
-			animTurn.animationKey = "armor_turn_reverse";
-			animTurn.gameObject.on("animationcomplete", () => {
-				// sets idle animation
-				const animIdle = new StartAnimation(this.gameObject);
-				animIdle.animationKey = "armor_idle";
-				
-				setTimeout(() => {
-					this.createSpeechBubble(this.gameObject.body.position.x + this.gameObject.body.halfWidth,(this.gameObject.body.position.y - this.gameObject.body.halfHeight) , 400, 50, 'ciaooo sono scp-2020 e ti narro una storiella :)')
-				},500);
-			})
 		
-			// todo inizia a parlare
-		});
+		if(this.sceneToStartKey) {
+			this.gameObject.setInteractive().on("pointerdown", () => {
+				console.log('door clicked', this.sceneToStartKey)
+
+				// todo switch scene
+				// () => this.scene.start("scena"))
+			});
+		} else {
+			this.gameObject.setInteractive().on("pointerdown", () => {
+				// stops
+				this.gameObject.anims.pause()
+				this.gameObject.body.velocity.x = 0;
+				// sets turn animation
+				const animTurn = new StartAnimation(this.gameObject);
+				animTurn.animationKey = "armor_turn_reverse";
+				animTurn.gameObject.on("animationcomplete", () => {
+					// sets idle animation
+					const animIdle = new StartAnimation(this.gameObject);
+					animIdle.animationKey = "armor_idle";
+
+					setTimeout(() => {
+						this.talk();
+					},500);
+				})
+			});
+
+			return;
+		}
+
+	}
+	
+	talk () {
+		let lastIndex = 0;
+		const discourse = [this.strings.alienIntro1, this.strings.alienIntro2, this.strings.alienIntro3];
+		
+		this.createSpeechBubble(discourse[lastIndex],null, null, 400, 50);
+		lastIndex++;
+		
+		this.scene.input.on("pointerdown", () => { // tap anywhere in the scene
+			
+			// TODO make prev bubble disappear
+			
+			if(discourse[lastIndex]) {
+				this.createSpeechBubble(discourse[lastIndex],null, null, 400, 50);
+				lastIndex++;
+			} else {
+				// disappear bubble	
+			}
+		})
+
 	}
 
-	
- 	createSpeechBubble (x, y, width, height, quote)
+
+	createSpeechBubble (quote, x, y, width, height,)
 {
+	// default position is on top of sprite
+	if(!x) x = this.gameObject.body.position.x + this.gameObject.body.halfWidth;
+	if(!y) y = this.gameObject.body.position.y - this.gameObject.body.halfHeight;
+		
     var bubbleWidth = width;
     var bubbleHeight = height;
     var bubblePadding = 10;
