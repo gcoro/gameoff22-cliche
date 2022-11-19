@@ -10,6 +10,8 @@ class Scp173 extends Phaser.Scene {
 
 		//player
 		this.load.atlas('alien', 'assets/scp173/spritesheet_player.png', 'assets/scp173/spritesheet_player.json');
+		//enemy
+		this.load.atlas('enemy', 'assets/scp173/eye_monster/covid_spritesheet.png', 'assets/scp173/eye_monster/covid_spritesheet.json');
 	}
 
 
@@ -23,6 +25,7 @@ class Scp173 extends Phaser.Scene {
 		const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
 
 		this.createPlayer()
+		this.createEnemy()
 		//this.cameras.main.setBounds(0, 0);
 		this.cameras.main.startFollow(this.player);
 	}
@@ -100,5 +103,42 @@ class Scp173 extends Phaser.Scene {
 
 		this.player = this.physics.add.sprite(110, 540, 'alien');
 		//this.player.setCollideWorldBounds(true)
+	}
+
+	updatePlayer(){
+		if (this.cursors.left.isDown){
+			this.player.setVelocityX(-200);
+			this.player.anims.play('left', true);
+		} else if (this.cursors.right.isDown){
+			this.player.setVelocityX(200);
+			this.player.anims.play('right', true);
+		} else if (this.cursors.down.isDown){
+			this.player.setVelocityY(200);
+			this.player.anims.play('down', true);
+		} else if (this.cursors.up.isDown){
+			this.player.setVelocityY(-200);
+			this.player.anims.play('up', true);
+		} else {
+			this.player.setVelocityX(0)
+			this.player.setVelocityY(0)
+			this.player.anims.play('turn')
+		}
+	}
+
+	createEnemy(){
+		this.anims.create({
+			key: 'bounce',
+			frames: this.anims.generateFrameNames('enemy', {
+				start: 1, end: 32,
+				prefix: 'sprite'
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+
+
+		this.enemy = this.physics.add.sprite(250, 350, 'enemy');
+		this.enemy.setScale(0.5, 0.5);
+		this.enemy.anims.play('bounce');
 	}
 }
