@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "editor": "phasereditor2d-launcher -project . -port 1959",
-    "editor-remote": "phasereditor2d-launcher -project . -disable-open-browser -public -port 1959"
+    "editor-remote": "phasereditor2d-launcher -project . -disable-open-browser -public -port 1959",
+    "start": "npx http-server -p 9000 -c-1 ."
   },
   "repository": {
     "type": "git",
