@@ -26,11 +26,12 @@ class Meteor extends Phaser.Scene {
 		// ground
 		const ground = this.add.tilemap("ground");
 		ground.addTilesetImage("Ground", "Green moss and rocky walls");
+		ground.addTilesetImage("Fantascienza", "level_tileset");
 
 		// livello_tile_1
-		const livello_tile_1 = ground.createLayer("Livello tile 1", ["Ground"], -417, -70);
-		livello_tile_1.scaleX = 1.371041766927582;
-		livello_tile_1.scaleY = 1.1853808994436823;
+		const livello_tile_1 = ground.createLayer("Livello tile 1", ["Ground","Fantascienza"], -98, 201);
+		livello_tile_1.scaleX = 0.5878711017473454;
+		livello_tile_1.scaleY = 0.6351244842608338;
 
 		// rectangle_1
 		/** @type {Phaser.GameObjects.Rectangle & { body: Phaser.Physics.Arcade.Body }} */

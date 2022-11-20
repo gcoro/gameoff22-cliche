@@ -15,14 +15,15 @@
             "id": "8ad74ce9-f15d-4b71-afb4-4de4bfd1a0bb",
             "label": "livello_tile_1",
             "components": [],
-            "x": -417,
-            "y": -70,
-            "scaleX": 1.371041766927582,
-            "scaleY": 1.1853808994436823,
+            "x": -98,
+            "y": 201,
+            "scaleX": 0.5878711017473454,
+            "scaleY": 0.6351244842608338,
             "tilemapId": "593bc6ec-83e1-4a5e-88e7-1785a7dffa86",
             "layerName": "Livello tile 1",
             "tilesets": [
-                "Ground"
+                "Ground",
+                "Fantascienza"
             ]
         },
         {
@@ -121,6 +122,10 @@
                 {
                     "name": "Ground",
                     "imageKey": "Green moss and rocky walls"
+                },
+                {
+                    "name": "Fantascienza",
+                    "imageKey": "level_tileset"
                 }
             ]
         },

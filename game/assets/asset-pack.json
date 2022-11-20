@@ -107,6 +107,11 @@
                 "key": "jail-layer"
             },
             {
+                "url": "assets/level_tileset.png",
+                "type": "image",
+                "key": "level_tileset"
+            },
+            {
                 "url": "src/components/StartAnimation.js",
                 "type": "script",
                 "key": "StartAnimation"
