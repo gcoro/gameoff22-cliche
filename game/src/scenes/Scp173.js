@@ -8,6 +8,13 @@ class Scp173 extends Phaser.Scene {
 		this.load.image('base_tiles', 'assets/scp173/tiles.png')
 		this.load.tilemapTiledJSON('tilemap', 'assets/scp173/map-scp173.json')
 
+		//player allies
+		this.load.atlas('alien_ally', 
+			'assets/scp173/spritesheet_player_ally.png', 
+			'assets/scp173/spritesheet_player.json'
+		);
+
+
 		//player
 		this.load.atlas('alien', 
 			'assets/scp173/spritesheet_player.png', 
@@ -48,6 +55,7 @@ class Scp173 extends Phaser.Scene {
 
 		this.createPlayer()
 		this.createEnemy(map)
+		this.createPlayerAllies()
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
 	}
 
@@ -65,10 +73,16 @@ class Scp173 extends Phaser.Scene {
 	update(){
 		this.updatePlayer()
 		this.updateEnemy()
+		this.updatePlayerAllies()
 	}
 
 	updateEnemy(){
 		this.enemy.setY(this.enemy.y+70-this.getRelativePositionToCanvas(this.enemy));
+	}
+
+	updatePlayerAllies(){
+		this.player_alien_ally1.setY(this.player_alien_ally1.y+450-this.getRelativePositionToCanvas(this.player_alien_ally1));
+		this.player_alien_ally2.setY(this.player_alien_ally2.y+450-this.getRelativePositionToCanvas(this.player_alien_ally2));
 	}
 
 	updatePlayer(){
@@ -89,6 +103,23 @@ class Scp173 extends Phaser.Scene {
 			this.player.setVelocityY(0)
 			this.player.anims.play('turn')
 		}
+	}
+	
+	createPlayerAllies(){
+		//TODO: remove static pixels coords
+		this.player_alien_ally2 = this.physics.add.sprite(450, 23850, 'alien_ally');
+		this.player_alien_ally1 = this.physics.add.sprite(50, 23850, 'alien_ally');
+
+		this.anims.create({
+			key: 'ally_stopped',
+			frames: this.anims.generateFrameNames('alien_ally', {
+				start: 3, end: 3,
+				prefix: 'sprite'
+			}),
+			frameRate: 10
+		});
+		this.player_alien_ally1.anims.play('ally_stopped')
+		this.player_alien_ally2.anims.play('ally_stopped')
 	}
 
 	createPlayer(){
