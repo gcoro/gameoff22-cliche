@@ -24,7 +24,19 @@ class Scp173 extends Phaser.Scene {
 
 	create() {
 		this.cursors = this.input.keyboard.createCursorKeys()
-        
+		this.triggerTimer = this.time.addEvent({
+            callback: this.eyeClose,
+            callbackScope: this,
+            delay: 1000 * 5, // 1000 = 1 second -> 1 min
+            loop: true
+        });
+		this.triggerTimer = this.time.addEvent({
+            callback: this.startBounce,
+            callbackScope: this,
+            delay: 1000 * 10, // 1000 = 1 second -> 1 min
+            loop: true
+        });
+
 		const map = this.make.tilemap({key: 'tilemap'})
 		const tileset = map.addTilesetImage('standard_tiles', 'base_tiles', 16, 16)
 
@@ -39,6 +51,16 @@ class Scp173 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
 	}
 
+
+	eyeClose() {
+        console.log('enemy eyeClose');
+		this.enemy.anims.play('stop');
+    }
+
+	startBounce() {
+        console.log('enemy bounce ');
+		this.enemy.anims.play('bounce');
+    }
 
 	update(){
 		this.updatePlayer()
@@ -140,10 +162,21 @@ class Scp173 extends Phaser.Scene {
 	}
 
 	createEnemy(map){
+		// TODO  need to fix the order of the sprites
 		this.anims.create({
 			key: 'bounce',
 			frames: this.anims.generateFrameNames('enemy', {
-				start: 1, end: 32,
+				start: 1, end: 11,
+				prefix: 'sprite'
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+
+		this.anims.create({
+			key: 'stop',
+			frames: this.anims.generateFrameNames('enemy', {
+				start: 24, end: 24,
 				prefix: 'sprite'
 			}),
 			frameRate: 8,
