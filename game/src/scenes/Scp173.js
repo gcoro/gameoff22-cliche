@@ -7,6 +7,7 @@ class Scp173 extends Phaser.Scene {
 	preload() {
 		this.load.image('base_tiles', 'assets/scp173/tiles.png')
 		this.load.tilemapTiledJSON('tilemap', 'assets/scp173/map-scp173.json')
+		this.load.image('star', 'assets/scp173/star.png')
 
 		//player allies
 		this.load.atlas('alien_ally', 
@@ -26,7 +27,6 @@ class Scp173 extends Phaser.Scene {
 			'assets/scp173/eye_monster/covid_spritesheet.json'
 		);
 
-
 		//exit door
 		this.load.atlas('exit_door', 
 			'assets/scp173/exit_door.png', 
@@ -36,18 +36,7 @@ class Scp173 extends Phaser.Scene {
 
 	create() {
 		this.cursors = this.input.keyboard.createCursorKeys()
-		this.triggerTimer = this.time.addEvent({
-            callback: this.eyeClose,
-            callbackScope: this,
-            delay: 1000 * 5, // 1000 = 1 second -> 1 min
-            loop: true
-        });
-		this.triggerTimer = this.time.addEvent({
-            callback: this.startBounce,
-            callbackScope: this,
-            delay: 1000 * 10, // 1000 = 1 second -> 1 min
-            loop: true
-        });
+		this.createTimers() //for monster
 
 		const map = this.make.tilemap({key: 'tilemap'})
 		const tileset = map.addTilesetImage('standard_tiles', 'base_tiles', 16, 16)
@@ -61,10 +50,61 @@ class Scp173 extends Phaser.Scene {
 		this.createPlayer()
 		this.createEnemy(map)
 		this.createPlayerAllies()
+		this.createStars();
+
 		this.createExitDoor() //to fix coords when we have the final tilemap background
+
+		this.physics.add.overlap(this.player, this.exit_door, this.goBackToMainScene, null, this)
+
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
 	}
 
+    collectStar(player, star){
+		star.disableBody(true, true)
+
+		if(this.stars.countActive() === 0){ //everything is cleaned up
+			console.log("this.stars.countActive is zero")
+			this.openExitDoor()
+		}
+        // TODO: update score label
+	}
+
+	createStars()
+	{
+		this.stars = this.physics.add.group({
+			key: 'star',
+			repeat: 11,
+			setXY: { x: 12, y: 23500, stepX: 70 }
+		})
+		
+		this.stars.children.iterate((c) => {
+            let child = /** @type {Phaser.Physics.Arcade.Sprite} */ (c)
+			child.setBounceY(Phaser.Math.FloatBetween(0.1, 0.4))
+		})
+
+		this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this)
+	}
+
+	createTimers(){
+		this.triggerTimer = this.time.addEvent({
+            callback: this.startBounce,
+            callbackScope: this,
+            delay: 1000 * 5, // 1000 = 1 second -> 1 min
+            loop: true
+        });
+		this.triggerTimer = this.time.addEvent({
+            callback: this.eyeClose,
+            callbackScope: this,
+            delay: 1000 * 10, // 1000 = 1 second -> 1 min
+            loop: true
+        });
+	}
+
+	goBackToMainScene() {
+		if(this.exit_door.anims.currentAnim && this.exit_door.anims.currentAnim.key === 'open'){// check door is open
+			this.scene.start('Preload');
+		}
+	}
 
 	eyeClose() {
         console.log('enemy eyeClose');
@@ -251,9 +291,11 @@ class Scp173 extends Phaser.Scene {
 		});
 
 		this.enemy = this.physics.add.sprite(map.widthInPixels/2, map.heightInPixels-500, 'enemy')
-		this.enemy.setScale(0.5, 0.5)
 		this.enemy.setCollideWorldBounds(true)
+		this.enemy.setScale(0.5, 0.5)
+
 		this.enemy.fixedToCamera = true;
+
 		this.enemy.anims.play('bounce');
 	}
 
