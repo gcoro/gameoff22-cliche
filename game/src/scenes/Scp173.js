@@ -35,13 +35,18 @@ class Scp173 extends Phaser.Scene {
 		//const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
 
 		this.createPlayer()
-		this.createEnemy()
+		this.createEnemy(map)
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
 	}
 
 
 	update(){
 		this.updatePlayer()
+		this.updateEnemy()
+	}
+
+	updateEnemy(){
+		this.enemy.setY(this.enemy.y+70-this.getRelativePositionToCanvas(this.enemy));
 	}
 
 	updatePlayer(){
@@ -134,7 +139,7 @@ class Scp173 extends Phaser.Scene {
 		}
 	}
 
-	createEnemy(){
+	createEnemy(map){
 		this.anims.create({
 			key: 'bounce',
 			frames: this.anims.generateFrameNames('enemy', {
@@ -145,10 +150,14 @@ class Scp173 extends Phaser.Scene {
 			repeat: -1
 		});
 
-
-		this.enemy = this.physics.add.sprite(300, 350, 'enemy')
+		this.enemy = this.physics.add.sprite(map.widthInPixels/2, map.heightInPixels-500, 'enemy')
 		this.enemy.setScale(0.5, 0.5)
-		//this.enemy.setScrollFactor(1,0)
+		this.enemy.setCollideWorldBounds(true)
+		this.enemy.fixedToCamera = true;
 		this.enemy.anims.play('bounce');
+	}
+
+	getRelativePositionToCanvas(gameObject) {
+		return (gameObject.y -  this.cameras.main.worldView.y) *  this.cameras.main.zoom
 	}
 }
