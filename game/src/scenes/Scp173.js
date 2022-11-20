@@ -14,7 +14,6 @@ class Scp173 extends Phaser.Scene {
 			'assets/scp173/spritesheet_player.json'
 		);
 
-
 		//player
 		this.load.atlas('alien', 
 			'assets/scp173/spritesheet_player.png', 
@@ -26,8 +25,14 @@ class Scp173 extends Phaser.Scene {
 			'assets/scp173/eye_monster/covid_spritesheet.png', 
 			'assets/scp173/eye_monster/covid_spritesheet.json'
 		);
-	}
 
+
+		//exit door
+		this.load.atlas('exit_door', 
+			'assets/scp173/exit_door.png', 
+			'assets/scp173/exit_door.json'
+		);
+	}
 
 	create() {
 		this.cursors = this.input.keyboard.createCursorKeys()
@@ -56,6 +61,7 @@ class Scp173 extends Phaser.Scene {
 		this.createPlayer()
 		this.createEnemy(map)
 		this.createPlayerAllies()
+		this.createExitDoor() //to fix coords when we have the final tilemap background
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
 	}
 
@@ -104,7 +110,37 @@ class Scp173 extends Phaser.Scene {
 			this.player.anims.play('turn')
 		}
 	}
-	
+
+	createExitDoor(){
+		this.anims.create({
+			key: 'open',
+			frames: this.anims.generateFrameNames('exit_door', {
+				start: 1, end: 6,
+				prefix: 'sprite'
+			}),
+			frameRate: 10
+		});
+
+		this.anims.create({
+			key: 'close',
+			frames: this.anims.generateFrameNames('exit_door', {
+				start: 6, end: 10,
+				prefix: 'sprite'
+			}),
+			frameRate: 10
+		});
+
+		this.exit_door = this.physics.add.sprite(650, 23550, 'exit_door');
+	}
+
+	closeExitDoor() { //to call back if monster release something
+		this.exit_door.anims.play('close')
+	}
+
+	openExitDoor() { //to call back when finish to clean around && monster eye's closed
+		this.exit_door.anims.play('open')
+	}
+
 	createPlayerAllies(){
 		//TODO: remove static pixels coords
 		this.player_alien_ally2 = this.physics.add.sprite(450, 23850, 'alien_ally');
