@@ -3,6 +3,9 @@
 
 /* START OF COMPILED CODE */
 
+/* START-USER-IMPORTS */
+/* END-USER-IMPORTS */
+
 class PushOnClick extends UserComponent {
 
 	constructor(gameObject) {
@@ -39,17 +42,17 @@ class PushOnClick extends UserComponent {
 				// sets idle animation
 				const animIdle = new StartAnimation(this.gameObject);
 				animIdle.animationKey = "armor_idle";
-				
+
 				setTimeout(() => {
 					this.createSpeechBubble(this.gameObject.body.position.x + this.gameObject.body.halfWidth,(this.gameObject.body.position.y - this.gameObject.body.halfHeight) , 400, 50, 'ciaooo sono scp-2020 e ti narro una storiella :)')
 				},500);
 			})
-		
+
 			// todo inizia a parlare
 		});
 	}
 
-	
+
  	createSpeechBubble (x, y, width, height, quote)
 {
     var bubbleWidth = width;

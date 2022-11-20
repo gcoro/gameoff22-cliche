@@ -49,7 +49,7 @@ class Preload extends Phaser.Scene {
 
 		this.editorPreload();
 
-		this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Level"));
+		this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Meteor"));
 	}
 
 	/* END-USER-CODE */

@@ -92,6 +92,16 @@
                 "type": "image"
             },
             {
+                "url": "assets/Green moss and rocky walls.png",
+                "type": "image",
+                "key": "Green moss and rocky walls"
+            },
+            {
+                "url": "assets/ground.json",
+                "type": "tilemapTiledJSON",
+                "key": "ground"
+            },
+            {
                 "url": "assets/jail.png",
                 "type": "image",
                 "key": "jail-layer"

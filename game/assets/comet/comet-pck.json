@@ -1,0 +1,167 @@
+{
+    "section1": {
+        "files": [
+            {
+                "url": "assets/comet/comet.json",
+                "type": "animation",
+                "key": "comet"
+            },
+            {
+                "url": "assets/comet/img_0.png",
+                "type": "image",
+                "key": "img_0"
+            },
+            {
+                "url": "assets/comet/img_1.png",
+                "type": "image",
+                "key": "img_1"
+            },
+            {
+                "url": "assets/comet/img_2.png",
+                "type": "image",
+                "key": "img_2"
+            },{
+                "url": "assets/comet/img_3.png",
+                "type": "image",
+                "key": "img_3"
+            },
+            {
+                "url": "assets/comet/img_4.png",
+                "type": "image",
+                "key": "img_4"
+            },
+            {
+                "url": "assets/comet/img_5.png",
+                "type": "image",
+                "key": "img_5"
+            },
+            {
+                "url": "assets/comet/img_6.png",
+                "type": "image",
+                "key": "img_6"
+            },
+            {
+                "url": "assets/comet/img_7.png",
+                "type": "image",
+                "key": "img_7"
+            },
+            {
+                "url": "assets/comet/img_8.png",
+                "type": "image",
+                "key": "img_8"
+            },
+            {
+                "url": "assets/comet/img_9.png",
+                "type": "image",
+                "key": "img_9"
+            },
+            {
+                "url": "assets/comet/img_10.png",
+                "type": "image",
+                "key": "img_10"
+            },
+            {
+                "url": "assets/comet/img_11.png",
+                "type": "image",
+                "key": "img_11"
+            },
+            {
+                "url": "assets/comet/img_12.png",
+                "type": "image",
+                "key": "img_12"
+            },
+            {
+                "url": "assets/comet/img_13.png",
+                "type": "image",
+                "key": "img_13"
+            },
+            {
+                "url": "assets/comet/img_14.png",
+                "type": "image",
+                "key": "img_14"
+            },
+            {
+                "url": "assets/comet/img_15.png",
+                "type": "image",
+                "key": "img_15"
+            },
+            {
+                "url": "assets/comet/img_16.png",
+                "type": "image",
+                "key": "img_16"
+            },
+            {
+                "url": "assets/comet/img_17.png",
+                "type": "image",
+                "key": "img_17"
+            },
+            {
+                "url": "assets/comet/img_18.png",
+                "type": "image",
+                "key": "img_18"
+            },
+            {
+                "url": "assets/comet/img_19.png",
+                "type": "image",
+                "key": "img_19"
+            },
+            {
+                "url": "assets/comet/img_20.png",
+                "type": "image",
+                "key": "img_20"
+            },
+            {
+                "url": "assets/comet/img_21.png",
+                "type": "image",
+                "key": "img_21"
+            },
+            {
+                "url": "assets/comet/img_22.png",
+                "type": "image",
+                "key": "img_22"
+            },
+            {
+                "url": "assets/comet/img_23.png",
+                "type": "image",
+                "key": "img_23"
+            },
+            {
+                "url": "assets/comet/img_24.png",
+                "type": "image",
+                "key": "img_24"
+            },
+            {
+                "url": "assets/comet/img_25.png",
+                "type": "image",
+                "key": "img_25"
+            },
+            {
+                "url": "assets/comet/img_26.png",
+                "type": "image",
+                "key": "img_26"
+            },
+            {
+                "url": "assets/comet/img_27.png",
+                "type": "image",
+                "key": "img_27"
+            },
+            {
+                "url": "assets/comet/img_28.png",
+                "type": "image",
+                "key": "img_28"
+            },
+            {
+                "url": "assets/comet/img_29.png",
+                "type": "image",
+                "key": "img_29"
+            }
+        ]
+    },
+    "meta": {
+        "app": "Phaser Editor 2D - Asset Pack Editor",
+        "contentType": "phasereditor2d.pack.core.AssetContentType",
+        "url": "https://phasereditor2d.com",
+        "version": 2,
+        "showAllFilesInBlocks": false
+    }
+}
