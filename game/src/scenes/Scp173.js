@@ -9,25 +9,34 @@ class Scp173 extends Phaser.Scene {
 		this.load.tilemapTiledJSON('tilemap', 'assets/scp173/map-scp173.json')
 
 		//player
-		this.load.atlas('alien', 'assets/scp173/spritesheet_player.png', 'assets/scp173/spritesheet_player.json');
+		this.load.atlas('alien', 
+			'assets/scp173/spritesheet_player.png', 
+			'assets/scp173/spritesheet_player.json'
+		);
+
 		//enemy
-		this.load.atlas('enemy', 'assets/scp173/eye_monster/covid_spritesheet.png', 'assets/scp173/eye_monster/covid_spritesheet.json');
+		this.load.atlas('enemy', 
+			'assets/scp173/eye_monster/covid_spritesheet.png', 
+			'assets/scp173/eye_monster/covid_spritesheet.json'
+		);
 	}
 
 
 	create() {
 		this.cursors = this.input.keyboard.createCursorKeys()
-
+        
 		const map = this.make.tilemap({key: 'tilemap'})
 		const tileset = map.addTilesetImage('standard_tiles', 'base_tiles', 16, 16)
 
-		const backgroundLayer = map.createLayer('background', tileset, 0, -map.heightInPixels+700) //pixels offset
-		const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
+        this.cameras.main.setBounds(0, 0, 800, 24000);
+        this.physics.world.setBounds(0, 0, 800, 24000);
+		
+		const backgroundLayer = map.createLayer('background', tileset, 0, 0); //pixels offset
+		//const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
 
 		this.createPlayer()
 		this.createEnemy()
-		//this.cameras.main.setBounds(0, 0);
-		this.cameras.main.startFollow(this.player);
+        this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
 	}
 
 
@@ -101,8 +110,8 @@ class Scp173 extends Phaser.Scene {
 			frameRate: 10
 		});
 
-		this.player = this.physics.add.sprite(110, 540, 'alien');
-		//this.player.setCollideWorldBounds(true)
+		this.player = this.physics.add.sprite(0, 24000, 'alien');
+		this.player.setCollideWorldBounds(true)
 	}
 
 	updatePlayer(){
@@ -137,8 +146,9 @@ class Scp173 extends Phaser.Scene {
 		});
 
 
-		this.enemy = this.physics.add.sprite(250, 350, 'enemy');
-		this.enemy.setScale(0.5, 0.5);
+		this.enemy = this.physics.add.sprite(300, 350, 'enemy')
+		this.enemy.setScale(0.5, 0.5)
+		//this.enemy.setScrollFactor(1,0)
 		this.enemy.anims.play('bounce');
 	}
 }
