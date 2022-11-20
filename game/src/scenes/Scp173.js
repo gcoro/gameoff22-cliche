@@ -3,6 +3,18 @@ class Scp173 extends Phaser.Scene {
 		super("Scp173");
 	}
 
+	init() {
+		this.player = undefined;
+		this.enemy = undefined;
+		
+		this.stars = undefined; //colliding obecjt that we do not have yet
+		// we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
+		this.player_alien_ally1 = undefined;
+		this.player_alien_ally2 = undefined;
+		this.exit_door = undefined;
+		this.cursors = undefined;
+		this.scoreLabel = undefined;
+	}
 
 	preload() {
 		this.load.image('base_tiles', 'assets/scp173/tiles.png')
@@ -40,7 +52,6 @@ class Scp173 extends Phaser.Scene {
 
 		const map = this.make.tilemap({key: 'tilemap'})
 		const tileset = map.addTilesetImage('standard_tiles', 'base_tiles', 16, 16)
-
         this.cameras.main.setBounds(0, 0, 800, 24000);
         this.physics.world.setBounds(0, 0, 800, 24000);
 		
@@ -50,11 +61,10 @@ class Scp173 extends Phaser.Scene {
 		this.createPlayer()
 		this.createEnemy(map)
 		this.createPlayerAllies()
-		this.createStars();
-
+		this.createStars()
 		this.createExitDoor() //to fix coords when we have the final tilemap background
 
-		this.physics.add.overlap(this.player, this.exit_door, this.goBackToMainScene, null, this)
+		this.physics.add.overlap(this.player, this.exit_door, this.goToAfterGameTransitionScene, null, this)
 
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
 	}
@@ -100,19 +110,17 @@ class Scp173 extends Phaser.Scene {
         });
 	}
 
-	goBackToMainScene() {
+	goToAfterGameTransitionScene() {
 		if(this.exit_door.anims.currentAnim && this.exit_door.anims.currentAnim.key === 'open'){// check door is open
-			this.scene.start('Preload');
+			this.scene.start('AfterGameTransition');
 		}
 	}
 
 	eyeClose() {
-        console.log('enemy eyeClose');
 		this.enemy.anims.play('stop');
     }
 
 	startBounce() {
-        console.log('enemy bounce ');
 		this.enemy.anims.play('bounce');
     }
 
