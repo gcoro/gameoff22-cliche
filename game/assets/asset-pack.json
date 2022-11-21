@@ -107,9 +107,35 @@
                 "key": "jail-layer"
             },
             {
+                "url": "assets/laser.png",
+                "frameConfig": {
+                    "frameWidth": 16,
+                    "frameHeight": 16,
+                    "startFrame": 0,
+                    "endFrame": 4,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "laser"
+            },
+            {
                 "url": "assets/level_tileset.png",
                 "type": "image",
                 "key": "level_tileset"
+            },
+            {
+                "url": "assets/ship.png",
+                "frameConfig": {
+                    "frameWidth": 66,
+                    "frameHeight": 66,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "ship"
             },
             {
                 "url": "src/components/StartAnimation.js",

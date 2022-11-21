@@ -1,5 +1,60 @@
 
 // You can write more code here
+class FallingObject extends Phaser.Physics.Arcade.Sprite{
+    constructor(scene, x, y, texture, config){
+        super(scene, x, y, texture)
+        this.scene = scene
+        this.speed = config.speed
+        this.rotationVal = config.rotation
+    }
+
+    spawn(x){
+        const positionY = Phaser.Math.Between(-50, -70)
+        this.setPosition(x, positionY)
+        this.setActive(true)
+        this.setVisible(true)
+    }
+
+    die(){
+        this.destroy()
+    }
+
+    update(time){
+        this.setVelocityY(this.speed)
+        this.rotation += this.rotationVal
+        const gameHeight = this.scene.scale.height
+
+        if(this.y > gameHeight + 5){
+            this.die()
+        }
+    }
+}
+
+
+class Laser extends Phaser.Physics.Arcade.Sprite{
+    constructor(scene, x, y, texture){
+        super(scene, x, y, texture)
+        this.setScale(2)
+        this.speed = 200
+    }
+
+    fire(x, y){
+        this.setPosition(x, y-50)
+        this.setActive(true)
+        this.setVisible(true)
+    }
+
+    erase(){
+        this.destroy()
+    }
+
+    update(time){
+        this.setVelocityY(this.speed * -1)
+        if(this.y < -10){
+            this.erase()
+        }
+    }
+}
 
 /* START OF COMPILED CODE */
 
@@ -49,7 +104,7 @@ class Meteor extends Phaser.Scene {
 		rectangle_1.isFilled = true;
 
 		// arcadesprite_1
-		const arcadesprite_1 = this.physics.add.sprite(432, 22, "img_0");
+		const arcadesprite_1 = this.physics.add.sprite(432, -254, "img_0");
 		arcadesprite_1.scaleX = 3.453177619787111;
 		arcadesprite_1.scaleY = 3.872053011718694;
 		arcadesprite_1.angle = 90;
@@ -58,6 +113,10 @@ class Meteor extends Phaser.Scene {
 		arcadesprite_1.body.gravity.y = 1;
 		arcadesprite_1.body.setOffset(71, 139);
 		arcadesprite_1.body.setSize(35, 44, false);
+
+		// player
+		const player = this.physics.add.sprite(439, 494, "ship", 0);
+		player.body.setSize(66, 66, false);
 
 		// Date
 		const date = this.add.text(30, 42, "", {});
@@ -85,6 +144,7 @@ class Meteor extends Phaser.Scene {
 		arcadesprite_1StartAnimation.animationKey = "comet";
 
 		this.arcadesprite_1 = arcadesprite_1;
+		this.player = player;
 		this.date = date;
 		this.rectangle_2 = rectangle_2;
 		this.text_1 = text_1;
@@ -95,6 +155,8 @@ class Meteor extends Phaser.Scene {
 
 	/** @type {Phaser.Physics.Arcade.Sprite} */
 	arcadesprite_1;
+	/** @type {Phaser.Physics.Arcade.Sprite} */
+	player;
 	/** @type {Phaser.GameObjects.Text} */
 	date;
 	/** @type {Phaser.GameObjects.Rectangle} */
@@ -105,6 +167,7 @@ class Meteor extends Phaser.Scene {
 	ground;
 
 	/* START-USER-CODE */
+	// Write your code here
 
 	getRandomInt(min, max) {
 		min = Math.ceil(min);
@@ -114,7 +177,14 @@ class Meteor extends Phaser.Scene {
 
 	dates = ["30 June 1908, Tunguska River, Russia", "9 April 1941, Chelyabinsk, USSR", "12 February 1947, Sikhote-Alin Mountains, USSR", "25 September 2002,Bodaybo, Russia", "7 February 2009,Tyumen Oblast, Russia", "15 February 2013,Chelyabinsk, Russia", "15 December 2017,Kamchatka, Russia", "18 December 2018,Kamchatka, Russia", "25 February 2020,Lake Baikal, Russia" ]
 
-	// Write your code here
+    shoot = false;
+    speed = 100;
+    cursors = undefined;
+    enemies = undefined;
+    enemySpeed = 60;
+    lasers = undefined;
+    lastFired = 0;
+    spaceBar = undefined;
 
 	onMeteorCollision(){
 	console.log("BOOM!")
@@ -133,7 +203,135 @@ class Meteor extends Phaser.Scene {
 		this.date.text = actualDate;
 		this.arcadesprite_1.body.velocity.y = cometVelocity;
 		this.arcadesprite_1.body.maxSpeed = cometVelocity;
+		this.player = this.createPlayer();
+		this.cursors = this.input.keyboard.createCursorKeys();
+		this.spaceBar = this.input.keyboard.addKey(
+		  Phaser.Input.Keyboard.KeyCodes.SPACE
+		);
+		this.enemies = this.physics.add.group({
+			classType: FallingObject,
+			maxSize: 10,
+			runChildUpdate: true
+		  });
+		  this.time.addEvent({
+			delay: 2000,
+			// delay : Phaser.Math.Between(2000, 8000),
+			callback: this.spawnEnemy,
+			callbackScope: this,
+			loop: true
+		  });
+
+		  this.lasers = this.physics.add.group({
+			classType: Laser,
+			maxSize: 10,
+			runChildUpdate: true
+		  });
+
+		  this.physics.add.overlap(
+			this.lasers,
+			this.enemies,
+			this.hitEnemy,
+			undefined,
+			this
+		  );
+		  this.physics.add.overlap(
+			this.player,
+			this.enemies,
+			this.decreaseLife,
+			null,
+			this
+		  );
 	}
+
+	createPlayer() {
+		const player = this.player;
+		player.setCollideWorldBounds(true);
+
+		this.anims.create({
+		  key: "turn",
+		  frames: [{ key: "ship", frame: 0 }]
+		});
+
+		this.anims.create({
+		  key: "left",
+		  frames: this.anims.generateFrameNumbers("ship", {
+			start: 1,
+			end: 2
+		  }),
+		  frameRate: 10
+		});
+
+		this.anims.create({
+		  key: "right",
+		  frames: this.anims.generateFrameNumbers("ship", {
+			start: 1,
+			end: 2
+		  }),
+		  frameRate: 10
+		});
+
+		return player;
+	  }
+
+	  movePlayer(player, time) {
+		if (this.cursors.left.isDown) {
+		  this.player.setVelocityX(this.speed * -1);
+		  this.player.anims.play("left", true);
+		  this.player.setFlipX(false);
+		} else if (this.cursors.right.isDown) {
+		  this.player.setVelocityX(this.speed);
+		  this.player.anims.play("right", true);
+		  this.player.setFlipX(true);
+		} else {
+		  this.player.setVelocityX(0);
+		  this.player.anims.play("turn");
+		}
+
+		if ((this.shoot || this.spaceBar.isDown) && time > this.lastFired) {
+		  const laser = this.lasers.get(0, 0, "laser");
+
+		  if (laser) {
+			laser.fire(this.player.x, this.player.y);
+			this.lastFired = time + 150;
+		  }
+		}
+	  }
+
+	  spawnEnemy() {
+		const config = {
+		  speed: this.enemySpeed,
+		  rotation: 0.01
+		};
+
+		// @ts-ignore
+		const enemy = this.enemies.get(0, 0, "animated_asteroid", config);
+		const enemyWidth = enemy.displayWidth;
+		const positionX = Phaser.Math.Between(
+		  enemyWidth,
+		  this.scale.width - enemyWidth
+		);
+
+		if (enemy) {
+		  enemy.spawn(positionX);
+		}
+	  }
+
+	  hitEnemy(laser, enemy) {
+		laser.erase();
+		enemy.die();
+
+		console.log("bang!")
+	  }
+
+	update(time) {	
+		this.movePlayer(this.player, time);
+	  }
+
+	  decreaseLife(player, enemy) {
+		enemy.die();
+
+		console.log("colpito!")
+	  }
 
 	/* END-USER-CODE */
 }

@@ -61,7 +61,7 @@
                 "key": "img_0"
             },
             "x": 432,
-            "y": 22,
+            "y": -254,
             "scaleX": 3.453177619787111,
             "scaleY": 3.872053011718694,
             "angle": 90,
@@ -72,6 +72,21 @@
             "body.height": 44,
             "body.offset.x": 71,
             "body.offset.y": 139
+        },
+        {
+            "type": "ArcadeSprite",
+            "id": "a651de66-6a83-4345-b7c9-dba522c3d081",
+            "label": "player",
+            "scope": "PUBLIC",
+            "components": [],
+            "texture": {
+                "key": "ship",
+                "frame": 0
+            },
+            "x": 439,
+            "y": 494,
+            "body.width": 66,
+            "body.height": 66
         },
         {
             "type": "Text",

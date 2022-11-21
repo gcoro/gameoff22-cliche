@@ -2,6 +2,19 @@
     "section1": {
         "files": [
             {
+                "url": "assets/animated_asteroid.png",
+                "frameConfig": {
+                    "frameWidth": 70,
+                    "frameHeight": 70,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "animated_asteroid"
+            },
+            {
                 "url": "assets/comet/comet.json",
                 "type": "animation",
                 "key": "comet"
@@ -15,45 +28,6 @@
                 "url": "assets/comet/img_1.png",
                 "type": "image",
                 "key": "img_1"
-            },
-            {
-                "url": "assets/comet/img_2.png",
-                "type": "image",
-                "key": "img_2"
-            },{
-                "url": "assets/comet/img_3.png",
-                "type": "image",
-                "key": "img_3"
-            },
-            {
-                "url": "assets/comet/img_4.png",
-                "type": "image",
-                "key": "img_4"
-            },
-            {
-                "url": "assets/comet/img_5.png",
-                "type": "image",
-                "key": "img_5"
-            },
-            {
-                "url": "assets/comet/img_6.png",
-                "type": "image",
-                "key": "img_6"
-            },
-            {
-                "url": "assets/comet/img_7.png",
-                "type": "image",
-                "key": "img_7"
-            },
-            {
-                "url": "assets/comet/img_8.png",
-                "type": "image",
-                "key": "img_8"
-            },
-            {
-                "url": "assets/comet/img_9.png",
-                "type": "image",
-                "key": "img_9"
             },
             {
                 "url": "assets/comet/img_10.png",
@@ -106,6 +80,11 @@
                 "key": "img_19"
             },
             {
+                "url": "assets/comet/img_2.png",
+                "type": "image",
+                "key": "img_2"
+            },
+            {
                 "url": "assets/comet/img_20.png",
                 "type": "image",
                 "key": "img_20"
@@ -154,6 +133,41 @@
                 "url": "assets/comet/img_29.png",
                 "type": "image",
                 "key": "img_29"
+            },
+            {
+                "url": "assets/comet/img_3.png",
+                "type": "image",
+                "key": "img_3"
+            },
+            {
+                "url": "assets/comet/img_4.png",
+                "type": "image",
+                "key": "img_4"
+            },
+            {
+                "url": "assets/comet/img_5.png",
+                "type": "image",
+                "key": "img_5"
+            },
+            {
+                "url": "assets/comet/img_6.png",
+                "type": "image",
+                "key": "img_6"
+            },
+            {
+                "url": "assets/comet/img_7.png",
+                "type": "image",
+                "key": "img_7"
+            },
+            {
+                "url": "assets/comet/img_8.png",
+                "type": "image",
+                "key": "img_8"
+            },
+            {
+                "url": "assets/comet/img_9.png",
+                "type": "image",
+                "key": "img_9"
             }
         ]
     },
