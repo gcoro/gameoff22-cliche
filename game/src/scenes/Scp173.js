@@ -6,7 +6,10 @@ class Scp173 extends Phaser.Scene {
 	init() {
 		this.player = undefined;
 		this.enemy = undefined;
-		
+		this.tileSize = 16;
+		this.mapHeight = 4800;
+		this.mapWidth = 640;
+
 		this.stars = undefined; //colliding obecjt that we do not have yet
 		// we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
 		this.player_alien_ally1 = undefined;
@@ -17,8 +20,8 @@ class Scp173 extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.image('base_tiles', 'assets/scp173/tiles.png')
-		this.load.tilemapTiledJSON('tilemap', 'assets/scp173/map-scp173.json')
+		this.load.image('base_tiles', 'assets/scp173/tiles_repack.png')
+		this.load.tilemapTiledJSON('tilemap', 'assets/scp173/small_map.json')
 		this.load.image('star', 'assets/scp173/star.png')
 
 		//player allies
@@ -51,11 +54,12 @@ class Scp173 extends Phaser.Scene {
 		this.createTimers() //for monster
 
 		const map = this.make.tilemap({key: 'tilemap'})
-		const tileset = map.addTilesetImage('standard_tiles', 'base_tiles', 16, 16)
-        this.cameras.main.setBounds(0, 0, 800, 24000);
-        this.physics.world.setBounds(0, 0, 800, 24000);
+		const tileset = map.addTilesetImage('tiles_repack', 'base_tiles', 16, 16)
+        this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHeight);
+        this.physics.world.setBounds(this.mapWidth/8, 0, this.mapWidth, this.mapHeight);
 		
-		const backgroundLayer = map.createLayer('background', tileset, 0, 0); //pixels offset
+		const backgroundLayer = map.createLayer('background', tileset, map.widthInPixels/8, 0); //pixels offset
+
 		//const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
 
 		this.createPlayer()
@@ -83,8 +87,8 @@ class Scp173 extends Phaser.Scene {
 	{
 		this.stars = this.physics.add.group({
 			key: 'star',
-			repeat: 11,
-			setXY: { x: 12, y: 23500, stepX: 70 }
+			repeat: 5,
+			setXY: { x: this.mapWidth/8, y: 3500, stepX: 10 }
 		})
 		
 		this.stars.children.iterate((c) => {
@@ -178,7 +182,7 @@ class Scp173 extends Phaser.Scene {
 			frameRate: 10
 		});
 
-		this.exit_door = this.physics.add.sprite(650, 23550, 'exit_door');
+		this.exit_door = this.physics.add.sprite(8*this.mapWidth/8, 50, 'exit_door');
 	}
 
 	closeExitDoor() { //to call back if monster release something
@@ -191,8 +195,8 @@ class Scp173 extends Phaser.Scene {
 
 	createPlayerAllies(){
 		//TODO: remove static pixels coords
-		this.player_alien_ally2 = this.physics.add.sprite(450, 23850, 'alien_ally');
-		this.player_alien_ally1 = this.physics.add.sprite(50, 23850, 'alien_ally');
+		this.player_alien_ally2 = this.physics.add.sprite(2*this.mapWidth/8, this.mapHeight-50, 'alien_ally');
+		this.player_alien_ally1 = this.physics.add.sprite(8*this.mapWidth/8, this.mapHeight-50, 'alien_ally');
 
 		this.anims.create({
 			key: 'ally_stopped',
@@ -252,7 +256,7 @@ class Scp173 extends Phaser.Scene {
 			frameRate: 10
 		});
 
-		this.player = this.physics.add.sprite(0, 24000, 'alien');
+		this.player = this.physics.add.sprite(5*this.mapWidth/8, this.mapHeight-30, 'alien');
 		this.player.setCollideWorldBounds(true)
 	}
 
@@ -298,7 +302,7 @@ class Scp173 extends Phaser.Scene {
 			repeat: -1
 		});
 
-		this.enemy = this.physics.add.sprite(map.widthInPixels/2, map.heightInPixels-500, 'enemy')
+		this.enemy = this.physics.add.sprite(5*this.mapWidth/8, map.heightInPixels-500, 'enemy')
 		this.enemy.setCollideWorldBounds(true)
 		this.enemy.setScale(0.5, 0.5)
 
