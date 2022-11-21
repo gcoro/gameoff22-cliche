@@ -4,12 +4,24 @@ class Scp173 extends Phaser.Scene {
 	}
 
 	init() {
+		// constants
+		this.CELL_SIZE = 16
+		this.NUM_POORS_PER_LOOP = 5
+		this.SCORES_OVERLAP_POOR = 5
+		this.OVERLAP_RANGE = 12
+
+		// local variables
+		this.currentPoors = []
+		this.container = {}
+		this.currentScore = 0
+
 		this.player = undefined;
 		this.enemy = undefined;
 		this.tileSize = 16;
 		this.mapHeight = 4800;
 		this.mapWidth = 640;
 
+		
 		this.stars = undefined; //colliding obecjt that we do not have yet
 		// we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
 		this.player_alien_ally1 = undefined;
@@ -23,6 +35,14 @@ class Scp173 extends Phaser.Scene {
 		this.load.image('base_tiles', 'assets/scp173/level_tileset.png')
 		this.load.tilemapTiledJSON('tilemap', 'assets/scp173/small_map.json')
 		this.load.image('star', 'assets/scp173/star.png')
+		this.load.image('poor', 'assets/scp173/poor/splat.png')
+    
+		//poops
+		this.load.atlas(
+		  'throw_poor',
+		  'assets/scp173/poops.png',
+		  'assets/scp173/poops.json'
+		)
 
 		//player allies
 		this.load.atlas('alien_ally', 
@@ -53,7 +73,20 @@ class Scp173 extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.createTimers() //for monster
 
+		// add collider
+		this.anims.create({
+				key: 'anim_throw_poor',
+				frames: this.anims.generateFrameNames('throw_poor', {
+					start: 1, end: 6,
+					prefix: 'sprite'
+				}),
+				frameRate: 10,
+			repeat: -1
+		});
+		this.currentScore = 0
+
 		const map = this.make.tilemap({key: 'tilemap'})
+		this.map = map
 		const tileset = map.addTilesetImage('level_tileset', 'base_tiles', 16, 16)
 		
         this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHeight);
@@ -73,18 +106,112 @@ class Scp173 extends Phaser.Scene {
 			}
 		});
 
-		//const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
-
 		this.createPlayer()
 		this.createEnemy(map)
 		this.createPlayerAllies()
 		this.createStars()
 		this.createExitDoor() //to fix coords when we have the final tilemap background
+		this.testCreatePoors()
 
 		this.physics.add.overlap(this.player, this.exit_door, this.goToAfterGameTransitionScene, null, this)
 		this.physics.add.collider(this.player, wallsLayer);
-
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08);
+	}
+
+	testCreatePoors() {
+		setTimeout(() => this.createPoors(), 1000)
+	}
+
+	createPoors() {
+		for (let i = 0; i < this.NUM_POORS_PER_LOOP; i++) {
+		  const coords = this.generateRandomCoords()
+		  const loopImage = this.physics.add.image(coords.x, coords.y, 'poor')
+		  loopImage.setVisible(false)
+		  loopImage.setDepth(1)
+		  this.currentPoors.push({ image: loopImage, ...coords })
+	
+		  const sourceImage = this.physics.add.sprite(100, 100, 'throw_poor')
+		  sourceImage.setScale(0.1, 0.)
+		  
+		  //const sourceImage = this.physics.add.image(100, 100, 'throw_poor')
+		  sourceImage.setDepth(0)
+		  sourceImage.anims.play('anim_throw_poor')
+	
+		  this.physics.moveToObject(sourceImage, loopImage, 200)
+		  const throwCollider = this.physics.add.overlap(sourceImage, loopImage, (source, dest) => {
+			source.body.stop()
+			dest.setVisible(true)
+			source.destroy()
+			this.physics.add.overlap(this.player, loopImage, (player, image) =>
+			  this.handlePoorOverlap(player, image)
+			)
+			this.physics.world.removeCollider(throwCollider)
+		  })
+		}
+	}
+
+	generateRandomCoords() {
+		const min = 32
+		const maxW = this.map.widthInPixels - 32
+		const maxH = this.map.heightInPixels - 32
+		return {
+		  x: Math.floor(Math.random() * (maxW - min - 1) + min),
+		  y: Math.floor(Math.random() * (maxH - min - 1) + min),
+		}
+	  }
+	
+	  /**
+	   * handle player overlap poor
+	   * @param {*} player
+	   * @param {*} image
+	   */
+	  handlePoorOverlap(player, image) {
+		if (this.cursors.space.isDown) {
+		  this.ckeckPoorToClean(player, image)
+		  this.currentScore += this.SCORES_OVERLAP_POOR
+		}
+	  }
+	
+	  /**
+	   * check if player is on a poor and eventually clean it if space is pressed
+	   */
+	  ckeckPoorToClean(player, image) {
+		const posPlayerX = player.x
+		const posPlayerY = player.y
+		let selIdx = -1
+		const selPoor = this.currentPoors.find((p, idx) => {
+		  const res = this.areObjectsOverlapping(p, { x: posPlayerX, y: posPlayerY })
+		  if (res) selIdx = idx
+		  return res
+		})
+		if (selPoor) {
+		  selPoor.image.destroy()
+		  this.currentPoors.splice(selIdx, 1)
+		}
+	  }
+	
+	  /**
+	   * get container position
+	   * @returns
+	   */
+	  getContainerPosition() {
+		return {
+		  top: (game.canvas.height - this.container.layer.height) / 2,
+		  left: (game.canvas.width - this.container.layer.width) / 2,
+		}
+	  }
+	
+	  /**
+	   * check if 2 objects are overlapping
+	   * @param {*} obj1
+	   * @param {*} obj2
+	   * @returns
+	   */
+	  areObjectsOverlapping(obj1, obj2) {
+		return (
+		  Math.abs(obj1.x - obj2.x) < this.OVERLAP_RANGE &&
+		  Math.abs(obj1.y - obj2.y) < this.OVERLAP_RANGE
+		)
 	}
 
     collectStar(player, star){
@@ -276,6 +403,7 @@ class Scp173 extends Phaser.Scene {
 		this.player = this.physics.add.sprite(5*this.mapWidth/8, this.mapHeight-60, 'alien');
 		this.player.setScale(0.6, 0.6)
 		this.player.setCollideWorldBounds(true)
+		this.player.setDepth(5) // above all the other objects
 	}
 
 	updatePlayer(){

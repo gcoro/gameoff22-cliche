@@ -18,7 +18,6 @@ window.addEventListener('load', function () {
   game.scene.add('Level', Level)
   game.scene.add('Scp173', Scp173)
   game.scene.add('AfterGameTransition', AfterGameTransition)
-  game.scene.add('Container173', Container173)
   game.scene.add('Boot', Boot, true)
 })
 
@@ -27,6 +26,6 @@ class Boot extends Phaser.Scene {
     this.load.pack('pack', 'assets/preload-asset-pack.json')
 
     //TODO: put back main scene
-    this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start('Container173'))
+    this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start('Scp173'))
   }
 }
