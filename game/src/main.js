@@ -27,6 +27,6 @@ class Boot extends Phaser.Scene {
     this.load.pack('pack', 'assets/preload-asset-pack.json')
 
     //TODO: put back main scene
-    this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start('Scp173'))
+    this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start('Container173'))
   }
 }
