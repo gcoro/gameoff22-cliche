@@ -38,7 +38,8 @@ class Level extends Phaser.Scene {
 		this.physics.add.existing(floor, false);
 		floor.body.moves = false;
 		floor.body.allowGravity = false;
-		floor.body.setSize(8572.945439012012, 160, false);
+		floor.body.setOffset(0, 17);
+		floor.body.setSize(726, 141, false);
 
 		// armor_idle_1
 		/** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
@@ -51,7 +52,8 @@ class Level extends Phaser.Scene {
 		armor_idle_1.body.bounce.x = 1;
 		armor_idle_1.body.bounce.y = 1;
 		armor_idle_1.body.collideWorldBounds = true;
-		armor_idle_1.body.setSize(0.005805364910478932, 0.7571963287628788, false);
+		armor_idle_1.body.setOffset(-77, 0);
+		armor_idle_1.body.setSize(366, 427, false);
 
 		// collider
 		this.physics.add.collider(armor_idle_1, floor);

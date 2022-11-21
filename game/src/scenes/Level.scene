@@ -63,8 +63,9 @@
             "ArcadeComponent.active": true,
             "moves": false,
             "allowGravity": false,
-            "body.width": 8572.945439012012,
-            "body.height": 160
+            "body.width": 726,
+            "body.height": 141,
+            "body.offset.y": 17
         },
         {
             "type": "Sprite",
@@ -89,8 +90,9 @@
             "body.bounce.x": 1,
             "body.bounce.y": 1,
             "collideWorldBounds": true,
-            "body.width": 0.005805364910478932,
-            "body.height": 0.7571963287628788
+            "body.width": 366,
+            "body.height": 427,
+            "body.offset.x": -77
         }
     ],
     "plainObjects": [
