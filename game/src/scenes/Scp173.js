@@ -55,10 +55,20 @@ class Scp173 extends Phaser.Scene {
 
 		const map = this.make.tilemap({key: 'tilemap'})
 		const tileset = map.addTilesetImage('tiles_repack', 'base_tiles', 16, 16)
+		
         this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHeight);
         this.physics.world.setBounds(this.mapWidth/8, 0, this.mapWidth, this.mapHeight);
 		
 		const backgroundLayer = map.createLayer('background', tileset, map.widthInPixels/8, 0); //pixels offset
+		this.make.text({
+			x:8*this.mapWidth/8, 
+			y: this.mapHeight/2,
+			text: 'ur halfway thourgh it!',
+			style: {
+				font: '12px monospace',
+				fill: '#ffffff'
+			}
+		});
 
 		//const wallsLayer = map.createLayer('walls', tileset, 0, -map.heightInPixels+700) //pixels offset
 
