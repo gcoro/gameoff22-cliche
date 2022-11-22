@@ -545,15 +545,6 @@ class Scp173 extends Phaser.Scene {
             ],
             frameRate: 8,
         })
-        /*
-            .on("animationcomplete", () => {
-                this.enemy.setFrame("sprite6")
-                this.enemy.anims.remove("openEye")
-                this.createPoors()
-                setTimeout(() => {
-                    this.enemy.anims.play("closeEye")
-                }, this.ENEMY_KEEP_EYE_OPEN_MILLIS)
-            })*/
 
         this.anims.create({
             key: "closeEye",
@@ -565,14 +556,7 @@ class Scp173 extends Phaser.Scene {
                 { key: "enemy", frame: "sprite24" },
             ],
             frameRate: 8,
-        }) /*
-            .on("animationcomplete", () => {
-                this.enemy.setFrame("sprite24")
-                this.enemy.anims.remove("closeEye")
-                setTimeout(() => {
-                    this.enemy.anims.play("openEye")
-                }, this.ENEMY_KEEP_EYE_CLOSE_MILLIS)
-            })*/
+        })
         /*
         this.anims.create({
             key: "bounce",
