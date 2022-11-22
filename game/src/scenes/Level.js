@@ -182,7 +182,7 @@ class Level extends Phaser.Scene {
 
 			this.createSpeechBubble(discourse[index], null, null, 400, 50);
 
-			if (index + 1 !== discourse.length) { // not last element
+			if (index !== discourse.length) { // not last element
 				this.input.once("pointerdown", () => { // tap anywhere in the scene
 					this.nextLine(discourse, index + 1);
 				})
