@@ -15,7 +15,7 @@ class PushOnClick extends UserComponent {
 		gameObject["__PushOnClick"] = this;
 
 		/* START-USER-CTR-CODE */
-		
+
 		/* END-USER-CTR-CODE */
 	}
 
@@ -32,12 +32,16 @@ class PushOnClick extends UserComponent {
 	/* START-USER-CODE */
 
 	awake() {
-		if(this.sceneToStartKey) {
+		if (this.sceneToStartKey) {
 			this.gameObject.setInteractive().on("pointerdown", () => {
-				console.log('door clicked', this.sceneToStartKey)
-
-				// todo switch scene
-				// () => this.scene.start("scena"))
+				if (this.scene.activeScp === this.sceneToStartKey) {
+					console.log('start scene', this.sceneToStartKey)
+					// todo switch scene
+					// () => this.scene.start("scena"))
+				} else {
+					// do nothing
+					console.log('scp not enabled')
+				}
 			});
 		}
 	}

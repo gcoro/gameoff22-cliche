@@ -89,6 +89,9 @@ class Level extends Phaser.Scene {
 	// user strings
 	strings = {};
 
+	// enabled scp ('scp173', 'scp5153' or null)
+	activeScp = null
+
 	create() {
 		this.editorCreate();
 		this.armor_idle_1
@@ -149,23 +152,36 @@ class Level extends Phaser.Scene {
 	}
 
 	talk() {
-		let lastIndex = 0;
-		const discourse = [this.strings.alienIntro1, this.strings.alienIntro2, this.strings.alienIntro3];
+		const index = 0;
+		const discourse = [
+			this.strings.alienIntro1, this.strings.alienIntro2, this.strings.alienIntro3, this.strings.alienEnableMinigame];
 
-		this.createSpeechBubble(discourse[lastIndex], null, null, 400, 50);
-		lastIndex++;
+		this.createSpeechBubble(discourse[index], null, null, 400, 50);
 
-		this.input.on("pointerdown", () => { // tap anywhere in the scene
-
-			// TODO make prev bubble disappear
-
-			if (discourse[lastIndex]) {
-				this.createSpeechBubble(discourse[lastIndex], null, null, 400, 50);
-				lastIndex++;
-			} else {
-				// disappear bubble	
-			}
+		this.input.once("pointerdown", () => { // tap anywhere in the scene
+			this.nextLine(discourse, index + 1);
 		})
+	}
+
+	nextLine(discourse, index) {
+		if (discourse[index]) {
+			if (discourse[index] === this.strings.alienEnableMinigame) {
+				const scp = 'scp173'; // todo randomize scp
+				this.activeScp = scp;
+				discourse[index] = this.strings.alienEnableMinigame + scp;
+			}
+			this.createSpeechBubble(discourse[index], null, null, 400, 50);
+
+			if (index + 1 !== discourse.length) { // not last element
+				this.input.once("pointerdown", () => { // tap anywhere in the scene
+					this.nextLine(discourse, index + 1);
+				})
+			}
+		} else {
+			// disappear bubble	
+		}
+
+		// TODO make prev bubble disappear
 	}
 
 	createSpeechBubble(quote, x, y, width, height,) {
