@@ -92,6 +92,12 @@ class Level extends Phaser.Scene {
 	// enabled scp ('scp173', 'scp5153' or null)
 	activeScp = null
 
+	// last bubble (contains reference to the objects)
+	lastBubble = {
+		bubble: null,
+		text: null
+	}
+
 	create() {
 		this.editorCreate();
 		this.armor_idle_1
@@ -164,24 +170,27 @@ class Level extends Phaser.Scene {
 	}
 
 	nextLine(discourse, index) {
+		this.lastBubble.bubble?.destroy()
+		this.lastBubble.text?.destroy()
+
 		if (discourse[index]) {
 			if (discourse[index] === this.strings.alienEnableMinigame) {
 				const scp = 'scp173'; // todo randomize scp
 				this.activeScp = scp;
 				discourse[index] = this.strings.alienEnableMinigame + scp;
 			}
+
 			this.createSpeechBubble(discourse[index], null, null, 400, 50);
 
 			if (index + 1 !== discourse.length) { // not last element
 				this.input.once("pointerdown", () => { // tap anywhere in the scene
 					this.nextLine(discourse, index + 1);
 				})
+			} else { // destroy last bubble
+				this.lastBubble.bubble?.destroy()
+				this.lastBubble.text?.destroy()
 			}
-		} else {
-			// disappear bubble	
 		}
-
-		// TODO make prev bubble disappear
 	}
 
 	createSpeechBubble(quote, x, y, width, height,) {
@@ -229,10 +238,14 @@ class Level extends Phaser.Scene {
 		bubble.lineBetween(point1X, point1Y, point3X, point3Y);
 
 		var content = this.armor_idle_1.scene.add.text(0, 0, quote, { fontFamily: 'Arial', fontSize: 20, color: '#000000', align: 'center', wordWrap: { width: bubbleWidth - (bubblePadding * 2) } });
-
+	
 		var b = content.getBounds();
 
 		content.setPosition(bubble.x + (bubbleWidth / 2) - (b.width / 2), bubble.y + (bubbleHeight / 2) - (b.height / 2));
+
+		this.lastBubble.bubble = bubble
+		this.lastBubble.text = content
+
 	}
 	/* END-USER-CODE */
 }
