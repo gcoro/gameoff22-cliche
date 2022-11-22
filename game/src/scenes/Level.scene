@@ -90,9 +90,10 @@
             "body.bounce.x": 1,
             "body.bounce.y": 1,
             "collideWorldBounds": true,
-            "body.width": 366,
-            "body.height": 427,
-            "body.offset.x": -77
+            "body.width": 500,
+            "body.height": 3.6601282095296224,
+            "body.offset.x": -150,
+            "body.offset.y": 414
         }
     ],
     "plainObjects": [

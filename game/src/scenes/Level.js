@@ -52,8 +52,8 @@ class Level extends Phaser.Scene {
 		armor_idle_1.body.bounce.x = 1;
 		armor_idle_1.body.bounce.y = 1;
 		armor_idle_1.body.collideWorldBounds = true;
-		armor_idle_1.body.setOffset(-77, 0);
-		armor_idle_1.body.setSize(366, 427, false);
+		armor_idle_1.body.setOffset(-150, 414);
+		armor_idle_1.body.setSize(500, 3.6601282095296224, false);
 
 		// collider
 		this.physics.add.collider(armor_idle_1, floor);
