@@ -142,6 +142,7 @@ class Scp173 extends Phaser.Scene {
 
         this.createPlayer()
         this.createEnemy(map)
+        this.enemy.setInteractive({ cursor: 'url(assets/scp173/precisesharp.cur), pointer' })
         this.createPlayerAllies()
         this.createStars()
         this.createExitDoor() //to fix coords when we have the final tilemap background
