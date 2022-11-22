@@ -115,7 +115,13 @@ class Scp173 extends Phaser.Scene {
             tileset,
             map.widthInPixels / 8,
             0
-        ) //pixels offset
+        ) 
+        this.container.layer = map.createLayer(
+            "background_texture_new",
+            tileset,
+            map.widthInPixels / 8,
+            0
+        )//pixels offset
         this.wallsLayer = map.createLayer(
             "walls_new",
             tileset,
