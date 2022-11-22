@@ -399,7 +399,7 @@ class Scp173 extends Phaser.Scene {
             frameRate: 10,
         })
 
-        this.exit_door = this.physics.add.sprite(705, 80, 'exit_door', 'sprite2');
+        this.exit_door = this.physics.add.sprite(915, 80, 'exit_door', 'sprite2');
     }
 
     closeExitDoor() {
