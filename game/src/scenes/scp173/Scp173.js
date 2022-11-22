@@ -71,8 +71,8 @@ class Scp173 extends Phaser.Scene {
         //exit door
         this.load.atlas(
             "exit_door",
-            "assets/scp173/exit_door.png",
-            "assets/scp173/exit_door.json"
+            "assets/scp173/door.png",
+            "assets/scp173/door.json"
         )
     }
 
@@ -396,7 +396,7 @@ class Scp173 extends Phaser.Scene {
             key: "open",
             frames: this.anims.generateFrameNames("exit_door", {
                 start: 1,
-                end: 6,
+                end: 1,
                 prefix: "sprite",
             }),
             frameRate: 10,
@@ -405,19 +405,14 @@ class Scp173 extends Phaser.Scene {
         this.anims.create({
             key: "close",
             frames: this.anims.generateFrameNames("exit_door", {
-                start: 6,
-                end: 10,
+                start: 2,
+                end: 2,
                 prefix: "sprite",
             }),
             frameRate: 10,
         })
 
-        this.exit_door = this.physics.add.sprite(
-            (8 * this.mapWidth) / 8,
-            50,
-            "exit_door"
-        )
-        this.exit_door.setScale(1.4, 1.4)
+        this.exit_door = this.physics.add.sprite(705, 80, 'exit_door', 'sprite2');
     }
 
     closeExitDoor() {
