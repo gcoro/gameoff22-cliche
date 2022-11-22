@@ -22,8 +22,8 @@ class Scp173 extends Phaser.Scene {
         this.player = undefined
         this.enemy = undefined
         this.tileSize = 16
-        this.mapHeight = 4800
-        this.mapWidth = 640
+        this.mapHeight = 1200
+        this.mapWidth = 1800
 
         this.stars = undefined //colliding obecjt that we do not have yet
         // we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
@@ -78,7 +78,6 @@ class Scp173 extends Phaser.Scene {
 
     create() {
         this.cursors = this.input.keyboard.createCursorKeys()
-        // this.createTimers() //for monster
 
         // add collider
         this.anims.create({
@@ -102,32 +101,33 @@ class Scp173 extends Phaser.Scene {
             16
         )
 
-        this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHeight)
+        this.cameras.main.setBounds(0, 0, this.mapWidth+800, this.mapHeight+100)
         this.physics.world.setBounds(
-            this.mapWidth / 8,
             0,
-            this.mapWidth,
-            this.mapHeight
+            0,
+            this.mapWidth+800,
+            this.mapHeight+100
         )
 
         this.container.layer = map.createLayer(
             "background_new",
             tileset,
-            map.widthInPixels / 8,
+            this.mapWidth/2,
             0
         ) 
         this.container.layer = map.createLayer(
             "background_texture_new",
             tileset,
-            map.widthInPixels / 8,
+            this.mapWidth/2,
             0
         )//pixels offset
         this.wallsLayer = map.createLayer(
             "walls_new",
             tileset,
-            map.widthInPixels / 8,
+            this.mapWidth/2,
             0
         ) //pixels offset
+
         this.wallsLayer.setCollisionByProperty({ collides: true })
 
         this.make.text({
@@ -171,7 +171,7 @@ class Scp173 extends Phaser.Scene {
     getContainerVisiblePosition() {
         return {
             top: this.cameras.main.worldView.y,
-            left: (game.canvas.width - this.container.layer.width) / 2,
+            left: (this.game.canvas.width - this.container.layer.width) / 2,
         }
     }
 
@@ -303,21 +303,6 @@ class Scp173 extends Phaser.Scene {
             null,
             this
         )
-    }
-
-    createTimers() {
-        this.triggerTimer = this.time.addEvent({
-            callback: this.startBounce,
-            callbackScope: this,
-            delay: 1000 * 10, // 1000 = 1 second -> 1 min
-            loop: true,
-        })
-        this.triggerTimer = this.time.addEvent({
-            callback: this.eyeClose,
-            callbackScope: this,
-            delay: 1000 * 10, // 1000 = 1 second -> 1 min
-            loop: true,
-        })
     }
 
     goToAfterGameTransitionScene() {
@@ -560,32 +545,11 @@ class Scp173 extends Phaser.Scene {
             ],
             frameRate: 8,
         })
-        /*
-        this.anims.create({
-            key: "bounce",
-            frames: this.anims.generateFrameNames("enemy", {
-                start: 1,
-                end: 11,
-                prefix: "sprite",
-            }),
-            frameRate: 8,
-            repeat: -1,
-        })
 
-        this.anims.create({
-            key: "stop",
-            frames: this.anims.generateFrameNames("enemy", {
-                start: 24,
-                end: 24,
-                prefix: "sprite",
-            }),
-            frameRate: 8,
-            repeat: -1,
-        })
-*/
+        console.log(this.mapWidth/2)
         this.enemy = this.physics.add.sprite(
-            (5 * this.mapWidth) / 8,
-            map.heightInPixels - 500,
+            1100,
+            this.mapHeight/2,
             "enemy"
         )
         this.enemy.setFrame("sprite24")
@@ -597,8 +561,6 @@ class Scp173 extends Phaser.Scene {
         this.enemy.on("animationcomplete", (anim) =>
             this.handleEnemyAnimationEnd(anim)
         )
-
-        // this.enemy.anims.play("bounce")
     }
 
     handleEnemyAnimationEnd(anim) {
