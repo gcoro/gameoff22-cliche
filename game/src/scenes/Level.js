@@ -31,6 +31,11 @@ class Level extends Phaser.Scene {
 		back_structures.scaleX = 2.490125549146286;
 		back_structures.scaleY = 3.1615983195492015;
 
+		// door0
+		const door0 = this.add.image(208, 406, "door0");
+		door0.scaleX = 2.0268395681818867;
+		door0.scaleY = 2.094852315770696;
+
 		// floor
 		/** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
 		const floor = this.add.image(399, 527, "pavement_full");
@@ -61,6 +66,11 @@ class Level extends Phaser.Scene {
 		// door_blue (components)
 		const door_bluePushOnClick = new PushOnClick(door_blue);
 		door_bluePushOnClick.sceneToStartKey = "scp173";
+
+		
+		// door0 (components)
+		const door0PushOnClick = new PushOnClick(door0);
+		door0PushOnClick.sceneToStartKey = "scp5153";
 
 		// armor_idle_1 (components)
 		const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1);

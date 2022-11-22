@@ -112,6 +112,11 @@
                 "key": "door_red"
             },
             {
+                "url": "assets/scp2020/door0.png",
+                "type": "image",
+                "key": "door0"
+            },
+            {
                 "url": "assets/jail.png",
                 "type": "image",
                 "key": "jail-layer"

@@ -51,6 +51,22 @@
         },
         {
             "type": "Image",
+            "id": "9e915c72-1785-473d-8d1e-b3ce3102927d",
+            "label": "door0",
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "scp5153",
+            "texture": {
+                "key": "door0"
+            },
+            "x": 208,
+            "y": 406,
+            "scaleX": 2.0268395681818867,
+            "scaleY": 2.094852315770696
+        },
+        {
+            "type": "Image",
             "id": "013cc1aa-5322-4c66-abd7-fc5ea59e6e74",
             "label": "floor",
             "components": [],
