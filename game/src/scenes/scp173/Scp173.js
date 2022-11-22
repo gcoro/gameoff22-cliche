@@ -157,6 +157,7 @@ class Scp173 extends Phaser.Scene {
             this
         )
         this.physics.add.collider(this.player, this.wallsLayer)
+        this.physics.add.collider(this.enemy, this.wallsLayer)
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
     }
 
@@ -607,6 +608,7 @@ class Scp173 extends Phaser.Scene {
             this.createPoors()
             setTimeout(() => {
                 this.enemy.anims.play("closeEye")
+                this.enemy.body.reset(this.enemy.x, this.enemy.y)
             }, this.ENEMY_KEEP_EYE_OPEN_MILLIS)
         } else if (anim.key === "closeEye") {
             // close eye finished
@@ -614,8 +616,15 @@ class Scp173 extends Phaser.Scene {
             this.enemy.anims.remove("closeEye")
             setTimeout(() => {
                 this.enemy.anims.play("openEye")
+                const posX = this.getRandomXPosition();
+                this.physics.moveTo(this.enemy, posX, this.enemy.y);
             }, this.ENEMY_KEEP_EYE_CLOSE_MILLIS)
         }
+    }
+
+    getRandomXPosition(){
+        const positions = [100, 600]
+        return positions[Math.floor(Math.random()*positions.length)];
     }
 
     getRelativePositionToCanvas(gameObject) {
