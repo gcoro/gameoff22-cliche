@@ -175,7 +175,9 @@ class Level extends Phaser.Scene {
 
 		if (discourse[index]) {
 			if (discourse[index] === this.strings.alienEnableMinigame) {
-				const scp = 'scp173'; // todo randomize scp
+				const items = ['scp173', 'scp5153'];
+				const scp = items[Math.floor(Math.random() * items.length)];
+
 				this.activeScp = scp;
 				discourse[index] = this.strings.alienEnableMinigame + scp;
 			}
@@ -238,7 +240,7 @@ class Level extends Phaser.Scene {
 		bubble.lineBetween(point1X, point1Y, point3X, point3Y);
 
 		var content = this.armor_idle_1.scene.add.text(0, 0, quote, { fontFamily: 'Arial', fontSize: 20, color: '#000000', align: 'center', wordWrap: { width: bubbleWidth - (bubblePadding * 2) } });
-	
+
 		var b = content.getBounds();
 
 		content.setPosition(bubble.x + (bubbleWidth / 2) - (b.width / 2), bubble.y + (bubbleHeight / 2) - (b.height / 2));
