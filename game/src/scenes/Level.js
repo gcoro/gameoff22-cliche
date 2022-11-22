@@ -9,7 +9,7 @@ class Level extends Phaser.Scene {
 		super("Level");
 
 		/* START-USER-CTR-CODE */
-		// Write your code here.
+
 		/* END-USER-CTR-CODE */
 	}
 
@@ -67,7 +67,6 @@ class Level extends Phaser.Scene {
 		const door_bluePushOnClick = new PushOnClick(door_blue);
 		door_bluePushOnClick.sceneToStartKey = "scp173";
 
-		
 		// door0 (components)
 		const door0PushOnClick = new PushOnClick(door0);
 		door0PushOnClick.sceneToStartKey = "scp5153";
@@ -87,19 +86,25 @@ class Level extends Phaser.Scene {
 
 	/* START-USER-CODE */
 
-	// Write more your code here
+	// user strings
+	strings = {};
 
 	create() {
 		this.editorCreate();
 		this.armor_idle_1
 		this.armor_idle_1.body.onWorldBounds = true;
 		this.physics.world.on('worldbounds', this.onWorldBounds, this)
+		this.strings = this.cache.json.get('strings');
+
+		setTimeout(() => {
+			this.initAlienInteraction();
+		}, 3000)
 	}
 	originalVelocity;
 	isAnimatingTurn = false;
 	onWorldBounds(body, up, down, left, right) {
 		if (this.isAnimatingTurn)
-		return;
+			return;
 		this.isAnimatingTurn = true;
 		// stops
 		this.armor_idle_1.anims.pause()
@@ -107,7 +112,7 @@ class Level extends Phaser.Scene {
 		this.armor_idle_1.body.velocity.x = 0;
 		// sets turn animation
 		const animTurn = new StartAnimation(this.armor_idle_1);
-		animTurn.animationKey = "armor_turn_reverse" ;
+		animTurn.animationKey = "armor_turn_reverse";
 		animTurn.gameObject.once("animationcomplete", () => {
 			if (right) {
 				this.armor_idle_1.flipX = true;
@@ -123,9 +128,96 @@ class Level extends Phaser.Scene {
 				this.isAnimatingTurn = false;
 			})
 		})
-
 	}
 
+	initAlienInteraction() {
+		// stops
+		this.armor_idle_1.anims.pause()
+		this.armor_idle_1.body.velocity.x = 0;
+		// sets turn animation
+		const animTurn = new StartAnimation(this.armor_idle_1);
+		animTurn.animationKey = "armor_turn_reverse";
+		animTurn.gameObject.on("animationcomplete", () => {
+			// sets idle animation
+			const animIdle = new StartAnimation(this.armor_idle_1);
+			animIdle.animationKey = "armor_idle";
+
+			setTimeout(() => {
+				this.talk();
+			}, 500);
+		});
+	}
+
+	talk() {
+		let lastIndex = 0;
+		const discourse = [this.strings.alienIntro1, this.strings.alienIntro2, this.strings.alienIntro3];
+
+		this.createSpeechBubble(discourse[lastIndex], null, null, 400, 50);
+		lastIndex++;
+
+		this.input.on("pointerdown", () => { // tap anywhere in the scene
+
+			// TODO make prev bubble disappear
+
+			if (discourse[lastIndex]) {
+				this.createSpeechBubble(discourse[lastIndex], null, null, 400, 50);
+				lastIndex++;
+			} else {
+				// disappear bubble	
+			}
+		})
+	}
+
+	createSpeechBubble(quote, x, y, width, height,) {
+		// default position is on top of sprite
+		if (!x) x = this.armor_idle_1.body.position.x + this.armor_idle_1.body.halfWidth;
+		if (!y) y = this.armor_idle_1.body.position.y - this.armor_idle_1.body.halfHeight;
+
+		var bubbleWidth = width;
+		var bubbleHeight = height;
+		var bubblePadding = 10;
+		var arrowHeight = bubbleHeight / 4;
+
+		var bubble = this.armor_idle_1.scene.add.graphics({ x: x, y: y });
+
+		//  Bubble shadow
+		bubble.fillStyle(0x222222, 0.5);
+		bubble.fillRoundedRect(6, 6, bubbleWidth, bubbleHeight, 16);
+
+		//  Bubble color
+		bubble.fillStyle(0xffffff, 1);
+
+		//  Bubble outline line style
+		bubble.lineStyle(4, 0x565656, 1);
+
+		//  Bubble shape and outline
+		bubble.strokeRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
+		bubble.fillRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
+
+		//  Calculate arrow coordinates
+		var point1X = Math.floor(bubbleWidth / 7);
+		var point1Y = bubbleHeight;
+		var point2X = Math.floor((bubbleWidth / 7) * 2);
+		var point2Y = bubbleHeight;
+		var point3X = Math.floor(bubbleWidth / 7);
+		var point3Y = Math.floor(bubbleHeight + arrowHeight);
+
+		//  Bubble arrow shadow
+		bubble.lineStyle(4, 0x222222, 0.5);
+		bubble.lineBetween(point2X - 1, point2Y + 6, point3X + 2, point3Y);
+
+		//  Bubble arrow fill
+		bubble.fillTriangle(point1X, point1Y, point2X, point2Y, point3X, point3Y);
+		bubble.lineStyle(2, 0x565656, 1);
+		bubble.lineBetween(point2X, point2Y, point3X, point3Y);
+		bubble.lineBetween(point1X, point1Y, point3X, point3Y);
+
+		var content = this.armor_idle_1.scene.add.text(0, 0, quote, { fontFamily: 'Arial', fontSize: 20, color: '#000000', align: 'center', wordWrap: { width: bubbleWidth - (bubblePadding * 2) } });
+
+		var b = content.getBounds();
+
+		content.setPosition(bubble.x + (bubbleWidth / 2) - (b.width / 2), bubble.y + (bubbleHeight / 2) - (b.height / 2));
+	}
 	/* END-USER-CODE */
 }
 
