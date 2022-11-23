@@ -101,30 +101,30 @@ class Scp173 extends Phaser.Scene {
             16
         )
 
-        this.cameras.main.setBounds(0, 0, this.mapWidth+800, this.mapHeight+100)
+        this.cameras.main.setBounds(0, 0, this.mapWidth, this.mapHeight)
         this.physics.world.setBounds(
             0,
             0,
-            this.mapWidth+800,
-            this.mapHeight+100
+            this.mapWidth,
+            this.mapHeight
         )
 
         this.container.layer = map.createLayer(
             "background_new",
             tileset,
-            this.mapWidth/2,
+            0,
             0
         ) 
         this.container.layer = map.createLayer(
             "background_texture_new",
             tileset,
-            this.mapWidth/2,
+            0,
             0
         )//pixels offset
         this.wallsLayer = map.createLayer(
             "walls_new",
             tileset,
-            this.mapWidth/2,
+            0,
             0
         ) //pixels offset
 
@@ -399,7 +399,7 @@ class Scp173 extends Phaser.Scene {
             frameRate: 10,
         })
 
-        this.exit_door = this.physics.add.sprite(915, 80, 'exit_door', 'sprite2');
+        this.exit_door = this.physics.add.sprite(15, 80, 'exit_door', 'sprite2');
     }
 
     closeExitDoor() {
@@ -490,8 +490,8 @@ class Scp173 extends Phaser.Scene {
         })
 
         this.player = this.physics.add.sprite(
-            (5 * this.mapWidth) / 8,
-            this.mapHeight - 60,
+            100,
+            100,
             "alien"
         )
         this.player.setScale(0.6, 0.6)
