@@ -101,30 +101,35 @@ class Scp173 extends Phaser.Scene {
             16
         )
 
-        this.cameras.main.setBounds(0, 0, this.mapWidth+800, this.mapHeight+100)
+        this.cameras.main.setBounds(
+            0,
+            0,
+            this.mapWidth + 800,
+            this.mapHeight + 100
+        )
         this.physics.world.setBounds(
             0,
             0,
-            this.mapWidth+800,
-            this.mapHeight+100
+            this.mapWidth + 800,
+            this.mapHeight + 100
         )
 
         this.container.layer = map.createLayer(
             "background_new",
             tileset,
-            this.mapWidth/2,
+            this.mapWidth / 2,
             0
-        ) 
+        )
         this.container.layer = map.createLayer(
             "background_texture_new",
             tileset,
-            this.mapWidth/2,
+            this.mapWidth / 2,
             0
-        )//pixels offset
+        ) //pixels offset
         this.wallsLayer = map.createLayer(
             "walls_new",
             tileset,
-            this.mapWidth/2,
+            this.mapWidth / 2,
             0
         ) //pixels offset
 
@@ -142,7 +147,9 @@ class Scp173 extends Phaser.Scene {
 
         this.createPlayer()
         this.createEnemy(map)
-        this.enemy.setInteractive({ cursor: 'url(assets/scp173/precisesharp.cur), pointer' })
+        this.enemy.setInteractive({
+            cursor: "url(assets/scp173/precisesharp.cur), pointer",
+        })
         this.createPlayerAllies()
         this.createStars()
         this.createExitDoor() //to fix coords when we have the final tilemap background
@@ -327,12 +334,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     update() {
-        /*
-        console.log(
-            "enemy getRelativePositionToCanvas",
-            this.getRelativePositionToCanvas(this.enemy)
-        )*/
-        this.updatePlayer()
+        this.player.update()
         this.updateEnemy()
         this.updatePlayerAllies()
     }
@@ -358,26 +360,6 @@ class Scp173 extends Phaser.Scene {
         )
     }
 
-    updatePlayer() {
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-200)
-            this.player.anims.play("left", true)
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(200)
-            this.player.anims.play("right", true)
-        } else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(200)
-            this.player.anims.play("down", true)
-        } else if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-200)
-            this.player.anims.play("up", true)
-        } else {
-            this.player.setVelocityX(0)
-            this.player.setVelocityY(0)
-            this.player.anims.play("turn")
-        }
-    }
-
     createExitDoor() {
         this.anims.create({
             key: "open",
@@ -399,7 +381,12 @@ class Scp173 extends Phaser.Scene {
             frameRate: 10,
         })
 
-        this.exit_door = this.physics.add.sprite(915, 80, 'exit_door', 'sprite2');
+        this.exit_door = this.physics.add.sprite(
+            915,
+            80,
+            "exit_door",
+            "sprite2"
+        )
     }
 
     closeExitDoor() {
@@ -439,84 +426,12 @@ class Scp173 extends Phaser.Scene {
     }
 
     createPlayer() {
-        this.anims.create({
-            key: "right",
-            frames: this.anims.generateFrameNames("alien", {
-                start: 5,
-                end: 8,
-                prefix: "sprite",
-            }),
-            frameRate: 10,
-        })
-
-        this.anims.create({
-            key: "left",
-            frames: this.anims.generateFrameNames("alien", {
-                start: 1,
-                end: 4,
-                prefix: "sprite",
-            }),
-            frameRate: 10,
-        })
-
-        this.anims.create({
-            key: "down",
-            frames: this.anims.generateFrameNames("alien", {
-                start: 1,
-                end: 1,
-                prefix: "sprite",
-            }),
-            frameRate: 10,
-        })
-
-        this.anims.create({
-            key: "up",
-            frames: this.anims.generateFrameNames("alien", {
-                start: 9,
-                end: 9,
-                prefix: "sprite",
-            }),
-            frameRate: 10,
-        })
-
-        this.anims.create({
-            key: "turn",
-            frames: this.anims.generateFrameNames("alien", {
-                start: 10,
-                end: 10,
-                prefix: "sprite",
-            }),
-            frameRate: 10,
-        })
-
-        this.player = this.physics.add.sprite(
+        this.player = new Player(
+            this,
             (5 * this.mapWidth) / 8,
             this.mapHeight - 60,
             "alien"
         )
-        this.player.setScale(0.6, 0.6)
-        this.player.setCollideWorldBounds(true)
-        this.player.setDepth(5) // above all the other objects
-    }
-
-    updatePlayer() {
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-200)
-            this.player.anims.play("left", true)
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(200)
-            this.player.anims.play("right", true)
-        } else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(200)
-            this.player.anims.play("down", true)
-        } else if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-200)
-            this.player.anims.play("up", true)
-        } else {
-            this.player.setVelocityX(0)
-            this.player.setVelocityY(0)
-            this.player.anims.play("turn")
-        }
     }
 
     createEnemy(map) {
@@ -546,12 +461,8 @@ class Scp173 extends Phaser.Scene {
             frameRate: 8,
         })
 
-        console.log(this.mapWidth/2)
-        this.enemy = this.physics.add.sprite(
-            1100,
-            this.mapHeight/2,
-            "enemy"
-        )
+        console.log(this.mapWidth / 2)
+        this.enemy = this.physics.add.sprite(1100, this.mapHeight / 2, "enemy")
         this.enemy.setFrame("sprite24")
         this.enemy.setCollideWorldBounds(true)
         this.enemy.setScale(0.6, 0.6)
@@ -578,15 +489,15 @@ class Scp173 extends Phaser.Scene {
             this.enemy.anims.remove("closeEye")
             setTimeout(() => {
                 this.enemy.anims.play("openEye")
-                const posX = this.getRandomXPosition();
-                this.physics.moveTo(this.enemy, posX, this.enemy.y);
+                const posX = this.getRandomXPosition()
+                this.physics.moveTo(this.enemy, posX, this.enemy.y)
             }, this.ENEMY_KEEP_EYE_CLOSE_MILLIS)
         }
     }
 
-    getRandomXPosition(){
+    getRandomXPosition() {
         const positions = [100, 600]
-        return positions[Math.floor(Math.random()*positions.length)];
+        return positions[Math.floor(Math.random() * positions.length)]
     }
 
     getRelativePositionToCanvas(gameObject) {
