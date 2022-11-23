@@ -132,7 +132,7 @@ class Scp173 extends Phaser.Scene {
         })
         this.createPlayerAllies()
         this.createStars()
-        this.createExitDoor() //to fix coords when we have the final tilemap background
+        this.createExitDoor()
         // this.testCreatePoors()
         this.start()
 
@@ -341,27 +341,8 @@ class Scp173 extends Phaser.Scene {
     }
 
     createExitDoor() {
-        this.anims.create({
-            key: "open",
-            frames: this.anims.generateFrameNames("exit_door", {
-                start: 1,
-                end: 1,
-                prefix: "sprite",
-            }),
-            frameRate: 10,
-        })
-
-        this.anims.create({
-            key: "close",
-            frames: this.anims.generateFrameNames("exit_door", {
-                start: 2,
-                end: 2,
-                prefix: "sprite",
-            }),
-            frameRate: 10,
-        })
-
-        this.exit_door = this.physics.add.sprite(15, 80, "exit_door", "sprite2")
+        
+        this.exit_door = new ExitDoor(this, 15, 80)
     }
 
     closeExitDoor() {
