@@ -92,6 +92,7 @@ class Scp173 extends Phaser.Scene {
         this.player = new Player(this, 100, 250)
         this.exit_door = new ExitDoor(this, 15, 80)
         this.enemy = new Enemy(this, this.mapWidth/2, this.mapHeight/2)
+		this.scoreLabel = new ScoreLabel(this, this.mapWidth/3, 0, this.currentScore)
 
         this.createPlayerAllies()
         this.start()
@@ -198,8 +199,12 @@ class Scp173 extends Phaser.Scene {
      */
     handlePoorOverlap(player, image) {
         if (this.cursors.space.isDown) {
+            console.log('handlePoorOverlap')
             this.ckeckPoorToClean(player, image)
+            // there's a bug using the `this.cursors.space.isDown`, the score keep update even when the poop 
+            // is bein already cleaned up
             this.currentScore += this.SCORES_OVERLAP_POOR
+            this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
         }
     }
 

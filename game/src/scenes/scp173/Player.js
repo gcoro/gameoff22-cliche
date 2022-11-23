@@ -61,7 +61,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 end: 10,
                 prefix: "sprite",
             }),
-            frameRate: 10,
+            frameRate: 10
         })
 
         //  You can either do this:
