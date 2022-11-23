@@ -10,7 +10,10 @@ window.addEventListener('load', function () {
 			autoCenter: Phaser.Scale.CENTER_BOTH
 		},
 		physics: {
-			default: "arcade"
+			default: "arcade",
+			arcade: {
+				debug: true
+			}
 		}
 	});
 	
