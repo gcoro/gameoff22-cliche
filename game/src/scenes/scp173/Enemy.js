@@ -12,6 +12,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 { key: "enemy", frame: "sprite6" },
             ],
             frameRate: 8,
+            repeat:-1
         })
 
         this.anims.create({

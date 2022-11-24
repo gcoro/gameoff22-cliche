@@ -64,6 +64,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 10
         })
 
+        this.scene.anims.create({
+            key: "death",
+            frames: this.scene.anims.generateFrameNames("alien", {
+                start: 11,
+                end: 11,
+                prefix: "sprite"
+            }),
+            frameRate: 10
+        })
+
         //  You can either do this:
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
@@ -91,5 +101,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(0)
             this.anims.play("turn")
         }
+    }
+
+    die(){
+        this.setVelocity(0);
+        this.play("death")
+        //this.scene.start("GameOver")
     }
 }
