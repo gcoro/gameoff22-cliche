@@ -24,7 +24,7 @@ class Scp173 extends Phaser.Scene {
         this.player = undefined
         this.enemy = undefined
         this.mapHeight = 1200
-        this.mapWidth = 1800
+        this.mapWidth = 16*90
 
         // we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
         this.player_alien_ally1 = undefined
@@ -97,7 +97,7 @@ class Scp173 extends Phaser.Scene {
         this.enemy = new Enemy(this, this.mapWidth / 2, this.mapHeight / 2)
         this.scoreLabel = new ScoreLabel(
             this,
-            this.mapWidth / 3,
+            this.mapWidth / 2-2.2*this.BOARD_GAP_TO_WORLD,
             0,
             this.currentScore
         )
@@ -163,7 +163,7 @@ class Scp173 extends Phaser.Scene {
         this.cameras.main.setBounds(
             -this.BOARD_GAP_TO_WORLD,
             0,
-            this.mapWidth - 2 * this.BOARD_GAP_TO_WORLD,
+            this.mapWidth + 2 * this.BOARD_GAP_TO_WORLD,
             this.mapHeight
         )
         this.physics.world.setBounds(0, 0, this.mapWidth, this.mapHeight)

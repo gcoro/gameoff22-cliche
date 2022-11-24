@@ -26,7 +26,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             frameRate: 8,
         })
 
-        this.setScale(0.8, 0.8)
         this.on("animationcomplete", (anim) =>
             this.handleEnemyAnimationEnd(anim)
         )
