@@ -9,6 +9,8 @@ class Scp173 extends Phaser.Scene {
         this.NUM_POORS_PER_LOOP = 5
         this.SCORES_OVERLAP_POOR = 5
         this.OVERLAP_RANGE = 12
+        this.WALL_THICKNESS = 3 * 16
+        this.BOARD_GAP_TO_WORLD = 50
 
         // enemy anim times
         this.ENEMY_KEEP_EYE_OPEN_MILLIS = 5 * 1000 // how long enemy keeps its eyes opened
@@ -30,6 +32,7 @@ class Scp173 extends Phaser.Scene {
         this.exit_door = undefined
         this.cursors = undefined
         this.scoreLabel = undefined
+        this.eventEmitter = EventDispatcher.getInstance()
     }
 
     preload() {
@@ -91,22 +94,47 @@ class Scp173 extends Phaser.Scene {
 
         this.player = new Player(this, 100, 250)
         this.exit_door = new ExitDoor(this, 15, 80)
-        this.enemy = new Enemy(this, this.mapWidth/2, this.mapHeight/2)
-		this.scoreLabel = new ScoreLabel(this, this.mapWidth/3, 0, this.currentScore)
+        this.enemy = new Enemy(this, this.mapWidth / 2, this.mapHeight / 2)
+        this.scoreLabel = new ScoreLabel(
+            this,
+            this.mapWidth / 3,
+            0,
+            this.currentScore
+        )
 
         this.createPlayerAllies()
         this.start()
         this.createCollidersAndBounds()
+
+        this.eventEmitter.on("ENEMY_EYE_OPENED", () => this.createPoors())
     }
 
     createBackgrounds() {
         this.map = this.make.tilemap({ key: "tilemap" })
         const tileset = this.map.addTilesetImage(
             "level_tileset",
-            "base_tiles", 16, 16)
-        this.container.backgroundLayer = this.map.createLayer("background_new", tileset, 0, 0)
-        this.container.textureLayer = this.map.createLayer("background_texture_new", tileset, 0, 0)
-        this.container.wallsLayer = this.map.createLayer("walls_new", tileset, 0, 0)
+            "base_tiles",
+            16,
+            16
+        )
+        this.container.backgroundLayer = this.map.createLayer(
+            "background_new",
+            tileset,
+            0,
+            0
+        )
+        this.container.textureLayer = this.map.createLayer(
+            "background_texture_new",
+            tileset,
+            0,
+            0
+        )
+        this.container.wallsLayer = this.map.createLayer(
+            "walls_new",
+            tileset,
+            0,
+            0
+        )
         this.container.wallsLayer.setCollisionByProperty({ collides: true })
     }
 
@@ -118,16 +146,27 @@ class Scp173 extends Phaser.Scene {
             null,
             this
         )
-    
+
         //colliders
         this.physics.add.collider(this.player, this.container.wallsLayer)
         this.physics.add.collider(this.enemy, this.container.wallsLayer)
-        this.physics.add.collider(this.player_alien_ally1, this.container.wallsLayer)
-        this.physics.add.collider(this.player_alien_ally2, this.container.wallsLayer)
-            
+        this.physics.add.collider(
+            this.player_alien_ally1,
+            this.container.wallsLayer
+        )
+        this.physics.add.collider(
+            this.player_alien_ally2,
+            this.container.wallsLayer
+        )
+
         // bounds
-        this.cameras.main.setBounds(-100, 0, this.mapWidth, this.mapHeight)
-        this.physics.world.setBounds(0, 0, this.mapWidth, this.mapHeight) 
+        this.cameras.main.setBounds(
+            -this.BOARD_GAP_TO_WORLD,
+            0,
+            this.mapWidth - 2 * this.BOARD_GAP_TO_WORLD,
+            this.mapHeight
+        )
+        this.physics.world.setBounds(0, 0, this.mapWidth, this.mapHeight)
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
     }
 
@@ -135,60 +174,71 @@ class Scp173 extends Phaser.Scene {
         setTimeout(() => this.enemy.anims.play("openEye"), 1000)
     }
 
-    getContainerVisiblePosition() {
-        return {
-            top: this.cameras.main.worldView.y,
-            left: (this.game.canvas.width - this.container.backgroundLayer.width) / 2,
-        }
-    }
-
     createPoors() {
-        const { top: visibleMinH, left: visibleMinW } =
-            this.getContainerVisiblePosition()
-        const visibleMaxW = visibleMinW + this.container.backgroundLayer.width // this.map.widthInPixels - 32
-        const visibleMaxH = visibleMinH + this.game.canvas.height // this.map.heightInPixels - 32
+        const visibleMaxW =
+            this.BOARD_GAP_TO_WORLD +
+            this.container.backgroundLayer.width -
+            2 * this.WALL_THICKNESS
+        const visibleMaxH =
+            this.container.backgroundLayer.height - 2 * this.WALL_THICKNESS
 
-        for (let i = 0; i < this.NUM_POORS_PER_LOOP; i++) {
+        let countPoors = 0
+
+        while (countPoors < this.NUM_POORS_PER_LOOP) {
             const coords = Utils.generateRandomCoords(
-                visibleMinW,
-                visibleMaxW,
-                visibleMinH + this.enemy.height,
-                visibleMaxH
+                this.BOARD_GAP_TO_WORLD + 32, // 32 is because we need to overlap with the alien character
+                visibleMaxW - 32,
+                this.WALL_THICKNESS + 32,
+                visibleMaxH - 32
             )
-            console.log("coords", coords)
-            const loopImage = this.physics.add.image(coords.x, coords.y, "poor")
-            loopImage.setVisible(false)
-            loopImage.setDepth(1)
-            loopImage.setScale(0.2)
-            this.currentPoors.push({ image: loopImage, ...coords })
 
-            const sourceImage = this.physics.add.sprite(
-                this.enemy.x,
-                this.enemy.y,
-                "throw_poor"
-            )
-            sourceImage.setScale(0.2)
+            if (
+                !Utils.areObjectsOverlapping(
+                    this.enemy,
+                    coords,
+                    Math.max(this.enemy.width, this.enemy.width)
+                )
+            ) {
+                countPoors++
+                const loopImage = this.physics.add.image(
+                    coords.x,
+                    coords.y,
+                    "poor"
+                )
+                loopImage.setVisible(false)
+                loopImage.setDepth(1)
+                loopImage.setScale(0.2)
+                this.currentPoors.push({ image: loopImage, ...coords })
 
-            //const sourceImage = this.physics.add.image(100, 100, 'throw_poor')
-            sourceImage.setDepth(0)
-            sourceImage.anims.play("anim_throw_poor")
+                const sourceImage = this.physics.add.sprite(
+                    this.enemy.x,
+                    this.enemy.y,
+                    "throw_poor"
+                )
+                sourceImage.setScale(0.2)
 
-            this.physics.moveToObject(sourceImage, loopImage, 200)
-            const throwCollider = this.physics.add.overlap(
-                sourceImage,
-                loopImage,
-                (source, dest) => {
-                    source.body.stop()
-                    dest.setVisible(true)
-                    source.destroy()
-                    this.physics.add.overlap(
-                        this.player,
-                        loopImage,
-                        (player, image) => this.handlePoorOverlap(player, image)
-                    )
-                    this.physics.world.removeCollider(throwCollider)
-                }
-            )
+                //const sourceImage = this.physics.add.image(100, 100, 'throw_poor')
+                sourceImage.setDepth(0)
+                sourceImage.anims.play("anim_throw_poor")
+
+                this.physics.moveToObject(sourceImage, loopImage, 200)
+                const throwCollider = this.physics.add.overlap(
+                    sourceImage,
+                    loopImage,
+                    (source, dest) => {
+                        source.body.stop()
+                        dest.setVisible(true)
+                        source.destroy()
+                        this.physics.add.overlap(
+                            this.player,
+                            loopImage,
+                            (player, image) =>
+                                this.handlePoorOverlap(player, image)
+                        )
+                        this.physics.world.removeCollider(throwCollider)
+                    }
+                )
+            }
         }
     }
 
@@ -198,20 +248,16 @@ class Scp173 extends Phaser.Scene {
      * @param {*} image
      */
     handlePoorOverlap(player, image) {
-        if (this.cursors.space.isDown) {
-            console.log('handlePoorOverlap')
-            this.ckeckPoorToClean(player, image)
-            // there's a bug using the `this.cursors.space.isDown`, the score keep update even when the poop 
-            // is bein already cleaned up
+        if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
             this.currentScore += this.SCORES_OVERLAP_POOR
             this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
         }
     }
 
     /**
-     * check if player is on a poor and eventually clean it if space is pressed
+     * check if player is on a poor and eventually clean it
      */
-    ckeckPoorToClean(player, image) {
+    checkPoorToClean(player) {
         const posPlayerX = player.x
         const posPlayerY = player.y
         let selIdx = -1
@@ -230,7 +276,8 @@ class Scp173 extends Phaser.Scene {
         if (selPoor) {
             selPoor.image.destroy()
             this.currentPoors.splice(selIdx, 1)
-        }
+            return true
+        } else return false
     }
 
     /**
@@ -239,8 +286,11 @@ class Scp173 extends Phaser.Scene {
      */
     getContainerPosition() {
         return {
-            top: (game.canvas.height - this.container.backgroundLayer.height) / 2,
-            left: (game.canvas.width - this.container.backgroundLayer.width) / 2,
+            top:
+                (game.canvas.height - this.container.backgroundLayer.height) /
+                2,
+            left:
+                (game.canvas.width - this.container.backgroundLayer.width) / 2,
         }
     }
 
@@ -256,15 +306,15 @@ class Scp173 extends Phaser.Scene {
 
     update() {
         this.player.update()
-        this.updatePlayerAllies()
+        this.movePlayerAllies()
     }
 
-    updatePlayerAllies() {
-        this.player_alien_ally1.y = this.player.y-100;
-        this.player_alien_ally1.x = this.player.x-50;
-        
-        this.player_alien_ally2.y = this.player.y+100;
-        this.player_alien_ally2.x = this.player.x-50;
+    movePlayerAllies() {
+        this.player_alien_ally1.y = this.player.y - 100
+        this.player_alien_ally1.x = this.player.x - 50
+
+        this.player_alien_ally2.y = this.player.y + 100
+        this.player_alien_ally2.x = this.player.x - 50
     }
 
     closeExitDoor() {

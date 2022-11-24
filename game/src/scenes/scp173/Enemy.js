@@ -1,7 +1,7 @@
 class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "enemy", "sprite24")
-        
+
         this.anims.create({
             key: "openEye",
             frames: [
@@ -32,13 +32,15 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         )
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
+
+        this.eventEmitter = EventDispatcher.getInstance()
     }
 
     handleEnemyAnimationEnd(anim) {
         if (anim.key === "openEye") {
             // open eye finished
             this.anims.stop("openEye")
-            this.scene.createPoors()
+            this.eventEmitter.emit("ENEMY_EYE_OPENED")
             setTimeout(() => {
                 this.anims.play("closeEye")
             }, this.scene.ENEMY_KEEP_EYE_OPEN_MILLIS)
