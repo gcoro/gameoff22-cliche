@@ -11,3 +11,4 @@
 ### Scp 173
 
 -   poops: https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?page-name=poop-game-sprites&item=1g6v4g0e1k7m7b5411
+-   cursor: https://opengameart.org/content/%E2%80%9Calien%E2%80%9D-crosshairs
