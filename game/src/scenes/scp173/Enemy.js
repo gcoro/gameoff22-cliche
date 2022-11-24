@@ -7,7 +7,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "enemy", "sprite24")
         this.setInteractive({
-            cursor: "url(assets/scp173/cursor/active.cur), pointer",
+            cursor: "url(assets/scp173/cursor/paternus_hit.cur), pointer",
         })
 
         this.anims.create({
@@ -19,8 +19,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 { key: "enemy", frame: "sprite32" },
                 { key: "enemy", frame: "sprite6" },
             ],
-            frameRate: 8,
-            repeat:-1
+            frameRate: 8
         })
 
         this.anims.create({

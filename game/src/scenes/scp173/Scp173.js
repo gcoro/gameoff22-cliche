@@ -20,7 +20,7 @@ class Scp173 extends Phaser.Scene {
         this.currentPoors = []
         this.container = {}
         this.currentScore = 0
-
+        this.gameHasStarted = false
         this.player = undefined
         this.enemy = undefined
         this.mapHeight = 1200
@@ -253,6 +253,7 @@ class Scp173 extends Phaser.Scene {
      */
     handlePoorOverlap(player, image) {
         if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
+            this.gameHasStarted = true
             this.currentScore += this.SCORES_OVERLAP_POOR
             this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
         }
@@ -310,7 +311,16 @@ class Scp173 extends Phaser.Scene {
 
     update() {
         this.player.update()
+        this.checkExitDoor()
         this.movePlayerAllies()
+    }
+
+    checkExitDoor() {
+        if(this.currentPoors.length===0 && this.gameHasStarted){ // animazione
+            this.exit_door.anims.play("open")
+        } else {
+            this.exit_door.anims.play("close")
+        }
     }
 
     movePlayerAllies() {
@@ -319,16 +329,6 @@ class Scp173 extends Phaser.Scene {
 
         this.player_alien_ally2.y = this.player.y + 100
         this.player_alien_ally2.x = this.player.x - 50
-    }
-
-    closeExitDoor() {
-        //to call back if monster release something
-        this.exit_door.anims.play("close")
-    }
-
-    openExitDoor() {
-        //to call back when finish to clean around && monster eye's closed
-        this.exit_door.anims.play("open")
     }
 
     createPlayerAllies() {
