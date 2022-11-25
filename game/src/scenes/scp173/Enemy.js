@@ -1,4 +1,4 @@
-const ANIMS = {
+const ENEMY_ANIMS = {
     OPEN_EYE: "openEye",
     CLOSE_EYE: "closeEye",
 }
@@ -11,7 +11,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         })
 
         this.anims.create({
-            key: ANIMS.OPEN_EYE,
+            key: ENEMY_ANIMS.OPEN_EYE,
             frames: [
                 { key: "enemy", frame: "sprite24" },
                 { key: "enemy", frame: "sprite18" },
@@ -19,11 +19,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 { key: "enemy", frame: "sprite32" },
                 { key: "enemy", frame: "sprite6" },
             ],
-            frameRate: 8
+            frameRate: 8,
         })
 
         this.anims.create({
-            key: ANIMS.CLOSE_EYE,
+            key: ENEMY_ANIMS.CLOSE_EYE,
             frames: [
                 { key: "enemy", frame: "sprite6" },
                 { key: "enemy", frame: "sprite32" },
@@ -46,15 +46,28 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     handleEnemyAnimationEnd(anim) {
-        if (anim.key === ANIMS.OPEN_EYE) {
-            this.anims.stop(ANIMS.OPEN_EYE)
-            this.eventEmitter.emit("ENEMY_EYE_OPENED")
+        if (anim.key === ENEMY_ANIMS.OPEN_EYE) {
+            this.anims.stop(ENEMY_ANIMS.OPEN_EYE)
+            this.eventEmitter.emit(ENEMY_EVENTS.EYE_OPENED)
 
             this.setInteractive().on("pointerout", () => {
-                if (this.anims.currentAnim.key === ANIMS.OPEN_EYE) {
-                    this.eventEmitter.emit("GAME_OVER")
+                if (this.anims.currentAnim.key === ENEMY_ANIMS.OPEN_EYE) {
+                    this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
                 }
             })
         }
     }
+
+    isPointerOverlapping() {
+        const { worldX, worldY } = game.input.activePointer
+        const { x, y, width, height } = this.body
+        return Utils.areObjectOverlapArea(
+            { x: worldX, y: worldY },
+            { x, y, width, height }
+        )
+    }
+}
+
+const ENEMY_EVENTS = {
+    EYE_OPENED: "ENEMY_EYE_OPENED",
 }

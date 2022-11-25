@@ -33,7 +33,7 @@ class Scp173 extends Phaser.Scene {
         this.exit_door = undefined
         this.cursors = undefined
         this.scoreLabel = undefined
-        this.countdown = undefined;
+        this.countdown = undefined
         this.eventEmitter = EventDispatcher.getInstance()
     }
 
@@ -81,6 +81,7 @@ class Scp173 extends Phaser.Scene {
     create() {
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
+        this.input.setPollAlways()
         this.input.setDefaultCursor(
             "url(assets/scp173/cursor/inactive.cur), auto"
         )
@@ -112,21 +113,34 @@ class Scp173 extends Phaser.Scene {
         this.start()
         this.createCollidersAndBounds()
 
-        this.eventEmitter.on("ENEMY_EYE_OPENED", () => this.createPoors())
-        this.eventEmitter.once("GAME_OVER", () => this.gameOver())
+        this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
+            this.gameHasStarted = true
+            this.createPoors()
+        })
+        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
     }
 
     createTimer() {
-		this.countdown = new CountdownController(this)
-		this.countdown.start(this.gameDuration)
+        this.countdown = new CountdownController(this)
+        this.countdown.start(this.gameDuration)
     }
-	
-    playerDeath() {
+
+    playerDeath(reason) {
+        this.countdown.stop()
         this.player.die()
-		this.add.text(this.player.x, this.player.y, `Time's up!`, { fontSize: 48 }).setDepth(7)
+        this.add
+            .text(
+                this.player.x,
+                this.player.y,
+                reason === "timer" ? `Time's up!` : "Game Over!!",
+                {
+                    fontSize: 48,
+                }
+            )
+            .setDepth(7)
         // to game over scene
         setTimeout(() => this.scene.start("AfterGameTransition"), 5000)
-	}
+    }
 
     createBackgrounds() {
         this.map = this.make.tilemap({ key: "tilemap" })
@@ -197,7 +211,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     start() {
-        setTimeout(() => this.enemy.anims.play("openEye"), 5000)
+        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
     }
 
     createPoors() {
@@ -275,7 +289,6 @@ class Scp173 extends Phaser.Scene {
      */
     handlePoorOverlap(player, image) {
         if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
-            this.gameHasStarted = true
             this.currentScore += this.SCORES_OVERLAP_POOR
             this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
         }
@@ -307,20 +320,6 @@ class Scp173 extends Phaser.Scene {
         } else return false
     }
 
-    /**
-     * get container position
-     * @returns
-     */
-    getContainerPosition() {
-        return {
-            top:
-                (game.canvas.height - this.container.backgroundLayer.height) /
-                2,
-            left:
-                (game.canvas.width - this.container.backgroundLayer.width) / 2,
-        }
-    }
-
     goToAfterGameTransitionScene() {
         if (
             this.exit_door.anims.currentAnim &&
@@ -336,10 +335,22 @@ class Scp173 extends Phaser.Scene {
         this.countdown.update()
         this.checkExitDoor()
         this.movePlayerAllies()
+        this.checkPointerPosition()
+    }
+
+    checkPointerPosition() {
+        if (
+            !this.enemy.isPointerOverlapping() &&
+            this.gameHasStarted &&
+            this.player.isAlive
+        ) {
+            this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
+        }
     }
 
     checkExitDoor() {
-        if(this.currentPoors.length===0 && this.gameHasStarted){ // animazione
+        if (this.currentPoors.length === 0 && this.gameHasStarted) {
+            // play animation
             this.exit_door.anims.play("open")
         } else {
             this.exit_door.anims.play("close")
@@ -347,24 +358,28 @@ class Scp173 extends Phaser.Scene {
     }
 
     movePlayerAllies() {
-        if(this.boundsAreValidX()){
+        if (this.boundsAreValidX()) {
             this.player_alien_ally1.x = this.player.x - 50
             this.player_alien_ally2.x = this.player.x - 50
         }
-        if(this.boundsAreValidY()){
+        if (this.boundsAreValidY()) {
             this.player_alien_ally1.y = this.player.y - 100
             this.player_alien_ally2.y = this.player.y + 100
         }
     }
 
     boundsAreValidX() {
-        return this.player.x - 50 > this.WALL_THICKNESS && 
+        return (
+            this.player.x - 50 > this.WALL_THICKNESS &&
             this.player.x + 50 + 50 < this.WALL_THICKNESS + this.mapWidth
+        )
     }
 
     boundsAreValidY() {
-        return this.player.y - 100 > this.WALL_THICKNESS &&
+        return (
+            this.player.y - 100 > this.WALL_THICKNESS &&
             this.player.y + 100 + 100 < this.WALL_THICKNESS + this.mapHeight
+        )
     }
 
     createPlayerAllies() {
@@ -376,9 +391,14 @@ class Scp173 extends Phaser.Scene {
     }
 
     gameOver() {
+        this.playerDeath()
         console.log(
             "%c  GAME OVER!!  ",
             "background: #063970; color: #47d2a7; font-family:sans-serif; font-size: 40px; padding: 5px 10px"
         )
     }
+}
+
+const SCENE_EVENTS = {
+    GAME_OVER: "GAME_OVER",
 }
