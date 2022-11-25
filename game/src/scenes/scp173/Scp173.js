@@ -118,10 +118,10 @@ class Scp173 extends Phaser.Scene {
 
     createTimer() {
 		this.countdown = new CountdownController(this)
-		this.countdown.start(this.handleCountdownFinished.bind(this), this.gameDuration)
+		this.countdown.start(this.playerDeath.bind(this), this.gameDuration)
     }
 	
-    handleCountdownFinished() {
+    playerDeath() {
         this.player.die()
 		const { width, height } = this.scale
 		this.add.text(width * 0.5, height * 0.5, `Time's up!`, { fontSize: 48 })
@@ -164,6 +164,14 @@ class Scp173 extends Phaser.Scene {
             this.player,
             this.exit_door,
             this.goToAfterGameTransitionScene,
+            null,
+            this
+        )
+
+        this.physics.add.overlap(
+            this.player,
+            this.enemy,
+            this.playerDeath,
             null,
             this
         )
