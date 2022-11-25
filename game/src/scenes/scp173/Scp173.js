@@ -117,22 +117,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     createTimer() {
-        const timerLabel = this.add.text(
-            this.mapWidth / 2 - 75,
-            30, 
-            `00:00`, 
-            { 
-                fixedWidth: 120, 
-                fixedHeight: 40, 
-                fontSize: '32px', 
-                fill: 'black', 
-                backgroundColor: 'white',
-                align: 'center'
-            })
-        timerLabel.setPadding(0,6)
-        timerLabel.alpha = 0.4;
-        timerLabel.setScrollFactor(0)
-		this.countdown = new CountdownController(this, timerLabel)
+		this.countdown = new CountdownController(this)
 		this.countdown.start(this.handleCountdownFinished.bind(this), this.gameDuration)
     }
 	

@@ -1,7 +1,25 @@
 class CountdownController {
-    constructor(scene, label) {
-		this.scene = scene
-		this.label = label
+    constructor(scene) {
+        this.scene = scene
+
+        const timerLabel = this.scene.add.text(
+            this.scene.mapWidth / 2 - 75,
+            30, 
+            `00:00`, 
+            { 
+                fixedWidth: 120, 
+                fixedHeight: 40, 
+                fontSize: '32px', 
+                fill: 'black', 
+                backgroundColor: 'white',
+                align: 'center'
+            })
+        timerLabel.setPadding(0,6)
+        timerLabel.setScrollFactor(0)
+        timerLabel.setDepth(7)
+        timerLabel.alpha = 0.4
+
+        this.label = timerLabel
     }
 
 	start(callback, duration)
