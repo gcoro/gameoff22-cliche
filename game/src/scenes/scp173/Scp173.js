@@ -118,7 +118,7 @@ class Scp173 extends Phaser.Scene {
 
     createTimer() {
         const timerLabel = this.add.text(
-            this.mapWidth / 2 - ( 2.2 *this.BOARD_GAP_TO_WORLD),
+            this.mapWidth / 2 - 75,
             30, 
             `00:00`, 
             { 
@@ -131,6 +131,7 @@ class Scp173 extends Phaser.Scene {
             })
         timerLabel.setPadding(0,6)
         timerLabel.alpha = 0.4;
+        timerLabel.setScrollFactor(0)
 		this.countdown = new CountdownController(this, timerLabel)
 		this.countdown.start(this.handleCountdownFinished.bind(this), this.gameDuration)
     }
@@ -356,12 +357,10 @@ class Scp173 extends Phaser.Scene {
     movePlayerAllies() {
         if(this.boundsAreValidX()){
             this.player_alien_ally1.x = this.player.x - 50
-
             this.player_alien_ally2.x = this.player.x - 50
         }
         if(this.boundsAreValidY()){
             this.player_alien_ally1.y = this.player.y - 100
-
             this.player_alien_ally2.y = this.player.y + 100
         }
     }
