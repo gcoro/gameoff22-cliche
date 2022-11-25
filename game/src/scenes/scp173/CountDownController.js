@@ -22,22 +22,16 @@ class CountdownController {
         this.label = timerLabel
     }
 
-	start(callback, duration)
+	start(duration)
 	{
-		this.stop()
-
-		this.finishedCallback = callback
 		this.duration = duration
 
 		this.timerEvent = this.scene.time.addEvent({
 			delay: duration,
 			callback: () => {
 				this.label.text = '00:00'
+                this.scene.playerDeath()
 				this.stop()
-				
-				if (callback){
-					callback()
-				}
 			}
 		})
 	}

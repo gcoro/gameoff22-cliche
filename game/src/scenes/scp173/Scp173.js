@@ -25,7 +25,7 @@ class Scp173 extends Phaser.Scene {
         this.enemy = undefined
         this.mapHeight = 1200
         this.mapWidth = 16 * 90
-        this.gameDuration = 180000
+        this.gameDuration = 18000
 
         // we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
         this.player_alien_ally1 = undefined
@@ -118,14 +118,12 @@ class Scp173 extends Phaser.Scene {
 
     createTimer() {
 		this.countdown = new CountdownController(this)
-		this.countdown.start(this.playerDeath.bind(this), this.gameDuration)
+		this.countdown.start(this.gameDuration)
     }
 	
     playerDeath() {
         this.player.die()
-		const { width, height } = this.scale
-		this.add.text(width * 0.5, height * 0.5, `Time's up!`, { fontSize: 48 })
-			.setOrigin(0.5)
+		this.add.text(this.player.x, this.player.y, `Time's up!`, { fontSize: 48 }).setDepth(7)
         // to game over scene
         setTimeout(() => this.scene.start("AfterGameTransition"), 5000)
 	}
@@ -193,6 +191,7 @@ class Scp173 extends Phaser.Scene {
         )
         this.physics.world.setBounds(0, 0, this.mapWidth, this.mapHeight)
         this.player_alien_ally1.setCollideWorldBounds(true)
+        this.player_alien_ally2.setCollideWorldBounds(true)
 
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
     }
