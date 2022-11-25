@@ -1,20 +1,9 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "alien", "sprite10")
+        this.isAlive = true
 
-        /*
-        // alternative subscribe to scene update event
-        const { events } = this.scene
-        events.on("update", this.update, this)
-        this.once(
-            "destroy",
-            function () {
-                events.off("update", this.update, this)
-            },
-            this
-        )
-        */
-        this.scene.anims.create({
+        this.anims.create({
             key: "right",
             frames: this.scene.anims.generateFrameNames("alien", {
                 start: 5,
@@ -24,7 +13,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 10,
         })
 
-        this.scene.anims.create({
+        this.anims.create({
             key: "left",
             frames: this.scene.anims.generateFrameNames("alien", {
                 start: 1,
@@ -34,34 +23,44 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 10,
         })
 
-        this.scene.anims.create({
+        this.anims.create({
             key: "down",
             frames: this.scene.anims.generateFrameNames("alien", {
                 start: 1,
-                end: 1,
+                end: 2,
                 prefix: "sprite",
             }),
             frameRate: 10,
         })
 
-        this.scene.anims.create({
+        this.anims.create({
             key: "up",
             frames: this.scene.anims.generateFrameNames("alien", {
                 start: 9,
-                end: 9,
+                end: 10,
                 prefix: "sprite",
             }),
             frameRate: 10,
         })
 
-        this.scene.anims.create({
+        this.anims.create({
             key: "turn",
             frames: this.scene.anims.generateFrameNames("alien", {
                 start: 10,
                 end: 10,
                 prefix: "sprite",
             }),
-            frameRate: 10
+            frameRate: 10,
+        })
+
+        this.anims.create({
+            key: "death",
+            frames: this.scene.anims.generateFrameNames("alien", {
+                start: 10,
+                end: 14,
+                prefix: "sprite",
+            }),
+            frameRate: 10,
         })
 
         //  You can either do this:
@@ -71,10 +70,25 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setScale(0.6, 0.6)
         this.setCollideWorldBounds(true)
         this.setDepth(5) // above all the other objects
+
+        this.eventEmitter = EventDispatcher.getInstance()
+        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => {
+            console.log("player on game over")
+            this.die()
+        })
+
+        this.on("animationcomplete", (anim) => {
+            if (anim.key === "death") {
+                this.anims.stop("death")
+                this.setFrame("sprite14")
+            }
+        })
     }
 
     update() {
-        if (this.scene.cursors.left.isDown) {
+        if (!this.isAlive) {
+            return
+        } else if (this.scene.cursors.left.isDown) {
             this.setVelocityX(-200)
             this.anims.play("left", true)
         } else if (this.scene.cursors.right.isDown) {
@@ -91,5 +105,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(0)
             this.anims.play("turn")
         }
+    }
+
+    die() {
+        this.isAlive = false
+        this.setVelocityX(0)
+        this.setVelocityY(0)
+        this.anims.play("death")
     }
 }

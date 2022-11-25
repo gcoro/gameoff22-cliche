@@ -14,6 +14,7 @@ class AlienAlly extends Phaser.Physics.Arcade.Sprite {
         })
 
         this.setScale(1.3, 1.3)
+        this.setDepth(5) // above all the other objects
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
     }
