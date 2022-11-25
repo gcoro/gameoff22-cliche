@@ -198,6 +198,8 @@ class Scp173 extends Phaser.Scene {
             this.mapHeight
         )
         this.physics.world.setBounds(0, 0, this.mapWidth, this.mapHeight)
+        this.player_alien_ally1.setCollideWorldBounds(true)
+
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
     }
 
@@ -352,11 +354,26 @@ class Scp173 extends Phaser.Scene {
     }
 
     movePlayerAllies() {
-        this.player_alien_ally1.y = this.player.y - 100
-        this.player_alien_ally1.x = this.player.x - 50
+        if(this.boundsAreValidX()){
+            this.player_alien_ally1.x = this.player.x - 50
 
-        this.player_alien_ally2.y = this.player.y + 100
-        this.player_alien_ally2.x = this.player.x - 50
+            this.player_alien_ally2.x = this.player.x - 50
+        }
+        if(this.boundsAreValidY()){
+            this.player_alien_ally1.y = this.player.y - 100
+
+            this.player_alien_ally2.y = this.player.y + 100
+        }
+    }
+
+    boundsAreValidX() {
+        return this.player.x - 50 > this.WALL_THICKNESS && 
+            this.player.x + 50 + 50 < this.WALL_THICKNESS + this.mapWidth
+    }
+
+    boundsAreValidY() {
+        return this.player.y - 100 > this.WALL_THICKNESS &&
+            this.player.y + 100 + 100 < this.WALL_THICKNESS + this.mapHeight
     }
 
     createPlayerAllies() {
