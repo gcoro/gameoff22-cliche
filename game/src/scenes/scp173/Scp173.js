@@ -25,6 +25,7 @@ class Scp173 extends Phaser.Scene {
         this.enemy = undefined
         this.mapHeight = 1200
         this.mapWidth = 16 * 90
+        this.gameDuration = 180000
 
         // we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
         this.player_alien_ally1 = undefined
@@ -32,6 +33,7 @@ class Scp173 extends Phaser.Scene {
         this.exit_door = undefined
         this.cursors = undefined
         this.scoreLabel = undefined
+        this.countdown = undefined;
         this.eventEmitter = EventDispatcher.getInstance()
     }
 
@@ -106,12 +108,41 @@ class Scp173 extends Phaser.Scene {
         )
 
         this.createPlayerAllies()
+        this.createTimer()
         this.start()
         this.createCollidersAndBounds()
 
         this.eventEmitter.on("ENEMY_EYE_OPENED", () => this.createPoors())
         this.eventEmitter.once("GAME_OVER", () => this.gameOver())
     }
+
+    createTimer() {
+        const timerLabel = this.add.text(
+            this.mapWidth / 2 - ( 2.2 *this.BOARD_GAP_TO_WORLD),
+            30, 
+            `00:00`, 
+            { 
+                fixedWidth: 120, 
+                fixedHeight: 40, 
+                fontSize: '32px', 
+                fill: 'black', 
+                backgroundColor: 'white',
+                align: 'center'
+            })
+        timerLabel.setPadding(0,6)
+        timerLabel.alpha = 0.4;
+		this.countdown = new CountdownController(this, timerLabel)
+		this.countdown.start(this.handleCountdownFinished.bind(this), this.gameDuration)
+    }
+	
+    handleCountdownFinished() {
+        this.player.die()
+		const { width, height } = this.scale
+		this.add.text(width * 0.5, height * 0.5, `Time's up!`, { fontSize: 48 })
+			.setOrigin(0.5)
+        // to game over scene
+        setTimeout(() => this.scene.start("AfterGameTransition"), 5000)
+	}
 
     createBackgrounds() {
         this.map = this.make.tilemap({ key: "tilemap" })
@@ -156,10 +187,6 @@ class Scp173 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.container.wallsLayer)
         this.physics.add.collider(
             this.player_alien_ally1,
-            this.container.wallsLayer
-        )
-        this.physics.add.collider(
-            this.player_alien_ally2,
             this.container.wallsLayer
         )
 
@@ -311,6 +338,7 @@ class Scp173 extends Phaser.Scene {
 
     update() {
         this.player.update()
+        this.countdown.update()
         this.checkExitDoor()
         this.movePlayerAllies()
     }

@@ -1,7 +1,7 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "alien", "sprite10")
-
+            this.isAlive = true;
         /*
         // alternative subscribe to scene update event
         const { events } = this.scene
@@ -84,7 +84,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.scene.cursors.left.isDown) {
+        if(!this.isAlive){
+            return
+        } else if (this.scene.cursors.left.isDown) {
             this.setVelocityX(-200)
             this.anims.play("left", true)
         } else if (this.scene.cursors.right.isDown) {
@@ -104,8 +106,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     die(){
-        this.setVelocity(0);
-        this.play("death")
+        this.isAlive = false
+        this.setVelocityX(0)
+        this.setVelocityY(0)
+        this.anims.play("death")
         //this.scene.start("GameOver")
     }
 }
