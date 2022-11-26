@@ -20,6 +20,11 @@
                 "key": "comet"
             },
             {
+                "url": "assets/explosions/explosion.json",
+                "type": "animation",
+                "key": "explosion"
+            },
+            {
                 "url": "assets/comet/img_0.png",
                 "type": "image",
                 "key": "img_0"

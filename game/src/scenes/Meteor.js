@@ -15,6 +15,18 @@ class FallingObject extends Phaser.Physics.Arcade.Sprite{
         this.setVisible(true)
     }
 
+	explode() {
+		this.speed = 0;
+		this.rotation = 0;
+		this.rotationVal = 0;
+		this.scale = 0.5;
+		this.y = this.y +30;
+		this.anims.play("explosion")
+		this.once('animationcomplete', function () {
+			this.die()
+		}, this);
+	}
+
     die(){
         this.destroy()
     }
@@ -71,8 +83,9 @@ class Meteor extends Phaser.Scene {
 	/** @returns {void} */
 	preload() {
 
-		this.load.pack("comet-pck", "assets/comet/comet-pck.json");
+		this.load.pack("asset-pack-explosion", "assets/explosions/asset-pack-explosion.json");
 		this.load.pack("asset-pack", "assets/asset-pack.json");
+		this.load.pack("comet-pck", "assets/comet/comet-pck.json");
 	}
 
 	/** @returns {void} */
@@ -122,6 +135,14 @@ class Meteor extends Phaser.Scene {
 		const date = this.add.text(30, 42, "", {});
 		date.text = "New text";
 
+		// life
+		const life = this.add.text(655, 34, "", {});
+		life.text = "Vita";
+
+		// lifeLabel
+		const lifeLabel = this.add.text(582, 34, "", {});
+		lifeLabel.text = "Energy:";
+
 		// rectangle_2
 		const rectangle_2 = this.add.rectangle(372, 297, 128, 128);
 		rectangle_2.scaleX = 6.755764178494033;
@@ -143,9 +164,11 @@ class Meteor extends Phaser.Scene {
 		const arcadesprite_1StartAnimation = new StartAnimation(arcadesprite_1);
 		arcadesprite_1StartAnimation.animationKey = "comet";
 
+		this.rectangle_1 = rectangle_1;
 		this.arcadesprite_1 = arcadesprite_1;
 		this.player = player;
 		this.date = date;
+		this.life = life;
 		this.rectangle_2 = rectangle_2;
 		this.text_1 = text_1;
 		this.ground = ground;
@@ -153,12 +176,16 @@ class Meteor extends Phaser.Scene {
 		this.events.emit("scene-awake");
 	}
 
+	/** @type {Phaser.GameObjects.Rectangle & { body: Phaser.Physics.Arcade.Body }} */
+	rectangle_1;
 	/** @type {Phaser.Physics.Arcade.Sprite} */
 	arcadesprite_1;
 	/** @type {Phaser.Physics.Arcade.Sprite} */
 	player;
 	/** @type {Phaser.GameObjects.Text} */
 	date;
+	/** @type {Phaser.GameObjects.Text} */
+	life;
 	/** @type {Phaser.GameObjects.Rectangle} */
 	rectangle_2;
 	/** @type {Phaser.GameObjects.Text} */
@@ -178,27 +205,44 @@ class Meteor extends Phaser.Scene {
 	dates = ["30 June 1908, Tunguska River, Russia", "9 April 1941, Chelyabinsk, USSR", "12 February 1947, Sikhote-Alin Mountains, USSR", "25 September 2002,Bodaybo, Russia", "7 February 2009,Tyumen Oblast, Russia", "15 February 2013,Chelyabinsk, Russia", "15 December 2017,Kamchatka, Russia", "18 December 2018,Kamchatka, Russia", "25 February 2020,Lake Baikal, Russia" ]
 
     shoot = false;
-    speed = 100;
+    speed = 300;
     cursors = undefined;
     enemies = undefined;
     enemySpeed = 60;
     lasers = undefined;
     lastFired = 0;
     spaceBar = undefined;
+	energyAccumulationInterval = undefined;
+
+	showEndScreen(message) {
+		this.arcadesprite_1.destroy();
+		this.rectangle_2.visible = true;
+		this.text_1.visible = true;
+		if (message)
+		this.text_1.text = message;
+		const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+		const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+		this.text_1.x = screenCenterX;
+		this.text_1.y = screenCenterY;
+		this.text_1.setOrigin(0.5)
+		this.enemies.setActive(false).setVisible(false);
+		this.player.setActive(false).setVisible(false);
+		this.lasers.setActive(false).setVisible(false);
+	}
 
 	onMeteorCollision(){
-	console.log("BOOM!")
-	this.arcadesprite_1.destroy();
-	this.rectangle_2.visible = true;
-	this.text_1.visible = true;
+		clearInterval(this.energyAccumulationInterval)
+		this.showEndScreen("[Data Lost]")
 	}
 
 	create() {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
+		this.life.text = 0;
 		const iteration = sessionStorage.getItem("iteration")||0;
-		const cometVelocity = ((+iteration)*5 + 10);
-		console.log(cometVelocity)
+		this.speed = this.speed + 20*iteration;
+		const cometVelocity = (10);
+		this.enemySpeed = this.enemySpeed + 20*iteration;
 		sessionStorage.setItem("iteration",+iteration + 1)
 		this.date.text = actualDate;
 		this.arcadesprite_1.body.velocity.y = cometVelocity;
@@ -210,11 +254,12 @@ class Meteor extends Phaser.Scene {
 		);
 		this.enemies = this.physics.add.group({
 			classType: FallingObject,
-			maxSize: 10,
+			maxSize: 100,
 			runChildUpdate: true
 		  });
+		  const delay = 500 - 50*iteration;
 		  this.time.addEvent({
-			delay: 2000,
+			delay: delay > 0 ? delay : 10,
 			// delay : Phaser.Math.Between(2000, 8000),
 			callback: this.spawnEnemy,
 			callbackScope: this,
@@ -241,6 +286,25 @@ class Meteor extends Phaser.Scene {
 			null,
 			this
 		  );
+
+		  this.physics.add.overlap(
+			this.rectangle_1,
+			this.enemies,
+			this.decreaseEnergy,
+			null,
+			this
+		  );
+
+		  this.energyAccumulationInterval = setInterval(() => {
+			this.life.text = +this.life.text + 5;
+			if (this.life.text > 100)
+			this.win()
+		  }, 2000)
+	}
+
+	win() {
+		this.clearInterval = this.energyAccumulationInterval;
+		this.showEndScreen("You have been able to charge SCP-2000 In time, humanity is saved")
 	}
 
 	createPlayer() {
@@ -290,35 +354,39 @@ class Meteor extends Phaser.Scene {
 		if ((this.shoot || this.spaceBar.isDown) && time > this.lastFired) {
 		  const laser = this.lasers.get(0, 0, "laser");
 
-		  if (laser) {
+		  if (laser && !this.rectangle_2.visible) {
 			laser.fire(this.player.x, this.player.y);
 			this.lastFired = time + 150;
 		  }
 		}
 	  }
 
-	  spawnEnemy() {
+	  generateEnemy() {
 		const config = {
-		  speed: this.enemySpeed,
-		  rotation: 0.01
-		};
+			speed: this.enemySpeed,
+			rotation: 0.01
+		  };
+  
+		  // @ts-ignore
+		  const enemy = this.enemies.get(0, 0, "animated_asteroid", config);
+		  const enemyWidth = enemy.displayWidth;
+		  const positionX = Phaser.Math.Between(
+			enemyWidth,
+			this.scale.width - enemyWidth
+		  );
+  
+		  if (enemy) {
+			enemy.spawn(positionX);
+		  }
+	  }
 
-		// @ts-ignore
-		const enemy = this.enemies.get(0, 0, "animated_asteroid", config);
-		const enemyWidth = enemy.displayWidth;
-		const positionX = Phaser.Math.Between(
-		  enemyWidth,
-		  this.scale.width - enemyWidth
-		);
-
-		if (enemy) {
-		  enemy.spawn(positionX);
-		}
+	  spawnEnemy() {
+		this.generateEnemy()
 	  }
 
 	  hitEnemy(laser, enemy) {
 		laser.erase();
-		enemy.die();
+		enemy.explode();
 
 		console.log("bang!")
 	  }
@@ -328,9 +396,15 @@ class Meteor extends Phaser.Scene {
 	  }
 
 	  decreaseLife(player, enemy) {
-		enemy.die();
+		enemy.explode();
+		if (this.life.text > 0)
+			this.life.text = this.life.text - 5;
+	  }
 
-		console.log("colpito!")
+	  decreaseEnergy(player, enemy) {
+		enemy.explode();
+		if (this.life.text > 0)
+			this.life.text = this.life.text - 5;
 	  }
 
 	/* END-USER-CODE */

@@ -1,0 +1,178 @@
+{
+    "section1": {
+        "files": [
+            {
+                "url": "assets/explosions/explosion (1).png",
+                "type": "image",
+                "key": "explosion (1)"
+            },
+            {
+                "url": "assets/explosions/explosion (2).png",
+                "type": "image",
+                "key": "explosion (2)"
+            },
+            {
+                "url": "assets/explosions/explosion (3).png",
+                "type": "image",
+                "key": "explosion (3)"
+            },
+            {
+                "url": "assets/explosions/explosion (4).png",
+                "type": "image",
+                "key": "explosion (4)"
+            },
+            {
+                "url": "assets/explosions/explosion (5).png",
+                "type": "image",
+                "key": "explosion (5)"
+            },
+            {
+                "url": "assets/explosions/explosion (6).png",
+                "type": "image",
+                "key": "explosion (6)"
+            },
+            {
+                "url": "assets/explosions/explosion (7).png",
+                "type": "image",
+                "key": "explosion (7)"
+            },
+            {
+                "url": "assets/explosions/explosion (8).png",
+                "type": "image",
+                "key": "explosion (8)"
+            },
+            {
+                "url": "assets/explosions/explosion (9).png",
+                "type": "image",
+                "key": "explosion (9)"
+            },
+            {
+                "url": "assets/explosions/explosion (10).png",
+                "type": "image",
+                "key": "explosion (10)"
+            },
+            {
+                "url": "assets/explosions/explosion (11).png",
+                "type": "image",
+                "key": "explosion (11)"
+            },
+            {
+                "url": "assets/explosions/explosion (12).png",
+                "type": "image",
+                "key": "explosion (12)"
+            },
+            {
+                "url": "assets/explosions/explosion (13).png",
+                "type": "image",
+                "key": "explosion (13)"
+            },
+            {
+                "url": "assets/explosions/explosion (14).png",
+                "type": "image",
+                "key": "explosion (14)"
+            },
+            {
+                "url": "assets/explosions/explosion (15).png",
+                "type": "image",
+                "key": "explosion (15)"
+            },
+            {
+                "url": "assets/explosions/explosion (16).png",
+                "type": "image",
+                "key": "explosion (16)"
+            },
+            {
+                "url": "assets/explosions/explosion (17).png",
+                "type": "image",
+                "key": "explosion (17)"
+            },
+            {
+                "url": "assets/explosions/explosion (18).png",
+                "type": "image",
+                "key": "explosion (18)"
+            },
+            {
+                "url": "assets/explosions/explosion (19).png",
+                "type": "image",
+                "key": "explosion (19)"
+            },
+            {
+                "url": "assets/explosions/explosion (20).png",
+                "type": "image",
+                "key": "explosion (20)"
+            },
+            {
+                "url": "assets/explosions/explosion (21).png",
+                "type": "image",
+                "key": "explosion (21)"
+            },
+            {
+                "url": "assets/explosions/explosion (22).png",
+                "type": "image",
+                "key": "explosion (22)"
+            },
+            {
+                "url": "assets/explosions/explosion (23).png",
+                "type": "image",
+                "key": "explosion (23)"
+            },
+            {
+                "url": "assets/explosions/explosion (24).png",
+                "type": "image",
+                "key": "explosion (24)"
+            },
+            {
+                "url": "assets/explosions/explosion (25).png",
+                "type": "image",
+                "key": "explosion (25)"
+            },
+            {
+                "url": "assets/explosions/explosion (26).png",
+                "type": "image",
+                "key": "explosion (26)"
+            },
+            {
+                "url": "assets/explosions/explosion (27).png",
+                "type": "image",
+                "key": "explosion (27)"
+            },
+            {
+                "url": "assets/explosions/explosion (28).png",
+                "type": "image",
+                "key": "explosion (28)"
+            },
+            {
+                "url": "assets/explosions/explosion (29).png",
+                "type": "image",
+                "key": "explosion (29)"
+            },
+            {
+                "url": "assets/explosions/explosion (30).png",
+                "type": "image",
+                "key": "explosion (30)"
+            },
+            {
+                "url": "assets/explosions/explosion (31).png",
+                "type": "image",
+                "key": "explosion (31)"
+            },
+            {
+                "url": "assets/explosions/explosion (32).png",
+                "type": "image",
+                "key": "explosion (32)"
+            },
+            {
+                "url": "assets/explosions/explosion (33).png",
+                "type": "image",
+                "key": "explosion (33)"
+            }
+        ]
+    },
+    "meta": {
+        "app": "Phaser Editor 2D - Asset Pack Editor",
+        "contentType": "phasereditor2d.pack.core.AssetContentType",
+        "url": "https://phasereditor2d.com",
+        "version": 2,
+        "showAllFilesInBlocks": false
+    }
+}

@@ -3,8 +3,9 @@
     "sceneType": "SCENE",
     "settings": {
         "preloadPackFiles": [
-            "game/assets/comet/comet-pck.json",
-            "game/assets/asset-pack.json"
+            "game/assets/explosions/asset-pack-explosion.json",
+            "game/assets/asset-pack.json",
+            "game/assets/comet/comet-pck.json"
         ],
         "createMethodName": "editorCreate",
         "sceneKey": "Meteor"
@@ -30,6 +31,7 @@
             "type": "Rectangle",
             "id": "fce09fbe-c199-437a-90c4-cdb02722415a",
             "label": "rectangle_1",
+            "scope": "PUBLIC",
             "components": [],
             "x": 489,
             "y": 612,
@@ -97,6 +99,25 @@
             "x": 30,
             "y": 42,
             "text": "New text"
+        },
+        {
+            "type": "Text",
+            "id": "9c594986-d2fc-4d46-9209-9cc283b752d0",
+            "label": "life",
+            "scope": "PUBLIC",
+            "components": [],
+            "x": 655,
+            "y": 34,
+            "text": "Vita"
+        },
+        {
+            "type": "Text",
+            "id": "ae03988d-fd04-4b93-93b0-f7d9a0a2edcc",
+            "label": "lifeLabel",
+            "components": [],
+            "x": 582,
+            "y": 34,
+            "text": "Energy:"
         },
         {
             "type": "Rectangle",
