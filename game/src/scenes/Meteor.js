@@ -299,7 +299,7 @@ class Meteor extends Phaser.Scene {
 			this.life.text = +this.life.text + 5;
 			if (this.life.text > 100)
 			this.win()
-		  }, 2000)
+		  }, 2000 - iteration*100)
 	}
 
 	win() {
