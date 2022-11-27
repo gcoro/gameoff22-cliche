@@ -182,6 +182,10 @@
                 "url": "src/components/StartAnimation.js",
                 "type": "script",
                 "key": "StartAnimation"
+            },{
+                "url": "assets/scp2020/pavement_full.png",
+                "type": "image",
+                "key": "pavement_full"
             }
         ]
     },
