@@ -70,7 +70,7 @@ class Level extends Phaser.Scene {
 
         // door0 (components)
         const door0PushOnClick = new PushOnClick(door0)
-        door0PushOnClick.sceneToStartKey = "scp5153"
+        door0PushOnClick.sceneToStartKey = Meteor.name
 
         // armor_idle_1 (components)
         const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1)
@@ -174,40 +174,37 @@ class Level extends Phaser.Scene {
     talk() {
         console.log('start speech')
 
+        // randomly choose scp
+        const items = [Scp173.name, Meteor.name]
+        const scp = items[Math.floor(Math.random() * items.length)]
+
         const index = 0
-        const discourse = [
-            this.strings.alienIntro1,
-            this.strings.alienIntro2,
-            this.strings.alienIntro3,
-            this.strings.alienEnableMinigame,
-        ]
+        let discourse = scp === Scp173.name ? this.strings.scp173 : this.strings.scp5153
+        discourse = discourse.concat(this.strings.clicheRight)
 
         this.createSpeechBubble(discourse[index], null, null, 400, 50)
 
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
-            this.nextLine(discourse, index + 1)
+            this.nextLine(discourse, index + 1, scp)
         })
     }
 
-    nextLine(discourse, index) {
+    nextLine(discourse, index, scp) {
         this.lastBubble.bubble?.destroy()
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
-            if (discourse[index] === this.strings.alienEnableMinigame) {
-                const items = [Scp173.name, "scp5153"]
-                const scp = items[Math.floor(Math.random() * items.length)]
-
+            if (index + 1 === discourse.length) { // last sentence
+                console.log('enabling scp', scp)
                 this.activeScp = scp
-                discourse[index] = this.strings.alienEnableMinigame + scp
             }
 
-            this.createSpeechBubble(discourse[index], null, null, 400, 50)
+            this.createSpeechBubble(discourse[index], null, null, 500, 50)
 
             this.input.once("pointerdown", () => {
                 // tap anywhere in the scene
-                this.nextLine(discourse, index + 1)
+                this.nextLine(discourse, index + 1, scp)
             })
         } else { // speech ended
             console.log('end speech')
