@@ -175,9 +175,11 @@ class Scp173 extends Phaser.Scene {
         const content = [
             "Collect everything the monster throw",
             "before the is up or you will die.",
+            "To collect items you need to press",
+            "the space bar while on it",
             "",
             "If you touch the monster you'll die too",
-            "The game is about to start"
+            "The game is about to start..."
         ];
         
         this.startingText = this.add.text(0, 0, content, { 
@@ -191,16 +193,15 @@ class Scp173 extends Phaser.Scene {
         })
         this.startingText.setDepth(7)
         this.startingText.setPadding(0, this.game.config.height/3)
-
         setTimeout(() => this.startGame(), 10000)
     }
 
     startGame() {
-        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
         this.startingText.destroy()
         this.scoreLabel.setVisible(true)
         this.countdown.label.setVisible(true)
         this.countdown.start(this.gameDuration)
+        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
     }
 
     createBackgrounds() {
