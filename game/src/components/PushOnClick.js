@@ -1,4 +1,3 @@
-
 // You can write more code here
 
 /* START OF COMPILED CODE */
@@ -7,46 +6,58 @@
 /* END-USER-IMPORTS */
 
 class PushOnClick extends UserComponent {
+    constructor(gameObject) {
+        super(gameObject)
 
-	constructor(gameObject) {
-		super(gameObject);
+        this.gameObject = gameObject
+        gameObject["__PushOnClick"] = this
 
-		this.gameObject = gameObject;
-		gameObject["__PushOnClick"] = this;
+        /* START-USER-CTR-CODE */
 
-		/* START-USER-CTR-CODE */
+        /* END-USER-CTR-CODE */
+    }
 
-		/* END-USER-CTR-CODE */
-	}
+    /** @returns {PushOnClick} */
+    static getComponent(gameObject) {
+        return gameObject["__PushOnClick"]
+    }
 
-	/** @returns {PushOnClick} */
-	static getComponent(gameObject) {
-		return gameObject["__PushOnClick"];
-	}
+    /** @type {Phaser.GameObjects.Image} */
+    gameObject
+    /** @type {string} */
+    sceneToStartKey = ""
 
-	/** @type {Phaser.GameObjects.Image} */
-	gameObject;
-	/** @type {string} */
-	sceneToStartKey = "";
+    /* START-USER-CODE */
 
-	/* START-USER-CODE */
+    awake() {
+        if (this.sceneToStartKey) {
+            this.gameObject.setInteractive().on("pointerdown", () => {
+                console.log('clicked', this.sceneToStartKey)
 
-	awake() {
-		if (this.sceneToStartKey) {
-			this.gameObject.setInteractive().on("pointerdown", () => {
-				if (this.scene.activeScp === this.sceneToStartKey) {
-					console.log('start scene', this.sceneToStartKey)
-					// todo switch scene
-					// () => this.scene.start("scena"))
-				} else {
-					// do nothing
-					console.log('scp not enabled')
-				}
-			});
-		}
-	}
+                if (this.sceneToStartKey === 'Level') { // main scene
+                    this.scene.scene.start(Level.name)
+                } else { // minigames
+                    if (this.scene.activeScp === this.sceneToStartKey) {
+                        console.log("start scene", this.sceneToStartKey)
 
-	/* END-USER-CODE */
+                        const doorOpening = this.scene.sound.add('door_open')
+                        doorOpening.play()
+
+                        setTimeout(() => { // timeout to give sound effect some time to play
+                            this.scene.scene.start(this.sceneToStartKey)
+                        }, 1000)
+                    } else {
+                        console.log("scp not enabled")
+
+                        const doorLocked = this.scene.sound.add('door_locked')
+                        doorLocked.play()
+                    }
+                }
+            })
+        }
+    }
+
+    /* END-USER-CODE */
 }
 
 /* END OF COMPILED CODE */

@@ -7,6 +7,9 @@
 -   bg https://opengameart.org/content/sideview-sci-fi-patreon-collection
 -   doors https://opengameart.org/content/lab-textures
 -   alien https://craftpix.net/freebies/2d-game-alien-character-free-sprite/
+-   audio door locked https://freesound.org/people/BenjaminNelan/sounds/321087/
+-   audio door opening https://opengameart.org/content/door-open-sfx
+-   audio main scene theme https://opengameart.org/content/green-gray 
 
 ### Scp 173
 

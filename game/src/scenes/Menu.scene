@@ -1,0 +1,44 @@
+{
+    "id": "7ec2a42f-fe01-45c6-84e8-296fce139823",
+    "sceneType": "SCENE",
+    "settings": {
+        "javaScriptInitFieldsInConstructor": true,
+        "preloadPackFiles": [],
+        "createMethodName": "editorCreate",
+        "sceneKey": "Menu"
+    },
+    "displayList": [
+        {
+            "type": "Image",
+            "id": "bff7d5a1-9aa3-4a0b-9f45-a4d3405e1065",
+            "label": "background_scifi_interior",
+            "components": [],
+            "texture": {
+                "key": "background_scifi_interior"
+            },
+            "x": 465,
+            "y": 145
+        },
+        {
+            "type": "Image",
+            "id": "fc1f8239-e0d0-4775-aa29-d228f7b865b1",
+            "label": "guapen",
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "Level",
+            "texture": {
+                "key": "guapen"
+            },
+            "x": 567,
+            "y": 326
+        }
+    ],
+    "plainObjects": [],
+    "meta": {
+        "app": "Phaser Editor 2D - Scene Editor",
+        "url": "https://phasereditor2d.com",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 3
+    }
+}
