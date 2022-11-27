@@ -1,7 +1,7 @@
 class AlienAlly extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "alien_ally", "sprite1")
-        
+
         this.anims.create({
             key: "idle",
             frames: this.anims.generateFrameNames("alien_ally", {
@@ -10,7 +10,7 @@ class AlienAlly extends Phaser.Physics.Arcade.Sprite {
                 prefix: "sprite",
             }),
             repeat: -1,
-            frameRate: 6
+            frameRate: 6,
         })
 
         this.setScale(1.3, 1.3)

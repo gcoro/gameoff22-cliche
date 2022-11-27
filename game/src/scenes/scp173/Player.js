@@ -72,10 +72,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setDepth(5) // above all the other objects
 
         this.eventEmitter = EventDispatcher.getInstance()
-        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => {
-            console.log("player on game over")
-            this.die()
-        })
 
         this.on("animationcomplete", (anim) => {
             if (anim.key === "death") {

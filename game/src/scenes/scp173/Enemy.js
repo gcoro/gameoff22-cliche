@@ -41,7 +41,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
         this.setDepth(6)
-        
         this.eventEmitter = EventDispatcher.getInstance()
     }
 

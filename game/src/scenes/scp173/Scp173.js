@@ -34,6 +34,7 @@ class Scp173 extends Phaser.Scene {
         this.cursors = undefined
         this.scoreLabel = undefined
         this.countdown = undefined
+        this.createPoorsTimeout = undefined
         this.eventEmitter = EventDispatcher.getInstance()
     }
 
@@ -76,15 +77,22 @@ class Scp173 extends Phaser.Scene {
             "assets/scp173/door.png",
             "assets/scp173/door.json"
         )
+
+        // TEST SENE EVENTS
+        this.events.once("destroy", () => console.log("scene scp 173 destroy"))
+        this.events.once("pause", () => console.log("scene scp 173 pause"))
+        this.events.once("resume", () => console.log("scene scp 173 resume"))
+        this.events.once("shutdown", () =>
+            console.log("scene scp 173 shutdown")
+        )
+        this.events.once("wake", () => console.log("scene scp 173 wake"))
     }
 
     create() {
+        console.log("scene scp173 create")
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.setPollAlways()
-        this.input.setDefaultCursor(
-            "url(assets/scp173/cursor/inactive.cur), auto"
-        )
 
         // add collider
         this.anims.create({
@@ -110,19 +118,33 @@ class Scp173 extends Phaser.Scene {
 
         this.createPlayerAllies()
         this.createTimer()
-        this.start()
         this.createCollidersAndBounds()
 
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
             this.gameHasStarted = true
             this.createPoors()
+
+            setTimeout(() => {
+                this.scene.start("Level")
+            }, 3000)
         })
-        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
+        this.toggleCharactersVisibility(false)
+
+        setTimeout(() => {
+            console.log("START GAME!!")
+            this.start()
+        }, 2000)
+    }
+
+    toggleCharactersVisibility(isVisible) {
+        this.player.setVisible(isVisible)
+        this.enemy.setVisible(isVisible)
+        this.player_alien_ally1.setVisible(isVisible)
+        this.player_alien_ally2.setVisible(isVisible)
     }
 
     createTimer() {
         this.countdown = new CountdownController(this)
-        this.countdown.start(this.gameDuration)
     }
 
     playerDeath(reason) {
@@ -139,7 +161,9 @@ class Scp173 extends Phaser.Scene {
             )
             .setDepth(7)
         // to game over scene
-        setTimeout(() => this.scene.start("AfterGameTransition"), 5000)
+        setTimeout(() => {
+            this.scene.start("AfterGameTransition")
+        }, 5000)
     }
 
     createBackgrounds() {
@@ -211,6 +235,12 @@ class Scp173 extends Phaser.Scene {
     }
 
     start() {
+        this.input.setDefaultCursor(
+            "url(assets/scp173/cursor/inactive.cur), auto"
+        )
+        this.toggleCharactersVisibility(true)
+        this.countdown.start(this.gameDuration)
+        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
         setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
     }
 
@@ -279,7 +309,10 @@ class Scp173 extends Phaser.Scene {
                 )
             }
         }
-        setTimeout(() => this.createPoors(), this.ENEMY_CREATE_POORS_MILLIS)
+        this.createPoorsTimeout = setTimeout(
+            () => this.createPoors(),
+            this.ENEMY_CREATE_POORS_MILLIS
+        )
     }
 
     /**
@@ -331,11 +364,15 @@ class Scp173 extends Phaser.Scene {
     }
 
     update() {
-        this.player.update()
-        this.countdown.update()
-        this.checkExitDoor()
-        this.movePlayerAllies()
-        this.checkPointerPosition()
+        if (this.gameHasStarted) {
+            // this.player.update()
+            // this.countdown.update()
+            /*
+            this.checkExitDoor()
+            this.movePlayerAllies()
+            this.checkPointerPosition()
+            */
+        }
     }
 
     checkPointerPosition() {
@@ -392,9 +429,22 @@ class Scp173 extends Phaser.Scene {
 
     gameOver() {
         this.playerDeath()
+        if (this.createPoorsTimeout) {
+            clearTimeout(this.createPoorsTimeout)
+            this.createPoorsTimeout = undefined
+        }
+        this.saveScore()
+        this.input.setDefaultCursor("default")
         console.log(
             "%c  GAME OVER!!  ",
             "background: #063970; color: #47d2a7; font-family:sans-serif; font-size: 40px; padding: 5px 10px"
+        )
+    }
+
+    saveScore() {
+        StorageService.saveScore(
+            `score-${Scp173.name}`,
+            this.scoreLabel.getScore()
         )
     }
 }
