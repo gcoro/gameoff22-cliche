@@ -34,4 +34,8 @@ const Utils = Object.freeze({
             obj1Y <= y + height
         )
     },
+
+    generateRandomEnemyObject(array) {
+        return array[Math.floor(Math.random()*array.length)]
+    },
 })

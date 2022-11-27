@@ -26,7 +26,18 @@ class Scp173 extends Phaser.Scene {
         this.mapHeight = 1200
         this.mapWidth = 16 * 90
         this.gameDuration = 18000
-
+        this.stuffToThrow = [
+            {
+                name: "skull",
+                anim: "anim_throw_skull",
+                scale: 1
+            },
+            {
+                name: "throw_poor",
+                anim: "anim_throw_poor",
+                scale: 0.2
+            }
+        ]
         // we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
         this.player_alien_ally1 = undefined
         this.player_alien_ally2 = undefined
@@ -41,6 +52,12 @@ class Scp173 extends Phaser.Scene {
         this.load.image("base_tiles", "assets/scp173/level_tileset.png")
         this.load.tilemapTiledJSON("tilemap", "assets/scp173/small_map.json")
         this.load.image("poor", "assets/scp173/poor/splat.png")
+
+        this.load.atlas(
+            "skull", 
+            "assets/scp173/blood/blood.png",
+            "assets/scp173/blood/blood.json"
+        )
 
         //poops
         this.load.atlas(
@@ -92,6 +109,18 @@ class Scp173 extends Phaser.Scene {
             frames: this.anims.generateFrameNames("throw_poor", {
                 start: 1,
                 end: 6,
+                prefix: "sprite",
+            }),
+            frameRate: 10,
+            repeat: -1,
+        })
+
+
+        this.anims.create({
+            key: "anim_throw_skull",
+            frames: this.anims.generateFrameNames("skull", {
+                start: 3,
+                end: 3,
                 prefix: "sprite",
             }),
             frameRate: 10,
@@ -240,25 +269,26 @@ class Scp173 extends Phaser.Scene {
                 )
             ) {
                 countPoors++
+                const selecedObjectToThrow = Utils.generateRandomEnemyObject(this.stuffToThrow);
                 const loopImage = this.physics.add.image(
                     coords.x,
                     coords.y,
-                    "poor"
+                    selecedObjectToThrow.name
                 )
                 loopImage.setVisible(false)
                 loopImage.setDepth(1)
-                loopImage.setScale(0.2)
+                loopImage.setScale(selecedObjectToThrow.scale)
                 this.currentPoors.push({ image: loopImage, ...coords })
 
                 const sourceImage = this.physics.add.sprite(
                     this.enemy.x,
                     this.enemy.y,
-                    "throw_poor"
+                    selecedObjectToThrow.name
                 )
-                sourceImage.setScale(0.2)
+                sourceImage.setScale(selecedObjectToThrow.scale)
 
                 sourceImage.setDepth(0)
-                sourceImage.anims.play("anim_throw_poor")
+                sourceImage.anims.play(selecedObjectToThrow.anim)
 
                 this.physics.moveToObject(sourceImage, loopImage, 200)
                 const throwCollider = this.physics.add.overlap(
