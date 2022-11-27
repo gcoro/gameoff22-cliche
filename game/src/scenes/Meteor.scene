@@ -1,0 +1,185 @@
+{
+    "id": "60e7b18e-56c0-43f4-98ee-e639ea70a089",
+    "sceneType": "SCENE",
+    "settings": {
+        "preloadPackFiles": [
+            "game/assets/explosions/asset-pack-explosion.json",
+            "game/assets/asset-pack.json",
+            "game/assets/comet/comet-pck.json"
+        ],
+        "createMethodName": "editorCreate",
+        "sceneKey": "scp5153"
+    },
+    "displayList": [
+        {
+            "type": "TilemapLayer",
+            "id": "8ad74ce9-f15d-4b71-afb4-4de4bfd1a0bb",
+            "label": "livello_tile_1",
+            "components": [],
+            "x": -98,
+            "y": 201,
+            "scaleX": 0.5878711017473454,
+            "scaleY": 0.6351244842608338,
+            "tilemapId": "593bc6ec-83e1-4a5e-88e7-1785a7dffa86",
+            "layerName": "Livello tile 1",
+            "tilesets": [
+                "Ground",
+                "Fantascienza"
+            ]
+        },
+        {
+            "type": "Rectangle",
+            "id": "fce09fbe-c199-437a-90c4-cdb02722415a",
+            "label": "rectangle_1",
+            "scope": "PUBLIC",
+            "components": [],
+            "x": 489,
+            "y": 612,
+            "scaleX": 9.550075246954478,
+            "scaleY": 0.8404655959892912,
+            "visible": false,
+            "ArcadeComponent.active": true,
+            "moves": false,
+            "allowGravity": false,
+            "allowDrag": false,
+            "allowRotation": false,
+            "body.width": 128,
+            "body.height": 128,
+            "body.offset.y": -5,
+            "isFilled": true,
+            "width": 128,
+            "height": 128
+        },
+        {
+            "type": "ArcadeSprite",
+            "id": "b261ac2e-a114-4779-9b29-2163fa09ad05",
+            "label": "arcadesprite_1",
+            "scope": "PUBLIC",
+            "components": [
+                "StartAnimation"
+            ],
+            "StartAnimation.animationKey": "comet",
+            "texture": {
+                "key": "img_0"
+            },
+            "x": 432,
+            "y": -254,
+            "scaleX": 3.453177619787111,
+            "scaleY": 3.872053011718694,
+            "angle": 90,
+            "body.velocity.y": 1,
+            "maxSpeed": 1,
+            "body.gravity.y": 1,
+            "body.width": 35,
+            "body.height": 44,
+            "body.offset.x": 71,
+            "body.offset.y": 139
+        },
+        {
+            "type": "ArcadeSprite",
+            "id": "a651de66-6a83-4345-b7c9-dba522c3d081",
+            "label": "player",
+            "scope": "PUBLIC",
+            "components": [],
+            "texture": {
+                "key": "ship",
+                "frame": 0
+            },
+            "x": 439,
+            "y": 494,
+            "body.width": 66,
+            "body.height": 66
+        },
+        {
+            "type": "Text",
+            "id": "5e40241c-7439-4d71-9756-1d1f97a643f3",
+            "label": "Date",
+            "scope": "PUBLIC",
+            "components": [],
+            "x": 30,
+            "y": 42,
+            "text": "New text"
+        },
+        {
+            "type": "Text",
+            "id": "9c594986-d2fc-4d46-9209-9cc283b752d0",
+            "label": "life",
+            "scope": "PUBLIC",
+            "components": [],
+            "x": 655,
+            "y": 34,
+            "text": "Vita"
+        },
+        {
+            "type": "Text",
+            "id": "ae03988d-fd04-4b93-93b0-f7d9a0a2edcc",
+            "label": "lifeLabel",
+            "components": [],
+            "x": 582,
+            "y": 34,
+            "text": "Energy:"
+        },
+        {
+            "type": "Rectangle",
+            "id": "d2aa468f-4502-446e-a028-a50515877ba5",
+            "label": "rectangle_2",
+            "scope": "PUBLIC",
+            "components": [],
+            "x": 372,
+            "y": 297,
+            "scaleX": 6.755764178494033,
+            "scaleY": 4.941475499349193,
+            "visible": false,
+            "isFilled": true,
+            "fillColor": "#000000",
+            "strokeColor": "#000000",
+            "width": 128,
+            "height": 128
+        },
+        {
+            "type": "Text",
+            "id": "a594c8e8-ad25-482b-8458-01c46236a753",
+            "label": "text_1",
+            "scope": "PUBLIC",
+            "components": [],
+            "x": 375,
+            "y": 308,
+            "visible": false,
+            "text": "Game Over?"
+        }
+    ],
+    "plainObjects": [
+        {
+            "id": "593bc6ec-83e1-4a5e-88e7-1785a7dffa86",
+            "type": "Tilemap",
+            "label": "ground",
+            "key": "ground",
+            "tilesets": [
+                {
+                    "name": "Ground",
+                    "imageKey": "Green moss and rocky walls"
+                },
+                {
+                    "name": "Fantascienza",
+                    "imageKey": "level_tileset"
+                }
+            ]
+        },
+        {
+            "id": "f95ce8d3-665f-43f7-a566-7c0e70005a99",
+            "type": "Collider",
+            "label": "collider",
+            "scope": "METHOD",
+            "object1": "arcadesprite_1",
+            "object2": "rectangle_1",
+            "collideCallback": "this.onMeteorCollision",
+            "callbackContext": "this"
+        }
+    ],
+    "meta": {
+        "app": "Phaser Editor 2D - Scene Editor",
+        "url": "https://phasereditor2d.com",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 3
+    }
+}

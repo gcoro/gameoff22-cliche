@@ -25,7 +25,7 @@ class Scp173 extends Phaser.Scene {
         this.enemy = undefined
         this.mapHeight = 1200
         this.mapWidth = 16 * 90
-        this.gameDuration = 18000
+        this.gameDuration = 180000
         this.stuffToThrow = [
             {
                 name: "skull",
@@ -45,6 +45,7 @@ class Scp173 extends Phaser.Scene {
         this.cursors = undefined
         this.scoreLabel = undefined
         this.countdown = undefined
+        this.createPoorsTimeout = undefined
         this.eventEmitter = EventDispatcher.getInstance()
     }
 
@@ -93,16 +94,20 @@ class Scp173 extends Phaser.Scene {
             "assets/scp173/door.png",
             "assets/scp173/door.json"
         )
+
+        // TEST SENE EVENTS
+        this.events.once("shutdown", () =>
+            console.log("scene scp 173 shutdown")
+        )
     }
 
     create() {
+        console.log("scene scp173 create")
+        this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
         this.createStartingText()
         this.createBackgrounds()
         this.input.setPollAlways()
-        this.input.setDefaultCursor(
-            "url(assets/scp173/cursor/inactive.cur), auto"
-        )
 
         // add collider
         this.anims.create({
@@ -146,13 +151,16 @@ class Scp173 extends Phaser.Scene {
             this.gameHasStarted = true
             this.createPoors()
         })
-        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
+
+        this.eventEmitter.once(PLAYER_EVENTS.PLAYER_DIED, () =>
+            this.endGame(false)
+        )
     }
 
     createTimer() {
         this.countdown = new CountdownController(this)
         this.countdown.label.setVisible(false)
-    }
+  }
 
     playerDeath(reason) {
         this.countdown.stop()
@@ -167,8 +175,6 @@ class Scp173 extends Phaser.Scene {
                 }
             )
             .setDepth(7)
-        // to game over scene
-        setTimeout(() => this.scene.start("AfterGameTransition"), 5000)
     }
 
     createStartingText() {
@@ -201,7 +207,7 @@ class Scp173 extends Phaser.Scene {
         this.scoreLabel.setVisible(true)
         this.countdown.label.setVisible(true)
         this.countdown.start(this.gameDuration)
-        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
+        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 10000)
     }
 
     createBackgrounds() {
@@ -237,7 +243,7 @@ class Scp173 extends Phaser.Scene {
         this.physics.add.overlap(
             this.player,
             this.exit_door,
-            this.goToAfterGameTransitionScene,
+            this.win,
             null,
             this
         )
@@ -272,7 +278,17 @@ class Scp173 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
     }
 
+    start() {
+        this.input.setDefaultCursor(
+            "url(assets/scp173/cursor/inactive.cur), auto"
+        )
+        this.countdown.start(this.gameDuration)
+        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
+        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
+    }
+
     createPoors() {
+        if (!this.gameHasStarted) return
         const visibleMaxW =
             this.BOARD_GAP_TO_WORLD +
             this.container.backgroundLayer.width -
@@ -338,7 +354,11 @@ class Scp173 extends Phaser.Scene {
                 )
             }
         }
-        setTimeout(() => this.createPoors(), this.ENEMY_CREATE_POORS_MILLIS)
+
+        this.createPoorsTimeout = setTimeout(
+            () => this.createPoors(),
+            this.ENEMY_CREATE_POORS_MILLIS
+        )
     }
 
     /**
@@ -379,13 +399,12 @@ class Scp173 extends Phaser.Scene {
         } else return false
     }
 
-    goToAfterGameTransitionScene() {
+    win() {
         if (
             this.exit_door.anims.currentAnim &&
             this.exit_door.anims.currentAnim.key === "open"
         ) {
-            // check door is open
-            this.scene.start("AfterGameTransition")
+            this.endGame(true)
         }
     }
 
@@ -450,11 +469,28 @@ class Scp173 extends Phaser.Scene {
     }
 
     gameOver() {
+        this.gameHasStarted = false
         this.playerDeath()
         console.log(
             "%c  GAME OVER!!  ",
             "background: #063970; color: #47d2a7; font-family:sans-serif; font-size: 40px; padding: 5px 10px"
         )
+    }
+
+    endGame(hasWin) {
+        this.gameHasStarted = false
+        if (this.createPoorsTimeout) {
+            clearTimeout(this.createPoorsTimeout)
+            this.createPoorsTimeout = undefined
+        }
+        this.input.setDefaultCursor("default")
+
+        setTimeout(() => {
+            this.scene.start(Level.name, {
+                partialScore: hasWin ? 100 : this.scoreLabel.getScore(),
+                gameOver: !hasWin,
+            })
+        }, 1000)
     }
 }
 

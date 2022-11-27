@@ -102,6 +102,20 @@
                 "key": "door_blue"
             },
             {
+                "url": [
+                    "assets/sfx/door_locked.wav"
+                ],
+                "type": "audio",
+                "key": "door_locked"
+            },
+            {
+                "url": [
+                    "assets/sfx/door_open.wav"
+                ],
+                "type": "audio",
+                "key": "door_open"
+            },
+            {
                 "url": "assets/scp2020/door_red.png",
                 "type": "image",
                 "key": "door_red"
@@ -112,19 +126,66 @@
                 "key": "door0"
             },
             {
+                "url": [
+                    "assets/music/green_gray.mp3"
+                ],
+                "type": "audio",
+                "key": "green_gray"
+            },
+            {
                 "url": "assets/scp2020/pavement.png",
                 "type": "image",
                 "key": "pavement"
             },
             {
-                "url": "assets/scp2020/pavement_full.png",
+                "url": "assets/Green moss and rocky walls.png",
                 "type": "image",
-                "key": "pavement_full"
+                "key": "Green moss and rocky walls"
+            },
+            {
+                "url": "assets/ground.json",
+                "type": "tilemapTiledJSON",
+                "key": "ground"
+            },
+            {
+                "url": "assets/laser.png",
+                "frameConfig": {
+                    "frameWidth": 16,
+                    "frameHeight": 16,
+                    "startFrame": 0,
+                    "endFrame": 4,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "laser"
+            },
+            {
+                "url": "assets/level_tileset.png",
+                "type": "image",
+                "key": "level_tileset"
+            },
+            {
+                "url": "assets/ship.png",
+                "frameConfig": {
+                    "frameWidth": 66,
+                    "frameHeight": 66,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "ship"
             },
             {
                 "url": "src/components/StartAnimation.js",
                 "type": "script",
                 "key": "StartAnimation"
+            },{
+                "url": "assets/scp2020/pavement_full.png",
+                "type": "image",
+                "key": "pavement_full"
             }
         ]
     },
