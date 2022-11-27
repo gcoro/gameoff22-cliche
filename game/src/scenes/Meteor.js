@@ -128,7 +128,9 @@ class Meteor extends Phaser.Scene {
 		arcadesprite_1.body.setSize(35, 44, false);
 
 		// player
-		const player = this.physics.add.sprite(439, 494, "ship", 0);
+		const player = this.physics.add.sprite(439, 487, "ship", 0);
+		player.scaleX = 1.5;
+		player.scaleY = 1.5;
 		player.body.setSize(66, 66, false);
 
 		// Date
@@ -387,7 +389,7 @@ class Meteor extends Phaser.Scene {
 			speed: this.enemySpeed,
 			rotation: 0.01
 		  };
-  
+
 		  // @ts-ignore
 		  const enemy = this.enemies.get(0, 0, "animated_asteroid", config);
 		  const enemyWidth = enemy.displayWidth;
@@ -395,7 +397,7 @@ class Meteor extends Phaser.Scene {
 			enemyWidth,
 			this.scale.width - enemyWidth
 		  );
-  
+
 		  if (enemy) {
 			enemy.spawn(positionX);
 		  }

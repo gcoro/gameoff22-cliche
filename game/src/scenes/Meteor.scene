@@ -86,7 +86,9 @@
                 "frame": 0
             },
             "x": 439,
-            "y": 494,
+            "y": 487,
+            "scaleX": 1.5,
+            "scaleY": 1.5,
             "body.width": 66,
             "body.height": 66
         },
