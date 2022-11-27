@@ -228,10 +228,13 @@ class Meteor extends Phaser.Scene {
 		this.enemies.setActive(false).setVisible(false);
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
+		clearInterval(this.energyAccumulationInterval);
+		setTimeout(() => {
+			this.scene.start('Level');
+		},3000)
 	}
 
 	onMeteorCollision(){
-		clearInterval(this.energyAccumulationInterval)
 		this.showEndScreen("[Data Lost]")
 	}
 
@@ -305,7 +308,6 @@ class Meteor extends Phaser.Scene {
 	}
 
 	win() {
-		this.clearInterval = this.energyAccumulationInterval;
 		this.showEndScreen("You have been able to charge SCP-2000 In time, humanity is saved")
 	}
 
