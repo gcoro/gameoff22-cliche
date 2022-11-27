@@ -244,7 +244,7 @@ class Meteor extends Phaser.Scene {
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
 		setTimeout(() => {
-			this.scene.start(Level.name, {gameOver: false, partialScore: 123}); // fixme
+			this.scene.start(Level.name, {gameOver: true, partialScore: 123}); // fixme
 		},3000)
 	}
 
