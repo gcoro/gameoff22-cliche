@@ -50,16 +50,16 @@ class Level extends Phaser.Scene {
         // armor_idle_1
         /** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
         const armor_idle_1 = this.add.sprite(168, 379, "armor_idle_1")
-        armor_idle_1.scaleX = 0.3495787233586669
-        armor_idle_1.scaleY = 0.28154832380997097
+        armor_idle_1.scaleX = 0.3
+        armor_idle_1.scaleY = 0.28
         this.physics.add.existing(armor_idle_1, false)
         armor_idle_1.body.velocity.x = 70
         armor_idle_1.body.velocity.y = 70
         armor_idle_1.body.bounce.x = 1
         armor_idle_1.body.bounce.y = 1
         armor_idle_1.body.collideWorldBounds = true
-        armor_idle_1.body.setOffset(-150, 414)
-        armor_idle_1.body.setSize(500, 3.6601282095296224, false)
+        armor_idle_1.body.setOffset(-150, 0)
+        armor_idle_1.body.setSize(500, 420, false)
 
         // collider
         this.physics.add.collider(armor_idle_1, floor)
