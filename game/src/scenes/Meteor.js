@@ -212,7 +212,6 @@ class Meteor extends Phaser.Scene {
     lasers = undefined;
     lastFired = 0;
     spaceBar = undefined;
-	energyAccumulationInterval = undefined;
 
 	showEndScreen(message) {
 		this.arcadesprite_1.destroy();
@@ -228,7 +227,6 @@ class Meteor extends Phaser.Scene {
 		this.enemies.setActive(false).setVisible(false);
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
-		clearInterval(this.energyAccumulationInterval);
 		setTimeout(() => {
 			this.scene.start('Level');
 		},3000)
@@ -246,6 +244,7 @@ class Meteor extends Phaser.Scene {
 		this.speed = this.speed + 20*iteration;
 		const cometVelocity = (10);
 		this.enemySpeed = this.enemySpeed + 20*iteration;
+		console.log(this.enemySpeed)
 		sessionStorage.setItem("iteration",+iteration + 1)
 		this.date.text = actualDate;
 		this.arcadesprite_1.body.velocity.y = cometVelocity;
@@ -300,11 +299,20 @@ class Meteor extends Phaser.Scene {
 
 		  const accumulation =  2000 - iteration*100
 
-		  this.energyAccumulationInterval = setInterval(() => {
+		  const computeEnergy =  ()  => {
+			if (this.rectangle_2.visible)
+			return;
 			this.life.text = +this.life.text + 5;
 			if (this.life.text > 100)
 			this.win()
-		  }, accumulation > 200 ? accumulation:  200)
+		  }
+
+		  this.time.addEvent({
+			delay: accumulation > 200 ? accumulation:  200,
+			callback: computeEnergy,
+			callbackScope: this,
+			loop: true
+		  });
 	}
 
 	win() {
