@@ -324,7 +324,8 @@ class Meteor extends Phaser.Scene {
 		  const computeEnergy =  ()  => {
 			if (this.rectangle_2.visible)
 			return;
-			this.life.text = +this.life.text + 5;
+			const life = +this.life.text.replace("%","")
+			this.life.text = (life + 5)+"%";
 			if (this.life.text > 100)
 			this.win()
 		  }
