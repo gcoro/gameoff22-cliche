@@ -96,6 +96,18 @@ class Meteor extends Phaser.Scene {
 		ground.addTilesetImage("Ground", "Green moss and rocky walls");
 		ground.addTilesetImage("Fantascienza", "level_tileset");
 
+		// background
+		const background = this.add.image(402, 296, "background");
+		background.scaleX = 1.0355335402542793;
+		background.scaleY = 1.0606516381679638;
+
+		// rectangle_3
+		const rectangle_3 = this.add.rectangle(382, 593, 128, 128);
+		rectangle_3.scaleX = 9.940350319351483;
+		rectangle_3.scaleY = 0.8373843093799873;
+		rectangle_3.isFilled = true;
+		rectangle_3.fillColor = 3085824;
+
 		// livello_tile_1
 		const livello_tile_1 = ground.createLayer("Livello tile 1", ["Ground","Fantascienza"], -98, 201);
 		livello_tile_1.scaleX = 0.5878711017473454;
@@ -142,8 +154,8 @@ class Meteor extends Phaser.Scene {
 		life.text = "Vita";
 
 		// lifeLabel
-		const lifeLabel = this.add.text(582, 34, "", {});
-		lifeLabel.text = "Energy:";
+		const lifeLabel = this.add.text(496, 34, "", {});
+		lifeLabel.text = "SCP-2000 Charge:";
 
 		// rectangle_2
 		const rectangle_2 = this.add.rectangle(372, 297, 128, 128);
@@ -242,7 +254,7 @@ class Meteor extends Phaser.Scene {
 	create() {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
-		this.life.text = 0;
+		this.life.text = "0%";
 		const iteration = sessionStorage.getItem("iteration")||0;
 		this.speed = this.speed + 20*iteration;
 		const cometVelocity = (10);
@@ -309,8 +321,9 @@ class Meteor extends Phaser.Scene {
 		  const accumulation =  2000 - iteration*100
 
 		  this.energyAccumulationInterval = setInterval(() => {
-			this.life.text = +this.life.text + 5;
-			if (this.life.text > 100)
+			const life = +this.life.text.replace("%","")
+			this.life.text = (life + 5)+"%";
+			if (life > 100)
 			this.win()
 		  }, accumulation > 200 ? accumulation:  200)
 	}
@@ -421,15 +434,17 @@ class Meteor extends Phaser.Scene {
 
 	  decreaseLife(player, enemy) {
 		enemy.explode();
-		if (this.life.text > 0)
-			this.life.text = this.life.text - 5;
+		const life = +this.life.text.replace("%","")
+		if (life > 0)
+			this.life.text = (life - 5)+"%";
 	  }
 
 	  decreaseEnergy(player, enemy) {
 		enemy.explode();
-		if (this.life.text > 0)
-			this.life.text = this.life.text - 5;
-	  }
+		const life = +this.life.text.replace("%","")
+		if (life > 0)
+		this.life.text = (life - 5)+"%";
+	}
 
 	/* END-USER-CODE */
 }

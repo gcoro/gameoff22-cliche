@@ -7,46 +7,6 @@
                 "key": "explosion (1)"
             },
             {
-                "url": "assets/explosions/explosion (2).png",
-                "type": "image",
-                "key": "explosion (2)"
-            },
-            {
-                "url": "assets/explosions/explosion (3).png",
-                "type": "image",
-                "key": "explosion (3)"
-            },
-            {
-                "url": "assets/explosions/explosion (4).png",
-                "type": "image",
-                "key": "explosion (4)"
-            },
-            {
-                "url": "assets/explosions/explosion (5).png",
-                "type": "image",
-                "key": "explosion (5)"
-            },
-            {
-                "url": "assets/explosions/explosion (6).png",
-                "type": "image",
-                "key": "explosion (6)"
-            },
-            {
-                "url": "assets/explosions/explosion (7).png",
-                "type": "image",
-                "key": "explosion (7)"
-            },
-            {
-                "url": "assets/explosions/explosion (8).png",
-                "type": "image",
-                "key": "explosion (8)"
-            },
-            {
-                "url": "assets/explosions/explosion (9).png",
-                "type": "image",
-                "key": "explosion (9)"
-            },
-            {
                 "url": "assets/explosions/explosion (10).png",
                 "type": "image",
                 "key": "explosion (10)"
@@ -95,6 +55,11 @@
                 "url": "assets/explosions/explosion (19).png",
                 "type": "image",
                 "key": "explosion (19)"
+            },
+            {
+                "url": "assets/explosions/explosion (2).png",
+                "type": "image",
+                "key": "explosion (2)"
             },
             {
                 "url": "assets/explosions/explosion (20).png",
@@ -147,6 +112,11 @@
                 "key": "explosion (29)"
             },
             {
+                "url": "assets/explosions/explosion (3).png",
+                "type": "image",
+                "key": "explosion (3)"
+            },
+            {
                 "url": "assets/explosions/explosion (30).png",
                 "type": "image",
                 "key": "explosion (30)"
@@ -165,6 +135,36 @@
                 "url": "assets/explosions/explosion (33).png",
                 "type": "image",
                 "key": "explosion (33)"
+            },
+            {
+                "url": "assets/explosions/explosion (4).png",
+                "type": "image",
+                "key": "explosion (4)"
+            },
+            {
+                "url": "assets/explosions/explosion (5).png",
+                "type": "image",
+                "key": "explosion (5)"
+            },
+            {
+                "url": "assets/explosions/explosion (6).png",
+                "type": "image",
+                "key": "explosion (6)"
+            },
+            {
+                "url": "assets/explosions/explosion (7).png",
+                "type": "image",
+                "key": "explosion (7)"
+            },
+            {
+                "url": "assets/explosions/explosion (8).png",
+                "type": "image",
+                "key": "explosion (8)"
+            },
+            {
+                "url": "assets/explosions/explosion (9).png",
+                "type": "image",
+                "key": "explosion (9)"
             }
         ]
     },
