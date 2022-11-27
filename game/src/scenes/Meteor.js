@@ -295,11 +295,13 @@ class Meteor extends Phaser.Scene {
 			this
 		  );
 
+		  const accumulation =  2000 - iteration*100
+
 		  this.energyAccumulationInterval = setInterval(() => {
 			this.life.text = +this.life.text + 5;
 			if (this.life.text > 100)
 			this.win()
-		  }, 2000 - iteration*100)
+		  }, accumulation > 200 ? accumulation:  200)
 	}
 
 	win() {
