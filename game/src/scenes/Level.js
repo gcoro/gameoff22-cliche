@@ -180,9 +180,11 @@ class Level extends Phaser.Scene {
 
         const index = 0
         let discourse = scp === Scp173.name ? this.strings.scp173 : this.strings.scp5153
+        const part2 = scp === Scp173.name ? this.strings.scp173_2 : this.strings.scp5153_2
+        discourse = discourse.concat(part2)
         discourse = discourse.concat(this.strings.clicheRight)
 
-        this.createSpeechBubble(discourse[index], null, null, 400, 50)
+        this.createSpeechBubble(discourse[index], null, null, 400, 80)
 
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
@@ -200,7 +202,7 @@ class Level extends Phaser.Scene {
                 this.activeScp = scp
             }
 
-            this.createSpeechBubble(discourse[index], null, null, 500, 50)
+            this.createSpeechBubble(discourse[index], null, null, 400, 80)
 
             this.input.once("pointerdown", () => {
                 // tap anywhere in the scene
