@@ -110,10 +110,24 @@ class Level extends Phaser.Scene {
     // totals
     totalScore
 
+    // map width
+    mapWidth = 16 * 90
+
     init(data) {
         console.log('init', data)
 
-        this.totalScore = this.totalScore + data.partialScore
+        if(!this.totalScore) this.totalScore = 0
+        if(data.partialScore) {
+            this.totalScore = this.totalScore + data.partialScore
+        }
+
+        this.scoreLabel = new ScoreLabel(
+            this,
+            this.mapWidth / 2 - 2.2 * 50,
+            0,
+            this.totalScore
+        )
+
     }
 
     create() {
