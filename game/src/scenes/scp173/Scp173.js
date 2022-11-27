@@ -207,6 +207,10 @@ class Scp173 extends Phaser.Scene {
         this.scoreLabel.setVisible(true)
         this.countdown.label.setVisible(true)
         this.countdown.start(this.gameDuration)
+        this.input.setDefaultCursor(
+            "url(assets/scp173/cursor/inactive.cur), auto"
+        )
+        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
         setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 10000)
     }
 
@@ -276,15 +280,6 @@ class Scp173 extends Phaser.Scene {
         this.player_alien_ally2.setCollideWorldBounds(true)
 
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
-    }
-
-    start() {
-        this.input.setDefaultCursor(
-            "url(assets/scp173/cursor/inactive.cur), auto"
-        )
-        this.countdown.start(this.gameDuration)
-        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
-        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
     }
 
     createPoors() {
