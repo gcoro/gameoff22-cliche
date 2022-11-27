@@ -96,8 +96,9 @@ class Scp173 extends Phaser.Scene {
     }
 
     create() {
-        this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
+        this.createStartingText()
+        this.createBackgrounds()
         this.input.setPollAlways()
         this.input.setDefaultCursor(
             "url(assets/scp173/cursor/inactive.cur), auto"
@@ -135,11 +136,10 @@ class Scp173 extends Phaser.Scene {
             this.mapWidth / 2 - 2.2 * this.BOARD_GAP_TO_WORLD,
             0,
             this.currentScore
-        )
+        ).setVisible(false)
 
         this.createPlayerAllies()
         this.createTimer()
-        this.start()
         this.createCollidersAndBounds()
 
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
@@ -151,7 +151,7 @@ class Scp173 extends Phaser.Scene {
 
     createTimer() {
         this.countdown = new CountdownController(this)
-        this.countdown.start(this.gameDuration)
+        this.countdown.label.setVisible(false)
     }
 
     playerDeath(reason) {
@@ -169,6 +169,38 @@ class Scp173 extends Phaser.Scene {
             .setDepth(7)
         // to game over scene
         setTimeout(() => this.scene.start("AfterGameTransition"), 5000)
+    }
+
+    createStartingText() {
+        const content = [
+            "Collect everything the monster throw",
+            "before the is up or you will die.",
+            "",
+            "If you touch the monster you'll die too",
+            "The game is about to start"
+        ];
+        
+        this.startingText = this.add.text(0, 0, content, { 
+            fixedHeight: this.game.config.height,
+            fixedWidth: this.game.config.width,
+            fontSize: 32,
+            align:"center", 
+            font: "28px monospace",
+            backgroundColor: "black",
+            color: "white" 
+        })
+        this.startingText.setDepth(7)
+        this.startingText.setPadding(0, this.game.config.height/3)
+
+        setTimeout(() => this.startGame(), 10000)
+    }
+
+    startGame() {
+        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
+        this.startingText.destroy()
+        this.scoreLabel.setVisible(true)
+        this.countdown.label.setVisible(true)
+        this.countdown.start(this.gameDuration)
     }
 
     createBackgrounds() {
@@ -237,10 +269,6 @@ class Scp173 extends Phaser.Scene {
         this.player_alien_ally2.setCollideWorldBounds(true)
 
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
-    }
-
-    start() {
-        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
     }
 
     createPoors() {
