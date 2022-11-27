@@ -8,7 +8,7 @@
             "game/assets/comet/comet-pck.json"
         ],
         "createMethodName": "editorCreate",
-        "sceneKey": "scp5153"
+        "sceneKey": "Meteor"
     },
     "displayList": [
         {
@@ -135,8 +135,8 @@
             "label": "life",
             "scope": "PUBLIC",
             "components": [],
-            "x": 655,
-            "y": 34,
+            "x": 737,
+            "y": 71,
             "text": "Vita"
         },
         {
@@ -144,8 +144,8 @@
             "id": "ae03988d-fd04-4b93-93b0-f7d9a0a2edcc",
             "label": "lifeLabel",
             "components": [],
-            "x": 496,
-            "y": 34,
+            "x": 576,
+            "y": 72,
             "text": "SCP-2000 Charge:"
         },
         {

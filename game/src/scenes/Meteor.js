@@ -150,11 +150,11 @@ class Meteor extends Phaser.Scene {
 		date.text = "New text";
 
 		// life
-		const life = this.add.text(655, 34, "", {});
+		const life = this.add.text(737, 71, "", {});
 		life.text = "Vita";
 
 		// lifeLabel
-		const lifeLabel = this.add.text(496, 34, "", {});
+		const lifeLabel = this.add.text(576, 72, "", {});
 		lifeLabel.text = "SCP-2000 Charge:";
 
 		// rectangle_2
@@ -228,8 +228,10 @@ class Meteor extends Phaser.Scene {
     lasers = undefined;
     lastFired = 0;
     spaceBar = undefined;
+	countdown = undefined;
 
-	showEndScreen(message) {
+	showEndScreen(message, gameover) {
+		this.countdown.hide();
 		this.arcadesprite_1.destroy();
 		this.rectangle_2.visible = true;
 		this.text_1.visible = true;
@@ -244,12 +246,12 @@ class Meteor extends Phaser.Scene {
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
 		setTimeout(() => {
-			this.scene.start(Level.name, {gameOver: false, partialScore: 123}); // fixme
+			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? 0 :100}); // fixme
 		},3000)
 	}
 
 	onMeteorCollision(){
-		this.showEndScreen("[Data Lost]")
+		this.showEndScreen("[Data Lost]", true)
 	}
 
 	playerDeath(){
@@ -259,7 +261,7 @@ class Meteor extends Phaser.Scene {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
 		this.countdown = new CountdownController(this)
-        this.countdown.start(20000)
+        this.countdown.start(50000)
 		this.life.text = "0%";
 		const iteration = sessionStorage.getItem("iteration")||0;
 		this.speed = this.speed + 20*iteration;
@@ -444,6 +446,7 @@ class Meteor extends Phaser.Scene {
 	update(time) {
 		this.handleDash();
 		this.movePlayer(this.player, time);
+		this.countdown.update()
 	  }
 
 	  decreaseLife(player, enemy) {
