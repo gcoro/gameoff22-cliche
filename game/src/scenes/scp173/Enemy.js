@@ -48,12 +48,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         if (anim.key === ENEMY_ANIMS.OPEN_EYE) {
             this.anims.stop(ENEMY_ANIMS.OPEN_EYE)
             this.eventEmitter.emit(ENEMY_EVENTS.EYE_OPENED)
-
+            /*
             this.setInteractive().on("pointerout", () => {
                 if (this.anims.currentAnim.key === ENEMY_ANIMS.OPEN_EYE) {
                     this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
                 }
             })
+            */
         }
     }
 

@@ -77,6 +77,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if (anim.key === "death") {
                 this.anims.stop("death")
                 this.setFrame("sprite14")
+                this.eventEmitter.emit(PLAYER_EVENTS.PLAYER_DIED)
             }
         })
     }
@@ -109,4 +110,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityY(0)
         this.anims.play("death")
     }
+}
+
+const PLAYER_EVENTS = {
+    PLAYER_DIED: "PLAYER_DIED",
 }
