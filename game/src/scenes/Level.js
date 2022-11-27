@@ -8,6 +8,8 @@ class Level extends Phaser.Scene {
 
         /* START-USER-CTR-CODE */
 
+        this.totalScore = 0
+
         /* END-USER-CTR-CODE */
     }
 
@@ -70,7 +72,7 @@ class Level extends Phaser.Scene {
 
         // door0 (components)
         const door0PushOnClick = new PushOnClick(door0)
-        door0PushOnClick.sceneToStartKey = "scp5153"
+        door0PushOnClick.sceneToStartKey = Meteor.name
 
         // armor_idle_1 (components)
         const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1)
@@ -104,6 +106,29 @@ class Level extends Phaser.Scene {
 
     // alien is turning
     isAnimatingTurn = false
+
+    // totals
+    totalScore
+
+    // map width
+    mapWidth = 16 * 90
+
+    init(data) {
+        console.log('init', data)
+
+        if(!this.totalScore) this.totalScore = 0
+        if(data.partialScore) {
+            this.totalScore = this.totalScore + data.partialScore
+        }
+
+        this.scoreLabel = new ScoreLabel(
+            this,
+            this.mapWidth / 2 - 2.2 * 50,
+            0,
+            this.totalScore
+        )
+
+    }
 
     create() {
         console.log('create main scene')
@@ -174,40 +199,39 @@ class Level extends Phaser.Scene {
     talk() {
         console.log('start speech')
 
-        const index = 0
-        const discourse = [
-            this.strings.alienIntro1,
-            this.strings.alienIntro2,
-            this.strings.alienIntro3,
-            this.strings.alienEnableMinigame,
-        ]
+        // randomly choose scp
+        const items = [Scp173.name, Meteor.name]
+        const scp = items[Math.floor(Math.random() * items.length)]
 
-        this.createSpeechBubble(discourse[index], null, null, 400, 50)
+        const index = 0
+        let discourse = scp === Scp173.name ? this.strings.scp173 : this.strings.scp5153
+        const part2 = scp === Scp173.name ? this.strings.scp173_2 : this.strings.scp5153_2
+        discourse = discourse.concat(part2)
+        discourse = discourse.concat(this.strings.clicheRight)
+
+        this.createSpeechBubble(discourse[index], null, null, 400, 80)
 
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
-            this.nextLine(discourse, index + 1)
+            this.nextLine(discourse, index + 1, scp)
         })
     }
 
-    nextLine(discourse, index) {
+    nextLine(discourse, index, scp) {
         this.lastBubble.bubble?.destroy()
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
-            if (discourse[index] === this.strings.alienEnableMinigame) {
-                const items = [Scp173.name, "scp5153"]
-                const scp = items[Math.floor(Math.random() * items.length)]
-
+            if (index + 1 === discourse.length) { // last sentence
+                console.log('enabling scp', scp)
                 this.activeScp = scp
-                discourse[index] = this.strings.alienEnableMinigame + scp
             }
 
-            this.createSpeechBubble(discourse[index], null, null, 400, 50)
+            this.createSpeechBubble(discourse[index], null, null, 400, 80)
 
             this.input.once("pointerdown", () => {
                 // tap anywhere in the scene
-                this.nextLine(discourse, index + 1)
+                this.nextLine(discourse, index + 1, scp)
             })
         } else { // speech ended
             console.log('end speech')

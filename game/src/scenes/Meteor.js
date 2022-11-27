@@ -73,7 +73,7 @@ class Laser extends Phaser.Physics.Arcade.Sprite{
 class Meteor extends Phaser.Scene {
 
 	constructor() {
-		super("scp5153");
+		super("Meteor");
 
 		/* START-USER-CTR-CODE */
 		// Write your code here.
@@ -95,6 +95,18 @@ class Meteor extends Phaser.Scene {
 		const ground = this.add.tilemap("ground");
 		ground.addTilesetImage("Ground", "Green moss and rocky walls");
 		ground.addTilesetImage("Fantascienza", "level_tileset");
+
+		// background
+		const background = this.add.image(402, 296, "background");
+		background.scaleX = 1.0355335402542793;
+		background.scaleY = 1.0606516381679638;
+
+		// rectangle_3
+		const rectangle_3 = this.add.rectangle(382, 593, 128, 128);
+		rectangle_3.scaleX = 9.940350319351483;
+		rectangle_3.scaleY = 0.8373843093799873;
+		rectangle_3.isFilled = true;
+		rectangle_3.fillColor = 3085824;
 
 		// livello_tile_1
 		const livello_tile_1 = ground.createLayer("Livello tile 1", ["Ground","Fantascienza"], -98, 201);
@@ -128,7 +140,9 @@ class Meteor extends Phaser.Scene {
 		arcadesprite_1.body.setSize(35, 44, false);
 
 		// player
-		const player = this.physics.add.sprite(439, 494, "ship", 0);
+		const player = this.physics.add.sprite(439, 487, "ship", 0);
+		player.scaleX = 1.5;
+		player.scaleY = 1.5;
 		player.body.setSize(66, 66, false);
 
 		// Date
@@ -140,8 +154,8 @@ class Meteor extends Phaser.Scene {
 		life.text = "Vita";
 
 		// lifeLabel
-		const lifeLabel = this.add.text(582, 34, "", {});
-		lifeLabel.text = "Energy:";
+		const lifeLabel = this.add.text(496, 34, "", {});
+		lifeLabel.text = "SCP-2000 Charge:";
 
 		// rectangle_2
 		const rectangle_2 = this.add.rectangle(372, 297, 128, 128);
@@ -206,6 +220,8 @@ class Meteor extends Phaser.Scene {
 
     shoot = false;
     speed = 300;
+	dashSpeed = 1000;
+	slowSpeed = 300;
     cursors = undefined;
     enemies = undefined;
     enemySpeed = 60;
@@ -228,7 +244,7 @@ class Meteor extends Phaser.Scene {
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
 		setTimeout(() => {
-			this.scene.start('Level');
+			this.scene.start(Level.name, {gameOver: false, partialScore: 123}); // fixme
 		},3000)
 	}
 
@@ -236,10 +252,15 @@ class Meteor extends Phaser.Scene {
 		this.showEndScreen("[Data Lost]")
 	}
 
+	playerDeath(){
+	}
+
 	create() {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
-		this.life.text = 0;
+		this.countdown = new CountdownController(this)
+        this.countdown.start(20000)
+		this.life.text = "0%";
 		const iteration = sessionStorage.getItem("iteration")||0;
 		this.speed = this.speed + 20*iteration;
 		const cometVelocity = (10);
@@ -250,9 +271,16 @@ class Meteor extends Phaser.Scene {
 		this.arcadesprite_1.body.maxSpeed = cometVelocity;
 		this.player = this.createPlayer();
 		this.cursors = this.input.keyboard.createCursorKeys();
-		this.spaceBar = this.input.keyboard.addKey(
-		  Phaser.Input.Keyboard.KeyCodes.SPACE
-		);
+		this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+		this.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+		this.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+		// i think theres a way to add callbacks somewhere
+		// this.D.addCallbacks(this, null, null, ()=>{console.log('hey')});
+		// this.cursors.shift.onDown(() => {
+		//   this.speed = this.dashSpeed;
+		//   console.log(this.speed)
+		//   setTimeout( () => {this.speed = this.slowSpeed}, 100);
+		// });
 		this.enemies = this.physics.add.group({
 			classType: FallingObject,
 			maxSize: 100,
@@ -301,8 +329,9 @@ class Meteor extends Phaser.Scene {
 		  const computeEnergy =  ()  => {
 			if (this.rectangle_2.visible)
 			return;
-			this.life.text = +this.life.text + 5;
-			if (this.life.text > 100)
+			const life = +this.life.text.replace("%","")
+			this.life.text = (life + 5)+"%";
+			if ((life + 5) > 100)
 			this.win()
 		  }
 
@@ -349,11 +378,11 @@ class Meteor extends Phaser.Scene {
 	  }
 
 	  movePlayer(player, time) {
-		if (this.cursors.left.isDown) {
+		if (this.cursors.left.isDown || this.A.isDown) {
 		  this.player.setVelocityX(this.speed * -1);
 		  this.player.anims.play("left", true);
 		  this.player.setFlipX(false);
-		} else if (this.cursors.right.isDown) {
+		} else if (this.cursors.right.isDown || this.D.isDown) {
 		  this.player.setVelocityX(this.speed);
 		  this.player.anims.play("right", true);
 		  this.player.setFlipX(true);
@@ -372,20 +401,30 @@ class Meteor extends Phaser.Scene {
 		}
 	  }
 
+	  handleDash(){
+	  // check if the shift key is held down
+	  if (this.cursors.shift.isDown) {
+	  this.speed = this.dashSpeed;
+	  // setTimeout( () => {this.speed = this.slowSpeed}, 100);
+		} else if (this.cursors.shift.isUp) {
+			this.speed = this.slowSpeed;
+		}
+	  }
+
 	  generateEnemy() {
 		const config = {
 			speed: this.enemySpeed,
 			rotation: 0.01
 		  };
-  
+
 		  // @ts-ignore
 		  const enemy = this.enemies.get(0, 0, "animated_asteroid", config);
-		  const enemyWidth = enemy.displayWidth;
+		  const enemyWidth = enemy?.displayWidth;
 		  const positionX = Phaser.Math.Between(
 			enemyWidth,
 			this.scale.width - enemyWidth
 		  );
-  
+
 		  if (enemy) {
 			enemy.spawn(positionX);
 		  }
@@ -402,21 +441,24 @@ class Meteor extends Phaser.Scene {
 		console.log("bang!")
 	  }
 
-	update(time) {	
+	update(time) {
+		this.handleDash();
 		this.movePlayer(this.player, time);
 	  }
 
 	  decreaseLife(player, enemy) {
 		enemy.explode();
-		if (this.life.text > 0)
-			this.life.text = this.life.text - 5;
+		const life = +this.life.text.replace("%","")
+		if (life > 0)
+			this.life.text = (life - 5)+"%";
 	  }
 
 	  decreaseEnergy(player, enemy) {
 		enemy.explode();
-		if (this.life.text > 0)
-			this.life.text = this.life.text - 5;
-	  }
+		const life = +this.life.text.replace("%","")
+		if (life > 0)
+		this.life.text = (life - 5)+"%";
+	}
 
 	/* END-USER-CODE */
 }
