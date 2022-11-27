@@ -230,7 +230,7 @@ class Meteor extends Phaser.Scene {
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
 		setTimeout(() => {
-			this.scene.start('Level');
+			this.scene.start(Level.name, {gameOver: false, partialScore: 123}); // fixme
 		},3000)
 	}
 
@@ -399,7 +399,7 @@ class Meteor extends Phaser.Scene {
   
 		  // @ts-ignore
 		  const enemy = this.enemies.get(0, 0, "animated_asteroid", config);
-		  const enemyWidth = enemy.displayWidth;
+		  const enemyWidth = enemy?.displayWidth;
 		  const positionX = Phaser.Math.Between(
 			enemyWidth,
 			this.scale.width - enemyWidth

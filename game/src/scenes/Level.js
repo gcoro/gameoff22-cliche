@@ -8,6 +8,8 @@ class Level extends Phaser.Scene {
 
         /* START-USER-CTR-CODE */
 
+        this.totalScore = 0
+
         /* END-USER-CTR-CODE */
     }
 
@@ -104,6 +106,15 @@ class Level extends Phaser.Scene {
 
     // alien is turning
     isAnimatingTurn = false
+
+    // totals
+    totalScore
+
+    init(data) {
+        console.log('init', data)
+
+        this.totalScore = this.totalScore + data.partialScore
+    }
 
     create() {
         console.log('create main scene')
