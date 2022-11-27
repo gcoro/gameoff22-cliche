@@ -12,6 +12,33 @@
     },
     "displayList": [
         {
+            "type": "Image",
+            "id": "d7eccdc4-e6c7-4e12-a5bc-6aa9c8ca900e",
+            "label": "background",
+            "components": [],
+            "texture": {
+                "key": "background"
+            },
+            "x": 402,
+            "y": 296,
+            "scaleX": 1.0355335402542793,
+            "scaleY": 1.0606516381679638
+        },
+        {
+            "type": "Rectangle",
+            "id": "3f79e562-7839-4910-9019-f493ce5eb8ee",
+            "label": "rectangle_3",
+            "components": [],
+            "x": 382,
+            "y": 593,
+            "scaleX": 9.940350319351483,
+            "scaleY": 0.8373843093799873,
+            "isFilled": true,
+            "fillColor": "#2f1600",
+            "width": 128,
+            "height": 128
+        },
+        {
             "type": "TilemapLayer",
             "id": "8ad74ce9-f15d-4b71-afb4-4de4bfd1a0bb",
             "label": "livello_tile_1",
@@ -86,7 +113,9 @@
                 "frame": 0
             },
             "x": 439,
-            "y": 494,
+            "y": 487,
+            "scaleX": 1.5,
+            "scaleY": 1.5,
             "body.width": 66,
             "body.height": 66
         },
@@ -115,9 +144,9 @@
             "id": "ae03988d-fd04-4b93-93b0-f7d9a0a2edcc",
             "label": "lifeLabel",
             "components": [],
-            "x": 582,
+            "x": 496,
             "y": 34,
-            "text": "Energy:"
+            "text": "SCP-2000 Charge:"
         },
         {
             "type": "Rectangle",
