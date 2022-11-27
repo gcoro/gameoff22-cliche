@@ -15,6 +15,11 @@
                 "key": "animated_asteroid"
             },
             {
+                "url": "assets/background.png",
+                "type": "image",
+                "key": "background"
+            },
+            {
                 "url": "assets/comet/comet.json",
                 "type": "animation",
                 "key": "comet"
