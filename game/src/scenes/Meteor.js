@@ -244,7 +244,6 @@ class Meteor extends Phaser.Scene {
 		this.speed = this.speed + 20*iteration;
 		const cometVelocity = (10);
 		this.enemySpeed = this.enemySpeed + 20*iteration;
-		console.log(this.enemySpeed)
 		sessionStorage.setItem("iteration",+iteration + 1)
 		this.date.text = actualDate;
 		this.arcadesprite_1.body.velocity.y = cometVelocity;
