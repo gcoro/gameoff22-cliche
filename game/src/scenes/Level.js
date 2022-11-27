@@ -106,13 +106,16 @@ class Level extends Phaser.Scene {
     isAnimatingTurn = false
 
     create() {
-        console.log('create scene')
+        console.log('create main scene')
 
         this.editorCreate()
         this.alienSprite
         this.alienSprite.body.onWorldBounds = true
         this.physics.world.on("worldbounds", this.onWorldBounds, this)
         this.strings = this.cache.json.get("strings")
+
+        // const bgMusic = this.sound.add('green_gray')
+        // bgMusic.play()
 
         setTimeout(() => {
             this.initAlienInteraction()
