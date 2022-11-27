@@ -206,13 +206,14 @@ class Meteor extends Phaser.Scene {
 
     shoot = false;
     speed = 300;
+	dashSpeed = 1000;
+	slowSpeed = 300;
     cursors = undefined;
     enemies = undefined;
     enemySpeed = 60;
     lasers = undefined;
     lastFired = 0;
     spaceBar = undefined;
-	energyAccumulationInterval = undefined;
 
 	showEndScreen(message) {
 		this.arcadesprite_1.destroy();
@@ -228,10 +229,12 @@ class Meteor extends Phaser.Scene {
 		this.enemies.setActive(false).setVisible(false);
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
+		setTimeout(() => {
+			this.scene.start('Level');
+		},3000)
 	}
 
 	onMeteorCollision(){
-		clearInterval(this.energyAccumulationInterval)
 		this.showEndScreen("[Data Lost]")
 	}
 
@@ -249,9 +252,16 @@ class Meteor extends Phaser.Scene {
 		this.arcadesprite_1.body.maxSpeed = cometVelocity;
 		this.player = this.createPlayer();
 		this.cursors = this.input.keyboard.createCursorKeys();
-		this.spaceBar = this.input.keyboard.addKey(
-		  Phaser.Input.Keyboard.KeyCodes.SPACE
-		);
+		this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+		this.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+		this.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+		// i think theres a way to add callbacks somewhere
+		// this.D.addCallbacks(this, null, null, ()=>{console.log('hey')});
+		// this.cursors.shift.onDown(() => {
+		//   this.speed = this.dashSpeed;
+		//   console.log(this.speed)
+		//   setTimeout( () => {this.speed = this.slowSpeed}, 100);
+		// });
 		this.enemies = this.physics.add.group({
 			classType: FallingObject,
 			maxSize: 100,
@@ -297,15 +307,23 @@ class Meteor extends Phaser.Scene {
 
 		  const accumulation =  2000 - iteration*100
 
-		  this.energyAccumulationInterval = setInterval(() => {
+		  const computeEnergy =  ()  => {
+			if (this.rectangle_2.visible)
+			return;
 			this.life.text = +this.life.text + 5;
 			if (this.life.text > 100)
 			this.win()
-		  }, accumulation > 200 ? accumulation:  200)
+		  }
+
+		  this.time.addEvent({
+			delay: accumulation > 200 ? accumulation:  200,
+			callback: computeEnergy,
+			callbackScope: this,
+			loop: true
+		  });
 	}
 
 	win() {
-		this.clearInterval = this.energyAccumulationInterval;
 		this.showEndScreen("You have been able to charge SCP-2000 In time, humanity is saved")
 	}
 
@@ -340,11 +358,11 @@ class Meteor extends Phaser.Scene {
 	  }
 
 	  movePlayer(player, time) {
-		if (this.cursors.left.isDown) {
+		if (this.cursors.left.isDown || this.A.isDown) {
 		  this.player.setVelocityX(this.speed * -1);
 		  this.player.anims.play("left", true);
 		  this.player.setFlipX(false);
-		} else if (this.cursors.right.isDown) {
+		} else if (this.cursors.right.isDown || this.D.isDown) {
 		  this.player.setVelocityX(this.speed);
 		  this.player.anims.play("right", true);
 		  this.player.setFlipX(true);
@@ -360,6 +378,16 @@ class Meteor extends Phaser.Scene {
 			laser.fire(this.player.x, this.player.y);
 			this.lastFired = time + 150;
 		  }
+		}
+	  }
+
+	  handleDash(){
+	  // check if the shift key is held down
+	  if (this.cursors.shift.isDown) {
+	  this.speed = this.dashSpeed;
+	  // setTimeout( () => {this.speed = this.slowSpeed}, 100);
+		} else if (this.cursors.shift.isUp) {
+			this.speed = this.slowSpeed;
 		}
 	  }
 
@@ -393,7 +421,8 @@ class Meteor extends Phaser.Scene {
 		console.log("bang!")
 	  }
 
-	update(time) {	
+	update(time) {
+		this.handleDash();
 		this.movePlayer(this.player, time);
 	  }
 
