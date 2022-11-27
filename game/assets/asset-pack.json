@@ -102,6 +102,20 @@
                 "key": "door_blue"
             },
             {
+                "url": [
+                    "assets/sound/door_locked.wav"
+                ],
+                "type": "audio",
+                "key": "door_locked"
+            },
+            {
+                "url": [
+                    "assets/sound/door_open.wav"
+                ],
+                "type": "audio",
+                "key": "door_open"
+            },
+            {
                 "url": "assets/scp2020/door_red.png",
                 "type": "image",
                 "key": "door_red"
