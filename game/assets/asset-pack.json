@@ -103,14 +103,14 @@
             },
             {
                 "url": [
-                    "assets/sound/door_locked.wav"
+                    "assets/sfx/door_locked.wav"
                 ],
                 "type": "audio",
                 "key": "door_locked"
             },
             {
                 "url": [
-                    "assets/sound/door_open.wav"
+                    "assets/sfx/door_open.wav"
                 ],
                 "type": "audio",
                 "key": "door_open"
@@ -124,6 +124,13 @@
                 "url": "assets/scp2020/door0.png",
                 "type": "image",
                 "key": "door0"
+            },
+            {
+                "url": [
+                    "assets/music/green_gray.mp3"
+                ],
+                "type": "audio",
+                "key": "green_gray"
             },
             {
                 "url": "assets/scp2020/pavement.png",

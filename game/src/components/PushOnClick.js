@@ -32,20 +32,26 @@ class PushOnClick extends UserComponent {
     awake() {
         if (this.sceneToStartKey) {
             this.gameObject.setInteractive().on("pointerdown", () => {
-                if (this.scene.activeScp === this.sceneToStartKey) {
-                    console.log("start scene", this.sceneToStartKey)
+                console.log('clicked', this.sceneToStartKey)
 
-                    const doorOpening = this.scene.sound.add('door_open')
-                    doorOpening.play()
+                if (this.sceneToStartKey === 'Level') { // main scene
+                    this.scene.scene.start(Level.name)
+                } else { // minigames
+                    if (this.scene.activeScp === this.sceneToStartKey) {
+                        console.log("start scene", this.sceneToStartKey)
 
-                    setTimeout(() => { // timeout to give sound effect some time to play
-                        this.scene.scene.start(this.sceneToStartKey)
-                    }, 1000)
-                } else {
-                    console.log("scp not enabled")
+                        const doorOpening = this.scene.sound.add('door_open')
+                        doorOpening.play()
 
-                    const doorLocked = this.scene.sound.add('door_locked')
-                    doorLocked.play()
+                        setTimeout(() => { // timeout to give sound effect some time to play
+                            this.scene.scene.start(this.sceneToStartKey)
+                        }, 1000)
+                    } else {
+                        console.log("scp not enabled")
+
+                        const doorLocked = this.scene.sound.add('door_locked')
+                        doorLocked.play()
+                    }
                 }
             })
         }
