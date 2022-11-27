@@ -7,89 +7,135 @@
                 "key": "animations"
             },
             {
-                "url": "assets/armor_idle_1.png",
+                "url": "assets/scp2020/armor_idle_1.png",
                 "type": "image",
                 "key": "armor_idle_1"
             },
             {
-                "url": "assets/armor_idle_2.png",
+                "url": "assets/scp2020/armor_idle_2.png",
                 "type": "image",
                 "key": "armor_idle_2"
             },
             {
-                "url": "assets/armor_idle_3.png",
+                "url": "assets/scp2020/armor_idle_3.png",
                 "type": "image",
                 "key": "armor_idle_3"
             },
             {
-                "url": "assets/armor_turn_1.png",
+                "url": "assets/scp2020/armor_turn_1.png",
                 "type": "image",
                 "key": "armor_turn_1"
             },
             {
-                "url": "assets/armor_turn_2.png",
+                "url": "assets/scp2020/armor_turn_2.png",
                 "type": "image",
                 "key": "armor_turn_2"
             },
             {
-                "url": "assets/armor_turn_3.png",
+                "url": "assets/scp2020/armor_turn_3.png",
                 "type": "image",
                 "key": "armor_turn_3"
             },
             {
-                "url": "assets/armor_turn_reverse_1.png",
+                "url": "assets/scp2020/armor_turn_reverse_1.png",
                 "type": "image",
                 "key": "armor_turn_reverse_1"
             },
             {
-                "url": "assets/armor_turn_reverse_2.png",
+                "url": "assets/scp2020/armor_turn_reverse_2.png",
                 "type": "image",
                 "key": "armor_turn_reverse_2"
             },
             {
-                "url": "assets/armor_turn_reverse_3.png",
+                "url": "assets/scp2020/armor_turn_reverse_3.png",
                 "type": "image",
                 "key": "armor_turn_reverse_3"
             },
             {
-                "url": "assets/armor_walk_1.png",
+                "url": "assets/scp2020/armor_walk_1.png",
                 "type": "image",
                 "key": "armor_walk_1"
             },
             {
-                "url": "assets/armor_walk_2.png",
+                "url": "assets/scp2020/armor_walk_2.png",
                 "type": "image",
                 "key": "armor_walk_2"
             },
             {
-                "url": "assets/armor_walk_3.png",
+                "url": "assets/scp2020/armor_walk_3.png",
                 "type": "image",
                 "key": "armor_walk_3"
             },
             {
-                "url": "assets/armor_walk_4.png",
+                "url": "assets/scp2020/armor_walk_4.png",
                 "type": "image",
                 "key": "armor_walk_4"
             },
             {
-                "url": "assets/armor_walk_5.png",
+                "url": "assets/scp2020/armor_walk_5.png",
                 "type": "image",
                 "key": "armor_walk_5"
             },
             {
-                "url": "assets/armor_walk_6.png",
+                "url": "assets/scp2020/armor_walk_6.png",
                 "type": "image",
                 "key": "armor_walk_6"
             },
             {
-                "url": "assets/checkered-floor-4327693_640.png",
+                "url": "assets/scp2020/back-structures.png",
                 "type": "image",
-                "key": "checkered-floor-4327693_640"
+                "key": "back-structures"
             },
             {
-                "url": "assets/dino.png",
-                "key": "dino",
-                "type": "image"
+                "url": "assets/scp2020/background_alien.png",
+                "type": "image",
+                "key": "background_alien"
+            },
+            {
+                "url": "assets/scp2020/background_scifi_interior.png",
+                "type": "image",
+                "key": "background_scifi_interior"
+            },
+            {
+                "url": "assets/scp2020/door_blue.png",
+                "type": "image",
+                "key": "door_blue"
+            },
+            {
+                "url": [
+                    "assets/sfx/door_locked.wav"
+                ],
+                "type": "audio",
+                "key": "door_locked"
+            },
+            {
+                "url": [
+                    "assets/sfx/door_open.wav"
+                ],
+                "type": "audio",
+                "key": "door_open"
+            },
+            {
+                "url": "assets/scp2020/door_red.png",
+                "type": "image",
+                "key": "door_red"
+            },
+            {
+                "url": "assets/scp2020/door0.png",
+                "type": "image",
+                "key": "door0"
+            },
+            {
+                "url": [
+                    "assets/music/green_gray.mp3"
+                ],
+                "type": "audio",
+                "key": "green_gray"
+            },
+            {
+                "url": "assets/scp2020/pavement.png",
+                "type": "image",
+                "key": "pavement"
             },
             {
                 "url": "assets/Green moss and rocky walls.png",
@@ -104,7 +150,7 @@
             {
                 "url": "assets/jail.png",
                 "type": "image",
-                "key": "jail-layer"
+                "key": "pavement_full"
             },
             {
                 "url": "assets/laser.png",

@@ -1,38 +1,22 @@
-# Basic JavaScript project template
+# clichè, right?
 
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/PhaserEditor2D/starter-template-basic-javascript)
+## Assets used
 
-This is a Phaser Editor 2D v3 project template.
+### main scene
 
-## Configuration
+-   bg https://opengameart.org/content/sideview-sci-fi-patreon-collection
+-   doors https://opengameart.org/content/lab-textures
+-   alien https://craftpix.net/freebies/2d-game-alien-character-free-sprite/
+-   audio door locked https://freesound.org/people/BenjaminNelan/sounds/321087/
+-   audio door opening https://opengameart.org/content/door-open-sfx
+-   audio main scene theme https://opengameart.org/content/green-gray 
 
-* It includes the latest Phaser v3 runtime (in the `lib/` folder).
-* It is coded in JavaScript.
-* It includes a VS Code project configuration (`jsconfig.json` file) and the type definitions (in the `types/` folder).
+### Scp 173
 
-## Run the editor
-
-If you have NodeJS installed, you can run the editor using the `editor` NPM script, defined in the `package.json` file:
-
-```bash
-$ npm install
-$ npm run editor
-```
-
-If you are in a remote environment (like the Gitpod.io IDE), then run the editor like this:
-
-```bash
-$ npm run editor-remote
-```
-
-If you want to see all the editor options, run:
-
-```bash
-$ npx phasereditor2d-launcher -help
-```
-
-If Phaser Editor 2D Core is globally installed, you can run:
-
-```bash
-$ PhaserEditor2D -project .
-```
+-   poops: https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?page-name=poop-game-sprites&item=1g6v4g0e1k7m7b5411
+- blood and bones: https://psychronic.com/abusive-prison-tileset/
+- alien sprite: https://kenney.nl/assets
+- alien guards: https://secrethideout.itch.io/team-wars-platformer-battle
+- eye monster: https://kuuly.itch.io/covid-boss
+-   cursor: https://opengameart.org/content/%E2%80%9Calien%E2%80%9D-crosshairs
+- tile: quelle di davide che non abbiamo
