@@ -106,6 +106,8 @@ class Level extends Phaser.Scene {
     isAnimatingTurn = false
 
     create() {
+        console.log('create scene')
+
         this.editorCreate()
         this.alienSprite
         this.alienSprite.body.onWorldBounds = true
@@ -118,6 +120,8 @@ class Level extends Phaser.Scene {
     }
 
     onWorldBounds(body, up, down, left, right) {
+        console.log('onWorldBounds')
+
         if (this.isAnimatingTurn) return
         this.isAnimatingTurn = true
         // stops
@@ -145,13 +149,15 @@ class Level extends Phaser.Scene {
     }
 
     initAlienInteraction() {
+        console.log('initAlienInteraction')
+
         // stops
         this.alienSprite.anims.pause()
         this.alienSprite.body.velocity.x = 0
         // sets turn animation
         const animTurn = new StartAnimation(this.alienSprite)
         animTurn.animationKey = "armor_turn_reverse"
-        animTurn.gameObject.on("animationcomplete", () => {
+        animTurn.gameObject.once("animationcomplete", () => {
             // sets idle animation
             const animIdle = new StartAnimation(this.alienSprite)
             animIdle.animationKey = "armor_idle"
