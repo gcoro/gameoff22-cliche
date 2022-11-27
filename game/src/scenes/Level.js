@@ -77,13 +77,13 @@ class Level extends Phaser.Scene {
         armor_idle_1StartAnimation.animationKey = "armor_walk"
         new PushOnClick(armor_idle_1)
 
-        this.armor_idle_1 = armor_idle_1
+        this.alienSprite = armor_idle_1
 
         this.events.emit("scene-awake")
     }
 
     /** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
-    armor_idle_1
+    alienSprite
 
     /* START-USER-CODE */
 
@@ -99,10 +99,16 @@ class Level extends Phaser.Scene {
         text: null,
     }
 
+    // walk horizontal velocity of alien
+    originalVelocity = 70
+
+    // alien is turning
+    isAnimatingTurn = false
+
     create() {
         this.editorCreate()
-        this.armor_idle_1
-        this.armor_idle_1.body.onWorldBounds = true
+        this.alienSprite
+        this.alienSprite.body.onWorldBounds = true
         this.physics.world.on("worldbounds", this.onWorldBounds, this)
         this.strings = this.cache.json.get("strings")
 
@@ -110,31 +116,29 @@ class Level extends Phaser.Scene {
             this.initAlienInteraction()
         }, 3000)
     }
-    originalVelocity
-    isAnimatingTurn = false
+
     onWorldBounds(body, up, down, left, right) {
         if (this.isAnimatingTurn) return
         this.isAnimatingTurn = true
         // stops
-        this.armor_idle_1.anims.pause()
-        this.originalVelocity =
-            this.armor_idle_1.body.velocity.x || this.originalVelocity
-        this.armor_idle_1.body.velocity.x = 0
+        this.alienSprite.anims.pause()
+        this.originalVelocity = this.alienSprite.body.velocity.x || this.originalVelocity
+        this.alienSprite.body.velocity.x = 0
         // sets turn animation
-        const animTurn = new StartAnimation(this.armor_idle_1)
+        const animTurn = new StartAnimation(this.alienSprite)
         animTurn.animationKey = "armor_turn_reverse"
         animTurn.gameObject.once("animationcomplete", () => {
             if (right) {
-                this.armor_idle_1.flipX = true
+                this.alienSprite.flipX = true
             }
             if (left) {
-                this.armor_idle_1.flipX = false
+                this.alienSprite.flipX = false
             }
-            const animTurn2 = new StartAnimation(this.armor_idle_1)
+            const animTurn2 = new StartAnimation(this.alienSprite)
             animTurn2.animationKey = "armor_turn"
             animTurn2.gameObject.once("animationcomplete", () => {
-                this.armor_idle_1.anims.play("armor_walk")
-                this.armor_idle_1.body.velocity.x = this.originalVelocity
+                this.alienSprite.anims.play("armor_walk")
+                this.alienSprite.body.velocity.x = this.originalVelocity
                 this.isAnimatingTurn = false
             })
         })
@@ -142,14 +146,14 @@ class Level extends Phaser.Scene {
 
     initAlienInteraction() {
         // stops
-        this.armor_idle_1.anims.pause()
-        this.armor_idle_1.body.velocity.x = 0
+        this.alienSprite.anims.pause()
+        this.alienSprite.body.velocity.x = 0
         // sets turn animation
-        const animTurn = new StartAnimation(this.armor_idle_1)
+        const animTurn = new StartAnimation(this.alienSprite)
         animTurn.animationKey = "armor_turn_reverse"
         animTurn.gameObject.on("animationcomplete", () => {
             // sets idle animation
-            const animIdle = new StartAnimation(this.armor_idle_1)
+            const animIdle = new StartAnimation(this.alienSprite)
             animIdle.animationKey = "armor_idle"
 
             setTimeout(() => {
@@ -159,6 +163,8 @@ class Level extends Phaser.Scene {
     }
 
     talk() {
+        console.log('start speech')
+
         const index = 0
         const discourse = [
             this.strings.alienIntro1,
@@ -190,37 +196,33 @@ class Level extends Phaser.Scene {
 
             this.createSpeechBubble(discourse[index], null, null, 400, 50)
 
-            if (index !== discourse.length) {
-                // not last element
-                this.input.once("pointerdown", () => {
-                    // tap anywhere in the scene
-                    this.nextLine(discourse, index + 1)
-                })
-            } else {
-                // destroy last bubble
-                this.lastBubble.bubble?.destroy()
-                this.lastBubble.text?.destroy()
-            }
+            this.input.once("pointerdown", () => {
+                // tap anywhere in the scene
+                this.nextLine(discourse, index + 1)
+            })
+        } else { // speech ended
+            console.log('end speech')
+            // walk again
+            this.alienSprite.anims.pause()
+            this.alienSprite.anims.play("armor_walk")
+            this.alienSprite.body.velocity.x = this.originalVelocity
+            this.alienSprite.isAnimatingTurn = false
         }
     }
 
     createSpeechBubble(quote, x, y, width, height) {
         // default position is on top of sprite
         if (!x)
-            x =
-                this.armor_idle_1.body.position.x +
-                this.armor_idle_1.body.halfWidth
+            x = this.alienSprite.body.position.x + this.alienSprite.body.halfWidth
         if (!y)
-            y =
-                this.armor_idle_1.body.position.y -
-                this.armor_idle_1.body.halfHeight
+            y = this.alienSprite.body.position.y - this.alienSprite.body.halfHeight
 
         var bubbleWidth = width
         var bubbleHeight = height
         var bubblePadding = 10
         var arrowHeight = bubbleHeight / 4
 
-        var bubble = this.armor_idle_1.scene.add.graphics({ x: x, y: y })
+        var bubble = this.alienSprite.scene.add.graphics({ x: x, y: y })
 
         //  Bubble shadow
         bubble.fillStyle(0x222222, 0.5)
@@ -261,7 +263,7 @@ class Level extends Phaser.Scene {
         bubble.lineBetween(point2X, point2Y, point3X, point3Y)
         bubble.lineBetween(point1X, point1Y, point3X, point3Y)
 
-        var content = this.armor_idle_1.scene.add.text(0, 0, quote, {
+        var content = this.alienSprite.scene.add.text(0, 0, quote, {
             fontFamily: "Arial",
             fontSize: 20,
             color: "#000000",
