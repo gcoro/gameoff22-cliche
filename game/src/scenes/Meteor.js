@@ -252,9 +252,14 @@ class Meteor extends Phaser.Scene {
 		this.showEndScreen("[Data Lost]")
 	}
 
+	playerDeath(){
+	}
+
 	create() {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
+		this.countdown = new CountdownController(this)
+        this.countdown.start(20000)
 		this.life.text = "0%";
 		const iteration = sessionStorage.getItem("iteration")||0;
 		this.speed = this.speed + 20*iteration;
@@ -326,7 +331,7 @@ class Meteor extends Phaser.Scene {
 			return;
 			const life = +this.life.text.replace("%","")
 			this.life.text = (life + 5)+"%";
-			if (this.life.text > 100)
+			if ((life + 5) > 100)
 			this.win()
 		  }
 
