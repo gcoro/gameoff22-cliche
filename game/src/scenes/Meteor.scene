@@ -136,7 +136,7 @@
             "scope": "PUBLIC",
             "components": [],
             "x": 655,
-            "y": 34,
+            "y": 42,
             "text": "Vita"
         },
         {
@@ -145,7 +145,7 @@
             "label": "lifeLabel",
             "components": [],
             "x": 496,
-            "y": 34,
+            "y": 42,
             "text": "SCP-2000 Charge:"
         },
         {
@@ -175,6 +175,38 @@
             "y": 308,
             "visible": false,
             "text": "Game Over?"
+        },
+        {
+            "type": "Sprite",
+            "id": "d38b2faa-0adb-42a0-8240-bf131f53d4a1",
+            "label": "progress_bar_background",
+            "useGameObjectName": true,
+            "components": [],
+            "texture": {},
+            "x": 30,
+            "y": 27,
+            "scaleX": 23,
+            "scaleY": 0.5,
+            "originX": 0,
+            "tintTopLeft": "#949494",
+            "tintTopRight": "#949494",
+            "tintBottomLeft": "#949494",
+            "tintBottomRight": "#949494",
+            "tintFill": true
+        },
+        {
+            "type": "Sprite",
+            "id": "c13f572a-0067-4770-86d1-9dc3603e3dee",
+            "label": "progress_bar",
+            "useGameObjectName": true,
+            "components": [],
+            "texture": {},
+            "x": 30,
+            "y": 27,
+            "scaleX": 11,
+            "scaleY": 0.5,
+            "originX": 0,
+            "tintFill": true
         }
     ],
     "plainObjects": [
