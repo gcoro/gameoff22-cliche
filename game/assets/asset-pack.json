@@ -148,11 +148,6 @@
                 "key": "ground"
             },
             {
-                "url": "assets/jail.png",
-                "type": "image",
-                "key": "pavement_full"
-            },
-            {
                 "url": "assets/laser.png",
                 "frameConfig": {
                     "frameWidth": 16,
