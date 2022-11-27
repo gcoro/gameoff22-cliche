@@ -97,7 +97,7 @@
                 "key": "armor_idle_1"
             },
             "x": 168,
-            "y": 379,
+            "y": 400,
             "scaleX": 0.3,
             "scaleY": 0.28,
             "ArcadeComponent.active": true,

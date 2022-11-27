@@ -49,7 +49,7 @@ class Level extends Phaser.Scene {
 
         // armor_idle_1
         /** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
-        const armor_idle_1 = this.add.sprite(168, 379, "armor_idle_1")
+        const armor_idle_1 = this.add.sprite(168, 400, "armor_idle_1")
         armor_idle_1.scaleX = 0.3
         armor_idle_1.scaleY = 0.28
         this.physics.add.existing(armor_idle_1, false)
