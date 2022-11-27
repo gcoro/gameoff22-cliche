@@ -25,7 +25,7 @@ class Scp173 extends Phaser.Scene {
         this.enemy = undefined
         this.mapHeight = 1200
         this.mapWidth = 16 * 90
-        this.gameDuration = 18000
+        this.gameDuration = 180000
         this.stuffToThrow = [
             {
                 name: "skull",
@@ -105,6 +105,8 @@ class Scp173 extends Phaser.Scene {
         console.log("scene scp173 create")
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
+        this.createStartingText()
+        this.createBackgrounds()
         this.input.setPollAlways()
 
         // add collider
@@ -139,7 +141,7 @@ class Scp173 extends Phaser.Scene {
             this.mapWidth / 2 - 2.2 * this.BOARD_GAP_TO_WORLD,
             0,
             this.currentScore
-        )
+        ).setVisible(false)
 
         this.createPlayerAllies()
         this.createTimer()
@@ -153,13 +155,12 @@ class Scp173 extends Phaser.Scene {
         this.eventEmitter.once(PLAYER_EVENTS.PLAYER_DIED, () =>
             this.endGame(false)
         )
-
-        setTimeout(() => this.start(), 2000)
     }
 
     createTimer() {
         this.countdown = new CountdownController(this)
-    }
+        this.countdown.label.setVisible(false)
+  }
 
     playerDeath(reason) {
         this.countdown.stop()
@@ -174,6 +175,43 @@ class Scp173 extends Phaser.Scene {
                 }
             )
             .setDepth(7)
+    }
+
+    createStartingText() {
+        const content = [
+            "Collect everything the monster throw",
+            "before the is up or you will die.",
+            "To collect items you need to press",
+            "the space bar while on it",
+            "",
+            "If you touch the monster you'll die too",
+            "The game is about to start..."
+        ];
+        
+        this.startingText = this.add.text(0, 0, content, { 
+            fixedHeight: this.game.config.height,
+            fixedWidth: this.game.config.width,
+            fontSize: 32,
+            align:"center", 
+            font: "28px monospace",
+            backgroundColor: "black",
+            color: "white" 
+        })
+        this.startingText.setDepth(7)
+        this.startingText.setPadding(0, this.game.config.height/3)
+        setTimeout(() => this.startGame(), 10000)
+    }
+
+    startGame() {
+        this.startingText.destroy()
+        this.scoreLabel.setVisible(true)
+        this.countdown.label.setVisible(true)
+        this.countdown.start(this.gameDuration)
+        this.input.setDefaultCursor(
+            "url(assets/scp173/cursor/inactive.cur), auto"
+        )
+        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
+        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 10000)
     }
 
     createBackgrounds() {
@@ -242,15 +280,6 @@ class Scp173 extends Phaser.Scene {
         this.player_alien_ally2.setCollideWorldBounds(true)
 
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
-    }
-
-    start() {
-        this.input.setDefaultCursor(
-            "url(assets/scp173/cursor/inactive.cur), auto"
-        )
-        this.countdown.start(this.gameDuration)
-        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
-        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
     }
 
     createPoors() {
