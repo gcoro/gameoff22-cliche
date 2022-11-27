@@ -3,7 +3,7 @@ class CountdownController {
         this.scene = scene
 
         const timerLabel = this.scene.add.text(
-            this.scene.mapWidth / 2 - 75,
+            (this.scene.mapWidth  / 2 - 75) || (this.scene.game.config.width-150),
             30,
             `00:00`,
             {
@@ -58,6 +58,10 @@ class CountdownController {
         const remaining = this.duration - elapsed
         const seconds = Math.floor(remaining / 1000)
         this.label.text = this.formatTime(seconds)
+    }
+
+    hide() {
+        this.label.setActive(false).setVisible(false);
     }
 
     formatTime(seconds) {

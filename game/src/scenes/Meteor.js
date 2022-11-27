@@ -150,12 +150,32 @@ class Meteor extends Phaser.Scene {
 		date.text = "New text";
 
 		// life
-		const life = this.add.text(655, 42, "", {});
+		const life = this.add.text(737, 71, "", {});
 		life.text = "Vita";
 
 		// lifeLabel
-		const lifeLabel = this.add.text(496, 42, "", {});
+		const lifeLabel = this.add.text(576, 72, "", {});
 		lifeLabel.text = "SCP-2000 Charge:";
+
+		// progress_bar_background
+		const progress_bar_background = this.add.sprite(30, 593, "_MISSING");
+		progress_bar_background.name = "progress_bar_background";
+		progress_bar_background.scaleX = 23;
+		progress_bar_background.scaleY = 0.5;
+		progress_bar_background.setOrigin(0, 0.5);
+		progress_bar_background.tintFill = true;
+		progress_bar_background.tintTopLeft = 9737364;
+		progress_bar_background.tintTopRight = 9737364;
+		progress_bar_background.tintBottomLeft = 9737364;
+		progress_bar_background.tintBottomRight = 9737364;
+
+		// progress_bar
+		const progress_bar = this.add.sprite(30, 592, "_MISSING");
+		progress_bar.name = "progress_bar";
+		progress_bar.scaleX = 11;
+		progress_bar.scaleY = 0.5;
+		progress_bar.setOrigin(0, 0.5);
+		progress_bar.tintFill = true;
 
 		// rectangle_2
 		const rectangle_2 = this.add.rectangle(372, 297, 128, 128);
@@ -171,26 +191,6 @@ class Meteor extends Phaser.Scene {
 		text_1.visible = false;
 		text_1.text = "Game Over?";
 
-		// progress_bar_background
-		const progress_bar_background = this.add.sprite(30, 27, "_MISSING");
-		progress_bar_background.name = "progress_bar_background";
-		progress_bar_background.scaleX = 23;
-		progress_bar_background.scaleY = 0.5;
-		progress_bar_background.setOrigin(0, 0.5);
-		progress_bar_background.tintFill = true;
-		progress_bar_background.tintTopLeft = 9737364;
-		progress_bar_background.tintTopRight = 9737364;
-		progress_bar_background.tintBottomLeft = 9737364;
-		progress_bar_background.tintBottomRight = 9737364;
-
-		// progress_bar
-		const progress_bar = this.add.sprite(30, 27, "_MISSING");
-		progress_bar.name = "progress_bar";
-		progress_bar.scaleX = 11;
-		progress_bar.scaleY = 0.5;
-		progress_bar.setOrigin(0, 0.5);
-		progress_bar.tintFill = true;
-
 		// collider
 		this.physics.add.collider(arcadesprite_1, rectangle_1, this.onMeteorCollision, undefined, this);
 
@@ -203,6 +203,8 @@ class Meteor extends Phaser.Scene {
 		this.player = player;
 		this.date = date;
 		this.life = life;
+		this.progress_bar_background = progress_bar_background;
+		this.progress_bar = progress_bar;
 		this.rectangle_2 = rectangle_2;
 		this.text_1 = text_1;
 		this.ground = ground;
@@ -220,6 +222,10 @@ class Meteor extends Phaser.Scene {
 	date;
 	/** @type {Phaser.GameObjects.Text} */
 	life;
+	/** @type {Phaser.GameObjects.Sprite} */
+	progress_bar_background;
+	/** @type {Phaser.GameObjects.Sprite} */
+	progress_bar;
 	/** @type {Phaser.GameObjects.Rectangle} */
 	rectangle_2;
 	/** @type {Phaser.GameObjects.Text} */
@@ -248,8 +254,10 @@ class Meteor extends Phaser.Scene {
     lasers = undefined;
     lastFired = 0;
     spaceBar = undefined;
+	countdown = undefined;
 
-	showEndScreen(message) {
+	showEndScreen(message, gameover) {
+		this.countdown.hide();
 		this.arcadesprite_1.destroy();
 		this.rectangle_2.visible = true;
 		this.text_1.visible = true;
@@ -264,12 +272,12 @@ class Meteor extends Phaser.Scene {
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
 		setTimeout(() => {
-			this.scene.start(Level.name, {gameOver: true, partialScore: 123}); // fixme
+			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? 0 :100}); // fixme
 		},3000)
 	}
 
 	onMeteorCollision(){
-		this.showEndScreen("[Data Lost]")
+		this.showEndScreen("[Data Lost]", true)
 	}
 
 	playerDeath(){
@@ -279,7 +287,7 @@ class Meteor extends Phaser.Scene {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
 		this.countdown = new CountdownController(this)
-        this.countdown.start(20000)
+        this.countdown.start(50000)
 		this.life.text = "0%";
 		const iteration = sessionStorage.getItem("iteration")||0;
 		this.speed = this.speed + 20*iteration;
@@ -344,12 +352,15 @@ class Meteor extends Phaser.Scene {
 			this
 		  );
 
+		  this.progress_bar.scaleX = 0 * 23 * 0.01;
+
 		  const accumulation =  2000 - iteration*100
 
 		  const computeEnergy =  ()  => {
 			if (this.rectangle_2.visible)
 			return;
 			const life = +this.life.text.replace("%","")
+			this.progress_bar.scaleX = life * 23 * 0.01;
 			this.life.text = (life + 5)+"%";
 			if ((life + 5) > 100)
 			this.win()
@@ -464,13 +475,13 @@ class Meteor extends Phaser.Scene {
 	update(time) {
 		this.handleDash();
 		this.movePlayer(this.player, time);
+		this.countdown.update()
 	  }
 
 	  decreaseLife(player, enemy) {
 		enemy.explode();
 		const life = +this.life.text.replace("%","")
-		progress_bar.scaleX = life * 23;
-		console.log(life);
+		this.progress_bar.scaleX = life * 23 * 0.01;
 		if (life > 0)
 			this.life.text = (life - 5)+"%";
 	  }
@@ -478,7 +489,7 @@ class Meteor extends Phaser.Scene {
 	  decreaseEnergy(player, enemy) {
 		enemy.explode();
 		const life = +this.life.text.replace("%","")
-		progress_bar.scaleX = life * 23;
+		this.progress_bar.scaleX = life * 23* 0.01;
 		console.log(life);
 		if (life > 0)
 		this.life.text = (life - 5)+"%";
