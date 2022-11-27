@@ -73,7 +73,7 @@ class Laser extends Phaser.Physics.Arcade.Sprite{
 class Meteor extends Phaser.Scene {
 
 	constructor() {
-		super("Meteor");
+		super("scp5153");
 
 		/* START-USER-CTR-CODE */
 		// Write your code here.
