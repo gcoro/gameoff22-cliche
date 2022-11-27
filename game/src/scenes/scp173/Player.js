@@ -105,6 +105,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     die() {
+        console.log("player die")
         this.isAlive = false
         this.setVelocityX(0)
         this.setVelocityY(0)
