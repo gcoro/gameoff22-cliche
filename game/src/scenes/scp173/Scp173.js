@@ -6,7 +6,7 @@ class Scp173 extends Phaser.Scene {
     init() {
         // constants
         this.CELL_SIZE = 16
-        this.NUM_POORS_PER_LOOP = 5
+        this.NUM_POORS_PER_LOOP = 1
         this.SCORES_OVERLAP_POOR = 3
         this.OVERLAP_RANGE = 12
         this.WALL_THICKNESS = 3 * 16
@@ -436,6 +436,7 @@ class Scp173 extends Phaser.Scene {
             this.countdown.update()
             this.movePlayerAllies()
         }
+        console.log(this.status)
         if (this.status === this.GAME_STATUS.FIGHTING) {
             this.checkExitDoor()
             this.checkPointerPosition()
@@ -453,8 +454,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     checkExitDoor() {
-        if (this.currentPoors.length === 0 && this.gameHasStarted) {
-            // play animation
+        if (this.currentPoors.length === 0) {
             this.exit_door.anims.play("open")
         } else {
             this.exit_door.anims.play("close")
