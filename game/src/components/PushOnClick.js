@@ -35,11 +35,14 @@ class PushOnClick extends UserComponent {
                 console.log('clicked', this.sceneToStartKey)
 
                 if (this.sceneToStartKey === 'Level') { // main scene
-                    this.scene.scene.start(Level.name)
+                    this.scene.scene.start(Level.name, { restart: true })
                 } else { // minigames
                     if (this.scene.activeScp === this.sceneToStartKey) {
                         console.log("start scene", this.sceneToStartKey)
 
+                        this.scene.activeScp = null
+                        this.scene.bgMusic?.pause()
+                        
                         const doorOpening = this.scene.sound.add('door_open')
                         doorOpening.play()
 

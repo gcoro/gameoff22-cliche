@@ -234,6 +234,7 @@ class Meteor extends Phaser.Scene {
 	ground;
 
 	/* START-USER-CODE */
+	meteorBgMusic
 	// Write your code here
 
 	getRandomInt(min, max) {
@@ -271,7 +272,14 @@ class Meteor extends Phaser.Scene {
 		this.enemies.setActive(false).setVisible(false);
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
+
+        let sound
+        if (!gameover) { sound = this.sound.add('levelcomplete') }
+        else { sound = this.sound.add('explosion') }
+        sound.play()
+		
 		setTimeout(() => {
+			this.meteorBgMusic?.stop()
 			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? 0 :100}); // fixme
 		},3000)
 	}
@@ -286,6 +294,10 @@ class Meteor extends Phaser.Scene {
 	create() {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
+
+		this.meteorBgMusic = this.sound.add('meteor_fight', { volume: 0.4 })
+		if(musicActive) this.meteorBgMusic.play()
+
 		this.countdown = new CountdownController(this)
         this.countdown.start(50000)
 		this.life.text = "0%";

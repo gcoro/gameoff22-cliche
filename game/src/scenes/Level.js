@@ -113,11 +113,25 @@ class Level extends Phaser.Scene {
     // map width
     mapWidth = 16 * 90
 
+    // text sfx
+    textSound
+
+    // bg theme music
+    bgMusic
+
     init(data) {
         console.log('init', data)
 
-        if(!this.totalScore) this.totalScore = 0
-        if(data.partialScore) {
+        if (data.restart) {
+            this.bgMusic?.stop()
+            this.bgMusic = null
+            this.totalScore = 0
+        }
+
+        if (!this.totalScore) {
+            this.totalScore = 0
+        }
+        if (data.partialScore) {
             this.totalScore = this.totalScore + data.partialScore
         }
 
@@ -128,6 +142,26 @@ class Level extends Phaser.Scene {
             this.totalScore
         )
 
+        if (data.gameOver) {
+            if(musicActive) {
+                this.bgMusic = this.sound.add('game_over_2', { volume: 0.4 })
+                this.bgMusic.play()
+            }
+
+            setTimeout(() => {
+                this.initAlienInteraction(true)
+            }, 300)
+        } else {
+            if(musicActive) {
+                this.bgMusic = this.sound.add('green_gray', { volume: 0.4 })
+                this.bgMusic.play()
+            }
+
+            const time = this.totalScore === 0 ? 3000 : 15000;// the times after 1st you have to wait more
+            setTimeout(() => {
+                this.initAlienInteraction(false)
+            }, time)
+        }
     }
 
     create() {
@@ -138,13 +172,7 @@ class Level extends Phaser.Scene {
         this.alienSprite.body.onWorldBounds = true
         this.physics.world.on("worldbounds", this.onWorldBounds, this)
         this.strings = this.cache.json.get("strings")
-
-        // const bgMusic = this.sound.add('green_gray')
-        // bgMusic.play()
-
-        setTimeout(() => {
-            this.initAlienInteraction()
-        }, 3000)
+        this.textSound = this.sound.add('text-blip')
     }
 
     onWorldBounds(body, up, down, left, right) {
@@ -176,7 +204,7 @@ class Level extends Phaser.Scene {
         })
     }
 
-    initAlienInteraction() {
+    initAlienInteraction(gameOver) {
         console.log('initAlienInteraction')
 
         // stops
@@ -191,12 +219,16 @@ class Level extends Phaser.Scene {
             animIdle.animationKey = "armor_idle"
 
             setTimeout(() => {
-                this.talk()
+                if (gameOver) {
+                    this.talkAboutGameOver()
+                } else {
+                    this.talkAboutScp()
+                }
             }, 500)
         })
     }
 
-    talk() {
+    talkAboutScp() {
         console.log('start speech')
 
         // randomly choose scp
@@ -209,7 +241,7 @@ class Level extends Phaser.Scene {
         discourse = discourse.concat(part2)
         discourse = discourse.concat(this.strings.clicheRight)
 
-        this.createSpeechBubble(discourse[index], null, null, 400, 80)
+        this.createSpeechBubble(discourse[index])
 
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
@@ -217,41 +249,77 @@ class Level extends Phaser.Scene {
         })
     }
 
-    nextLine(discourse, index, scp) {
+    talkAboutGameOver() {
+        console.log('game over!!')
+
+        const index = 0
+        let discourse = this.strings.gameOver
+
+        this.createSpeechBubble(discourse[index], null, null, 400, 100)
+
+        this.input.once("pointerdown", () => {
+            // tap anywhere in the scene
+            this.nextLine(discourse, index + 1, null, true)
+        })
+    }
+
+    nextLine(discourse, index, scp, gameOver) {
         this.lastBubble.bubble?.destroy()
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
-            if (index + 1 === discourse.length) { // last sentence
-                console.log('enabling scp', scp)
-                this.activeScp = scp
+            if (discourse[index] === this.strings.clicheRight[0]) { // exception in size for cliche right
+                this.createSpeechBubble(discourse[index], null, null, 200, 100)
+            } else if (gameOver) { // exception in size for game over text
+                this.createSpeechBubble(discourse[index], null, null, 400, 100)
+            } else {
+                this.createSpeechBubble(discourse[index])
             }
-
-            this.createSpeechBubble(discourse[index], null, null, 400, 80)
 
             this.input.once("pointerdown", () => {
                 // tap anywhere in the scene
-                this.nextLine(discourse, index + 1, scp)
+                this.nextLine(discourse, index + 1, scp, gameOver)
             })
         } else { // speech ended
             console.log('end speech')
+
             // walk again
             this.alienSprite.anims.pause()
             this.alienSprite.anims.play("armor_walk")
-            this.alienSprite.body.velocity.x = this.originalVelocity
             this.alienSprite.isAnimatingTurn = false
+
+            if (scp) {
+                this.alienSprite.body.velocity.x = this.originalVelocity
+                // enable scp 
+                console.log('enabling scp', scp)
+                this.activeScp = scp
+            } else { // game over
+                this.alienSprite.body.velocity.x = 400 // sprit away
+                this.alienSprite.body.collideWorldBounds = false // go out of room
+
+                setTimeout(() => { // time of animation
+                    this.scene.start(GameOver.name)
+                }, 2000)
+            }
+
         }
     }
 
     createSpeechBubble(quote, x, y, width, height) {
+        // sound play
+        this.textSound?.play()
+
+        // default sizes
+        if (!width) width = 400
+        if (!height) height = 240
+
         // default position is on top of sprite
-        if (!x)
-            x = this.alienSprite.body.position.x + this.alienSprite.body.halfWidth
-        if (!y)
-            y = this.alienSprite.body.position.y - this.alienSprite.body.halfHeight
+        if (!x) x = this.alienSprite.body.position.x + this.alienSprite.body.halfWidth
+        if (!y) y = this.alienSprite.body.position.y - this.alienSprite.body.halfHeight - height
 
         var bubbleWidth = width
         var bubbleHeight = height
+
         var bubblePadding = 10
         var arrowHeight = bubbleHeight / 4
 

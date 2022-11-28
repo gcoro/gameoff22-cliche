@@ -7,6 +7,13 @@
                 "key": "animations"
             },
             {
+                "url": [
+                    "assets/sfx/arcade-shoot.wav"
+                ],
+                "type": "audio",
+                "key": "arcade-shoot"
+            },
+            {
                 "url": "assets/scp2020/armor_idle_1.png",
                 "type": "image",
                 "key": "armor_idle_1"
@@ -97,6 +104,20 @@
                 "key": "background_scifi_interior"
             },
             {
+                "url": [
+                    "assets/sfx/death-monster-sound.ogg"
+                ],
+                "type": "audio",
+                "key": "death-monster-sound"
+            },
+            {
+                "url": [
+                    "assets/music/dirty_area.mp3"
+                ],
+                "type": "audio",
+                "key": "dirty_area"
+            },
+            {
                 "url": "assets/scp2020/door_blue.png",
                 "type": "image",
                 "key": "door_blue"
@@ -127,15 +148,17 @@
             },
             {
                 "url": [
-                    "assets/music/green_gray.mp3"
+                    "assets/sfx/explosion.mp3"
                 ],
                 "type": "audio",
-                "key": "green_gray"
+                "key": "explosion"
             },
             {
-                "url": "assets/scp2020/pavement.png",
-                "type": "image",
-                "key": "pavement"
+                "url": [
+                    "assets/music/game_over_2.mp3"
+                ],
+                "type": "audio",
+                "key": "game_over_2"
             },
             {
                 "url": "assets/Green moss and rocky walls.png",
@@ -143,9 +166,30 @@
                 "key": "Green moss and rocky walls"
             },
             {
+                "url": [
+                    "assets/music/green_gray.mp3"
+                ],
+                "type": "audio",
+                "key": "green_gray"
+            },
+            {
                 "url": "assets/ground.json",
                 "type": "tilemapTiledJSON",
                 "key": "ground"
+            },
+            {
+                "url": [
+                    "assets/sfx/gushing-flesh.wav"
+                ],
+                "type": "audio",
+                "key": "gushing-flesh"
+            },
+            {
+                "url": [
+                    "assets/sfx/hit20.mp3"
+                ],
+                "type": "audio",
+                "key": "hit20"
             },
             {
                 "url": "assets/laser.png",
@@ -166,6 +210,30 @@
                 "key": "level_tileset"
             },
             {
+                "url": [
+                    "assets/sfx/levelcomplete.mp3"
+                ],
+                "type": "audio",
+                "key": "levelcomplete"
+            },
+            {
+                "url": [
+                    "assets/music/meteor_fight.ogg"
+                ],
+                "type": "audio",
+                "key": "meteor_fight"
+            },
+            {
+                "url": "assets/scp2020/pavement.png",
+                "type": "image",
+                "key": "pavement"
+            },
+            {
+                "url": "assets/scp2020/pavement_full.png",
+                "type": "image",
+                "key": "pavement_full"
+            },
+            {
                 "url": "assets/ship.png",
                 "frameConfig": {
                     "frameWidth": 66,
@@ -182,10 +250,13 @@
                 "url": "src/components/StartAnimation.js",
                 "type": "script",
                 "key": "StartAnimation"
-            },{
-                "url": "assets/scp2020/pavement_full.png",
-                "type": "image",
-                "key": "pavement_full"
+            },
+            {
+                "url": [
+                    "assets/sfx/text-blip.wav"
+                ],
+                "type": "audio",
+                "key": "text-blip"
             }
         ]
     },

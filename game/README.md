@@ -1,4 +1,4 @@
-# clichè, right?
+# cliche, right?
 
 ## Assets used
 
@@ -7,9 +7,23 @@
 -   bg https://opengameart.org/content/sideview-sci-fi-patreon-collection
 -   doors https://opengameart.org/content/lab-textures
 -   alien https://craftpix.net/freebies/2d-game-alien-character-free-sprite/
--   audio door locked https://freesound.org/people/BenjaminNelan/sounds/321087/
--   audio door opening https://opengameart.org/content/door-open-sfx
--   audio main scene theme https://opengameart.org/content/green-gray 
+
+### audio 
+
+-   door locked https://freesound.org/people/BenjaminNelan/sounds/321087/
+-   door opening https://opengameart.org/content/door-open-sfx
+-   main scene theme https://opengameart.org/content/green-gray 
+-   meteor theme https://opengameart.org/content/meteor-1 
+-   cleaning theme https://opengameart.org/content/floor-34-clean-and-dirty-area 
+-   game over theme https://opengameart.org/content/music-box-game-over-ii
+-   stone https://freesound.org/people/thanvannispen/sounds/29986/ 
+-   monster scream https://freesound.org/people/ibm5155/sounds/174912/ 
+-   explosion https://freesound.org/people/Iwiploppenisse/sounds/156031/
+-   level complete https://freesound.org/people/deleteCookies/sounds/376009/
+-   speaking https://freesound.org/people/SomeGuy22/sounds/431328/
+-   shoot https://freesound.org/people/Aesterial-Arts/sounds/633250/
+-   blood clean https://freesound.org/people/magnuswaker/sounds/563315/
+-   hit https://opengameart.org/content/hit-sound-effects
 
 ### Scp 173
 
