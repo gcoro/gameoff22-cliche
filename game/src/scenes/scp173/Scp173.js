@@ -6,8 +6,8 @@ class Scp173 extends Phaser.Scene {
     init() {
         // constants
         this.CELL_SIZE = 16
-        this.NUM_POORS_PER_LOOP = 5
-        this.SCORES_OVERLAP_POOR = 3
+        this.NUM_POORS_PER_LOOP = 1
+        this.SCORES_OVERLAP_POOR = 200
         this.OVERLAP_RANGE = 12
         this.WALL_THICKNESS = 3 * 16
         this.BOARD_GAP_TO_WORLD = 50
@@ -413,7 +413,10 @@ class Scp173 extends Phaser.Scene {
     handlePoorOverlap(player, image) {
         if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
             this.currentScore += this.SCORES_OVERLAP_POOR
-            this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
+            const currentScore = this.scoreLabel.getScore()
+            if (currentScore + this.SCORES_OVERLAP_POOR < this.MAX_SCORE) {
+                this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
+            } else this.scoreLabel.setScore(this.MAX_SCORE)
         }
     }
 
@@ -540,11 +543,6 @@ class Scp173 extends Phaser.Scene {
         }
         this.input.setDefaultCursor("default")
 
-        let score = this.scoreLabel.getScore()
-        if (!hasWin && score > this.MAX_SCORE) {
-            score = this.MAX_SCORE - 80
-        }
-
         let sound
         if (hasWin) {
             sound = this.sound.add("levelcomplete")
@@ -555,7 +553,9 @@ class Scp173 extends Phaser.Scene {
 
         setTimeout(() => {
             this.createResultText({
-                partialScore: hasWin ? this.MAX_SCORE : score,
+                partialScore: hasWin
+                    ? this.MAX_SCORE
+                    : Math.min(this.scoreLabel.getScore(), this.MAX_SCORE - 80),
                 gameOver: !hasWin,
             })
         }, 1000)
