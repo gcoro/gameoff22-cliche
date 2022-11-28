@@ -123,6 +123,8 @@ class Level extends Phaser.Scene {
         console.log('init', data)
 
         if (data.restart) {
+            this.bgMusic?.stop()
+            this.bgMusic = null
             this.totalScore = 0
         }
 
