@@ -38,3 +38,8 @@
 ### SCP-2000
 -   background https://pxhere.com/it/photo/1460581 
 -   guns https://twitter.com/hashashaaaa
+-   asteroid https://opengameart.org/content/2d-asteroid-sprite
+-   meteor: https://weisinx7.itch.io/fireballs-sprites
+-   explosion effects: https://weisinx7.itch.io/fireball-explosion-sprites
+-   tiles: https://foozlecc.itch.io/sci-fi-lab-tileset-decor-traps
+-   tiles: https://helperwesley.itch.io/helpers-artpack
