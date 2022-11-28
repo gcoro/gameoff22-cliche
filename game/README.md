@@ -25,12 +25,16 @@
 -   blood clean https://freesound.org/people/magnuswaker/sounds/563315/
 -   hit https://opengameart.org/content/hit-sound-effects
 
-### Scp 173
+### SCP-173
 
 -   poops: https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?page-name=poop-game-sprites&item=1g6v4g0e1k7m7b5411
-- blood and bones: https://psychronic.com/abusive-prison-tileset/
-- alien sprite: https://kenney.nl/assets
-- alien guards: https://secrethideout.itch.io/team-wars-platformer-battle
-- eye monster: https://kuuly.itch.io/covid-boss
+-   blood and bones: https://psychronic.com/abusive-prison-tileset/
+-   alien sprite: https://kenney.nl/assets
+-   alien guards: https://secrethideout.itch.io/team-wars-platformer-battle
+-   eye monster: https://kuuly.itch.io/covid-boss
 -   cursor: https://opengameart.org/content/%E2%80%9Calien%E2%80%9D-crosshairs
-- tile: quelle di davide che non abbiamo
+-   tile: quelle di davide che non abbiamo
+
+### SCP-2000
+-   background https://pxhere.com/it/photo/1460581 
+-   guns https://twitter.com/hashashaaaa
