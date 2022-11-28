@@ -218,7 +218,7 @@ class Level extends Phaser.Scene {
         discourse = discourse.concat(part2)
         discourse = discourse.concat(this.strings.clicheRight)
 
-        this.createSpeechBubble(discourse[index], null, null, 400, 80)
+        this.createSpeechBubble(discourse[index])
 
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
@@ -232,7 +232,7 @@ class Level extends Phaser.Scene {
         const index = 0
         let discourse = this.strings.gameOver
 
-        this.createSpeechBubble(discourse[index], null, null, 400, 80)
+        this.createSpeechBubble(discourse[index])
 
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
@@ -245,7 +245,7 @@ class Level extends Phaser.Scene {
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
-            this.createSpeechBubble(discourse[index], null, null, 400, 80)
+            this.createSpeechBubble(discourse[index])
 
             this.input.once("pointerdown", () => {
                 // tap anywhere in the scene
@@ -273,14 +273,17 @@ class Level extends Phaser.Scene {
     }
 
     createSpeechBubble(quote, x, y, width, height) {
+        // default sizes
+        if (!width) width = 400
+        if (!height) height = 250
+
         // default position is on top of sprite
-        if (!x)
-            x = this.alienSprite.body.position.x + this.alienSprite.body.halfWidth
-        if (!y)
-            y = this.alienSprite.body.position.y - this.alienSprite.body.halfHeight
+        if (!x) x = this.alienSprite.body.position.x + this.alienSprite.body.halfWidth
+        if (!y) y = this.alienSprite.body.position.y - this.alienSprite.body.halfHeight - height
 
         var bubbleWidth = width
         var bubbleHeight = height
+
         var bubblePadding = 10
         var arrowHeight = bubbleHeight / 4
 
