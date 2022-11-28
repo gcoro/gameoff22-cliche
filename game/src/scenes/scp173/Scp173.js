@@ -196,7 +196,7 @@ class Scp173 extends Phaser.Scene {
             "Click on this text to start the game!",
         ]
 
-        this.startingText = this.add.text(0, 0, content, {
+        this.startingText = this.add.text(-this.WALL_THICKNESS, 0, content, {
             fixedHeight: this.game.config.height,
             fixedWidth: this.game.config.width,
             fontSize: 32,
