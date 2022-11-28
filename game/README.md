@@ -18,6 +18,9 @@
 -   explosion https://freesound.org/people/Iwiploppenisse/sounds/156031/
 -   level complete https://freesound.org/people/deleteCookies/sounds/376009/
 -   speaking https://freesound.org/people/SomeGuy22/sounds/431328/
+-   shoot https://freesound.org/people/Aesterial-Arts/sounds/633250/
+-   blood clean https://freesound.org/people/magnuswaker/sounds/563315/
+-   hit https://opengameart.org/content/hit-sound-effects
 
 ### Scp 173
 

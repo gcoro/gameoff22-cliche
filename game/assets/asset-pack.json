@@ -7,6 +7,13 @@
                 "key": "animations"
             },
             {
+                "url": [
+                    "assets/sfx/arcade-shoot.wav"
+                ],
+                "type": "audio",
+                "key": "arcade-shoot"
+            },
+            {
                 "url": "assets/scp2020/armor_idle_1.png",
                 "type": "image",
                 "key": "armor_idle_1"
@@ -155,6 +162,20 @@
                 "url": "assets/ground.json",
                 "type": "tilemapTiledJSON",
                 "key": "ground"
+            },
+            {
+                "url": [
+                    "assets/sfx/gushing-flesh.wav"
+                ],
+                "type": "audio",
+                "key": "gushing-flesh"
+            },
+            {
+                "url": [
+                    "assets/sfx/hit20.mp3"
+                ],
+                "type": "audio",
+                "key": "hit20"
             },
             {
                 "url": "assets/laser.png",
