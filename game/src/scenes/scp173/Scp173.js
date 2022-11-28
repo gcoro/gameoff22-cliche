@@ -7,26 +7,38 @@ class Scp173 extends Phaser.Scene {
         // constants
         this.CELL_SIZE = 16
         this.NUM_POORS_PER_LOOP = 5
-        this.SCORES_OVERLAP_POOR = 5
+        this.SCORES_OVERLAP_POOR = 3
         this.OVERLAP_RANGE = 12
         this.WALL_THICKNESS = 3 * 16
         this.BOARD_GAP_TO_WORLD = 50
+        this.SHOW_TEXT_TIMEOUT = 3000 //10000
+        this.MAX_SCORE = 100
 
         // enemy anim times
-        // this.ENEMY_KEEP_EYE_OPEN_MILLIS = 5 * 1000 // how long enemy keeps its eyes opened
-        // this.ENEMY_KEEP_EYE_CLOSE_MILLIS = 10 * 1000 // how long enemy keeps its eyes closed
-        this.ENEMY_CREATE_POORS_MILLIS = 15 * 1000
+        this.ENEMY_CREATE_POORS_MILLIS = 20 * 1000
+
         // local variables
         this.currentPoors = []
         this.container = {}
         this.currentScore = 0
-        this.gameHasStarted = false
         this.player = undefined
         this.enemy = undefined
         this.mapHeight = 1200
         this.mapWidth = 16 * 90
-        this.gameDuration = 18000
-
+        this.gameDuration = 180000
+        this.stuffToThrow = [
+            {
+                name: "skull",
+                anim: "anim_throw_skull",
+                scale: 1,
+            },
+            {
+                name: "throw_poor",
+                anim: "anim_throw_poor",
+                scale: 0.2,
+            },
+        ]
+        this.playRounds = 0
         // we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
         this.player_alien_ally1 = undefined
         this.player_alien_ally2 = undefined
@@ -34,13 +46,26 @@ class Scp173 extends Phaser.Scene {
         this.cursors = undefined
         this.scoreLabel = undefined
         this.countdown = undefined
+        this.createPoorsTimeout = undefined
         this.eventEmitter = EventDispatcher.getInstance()
+        this.GAME_STATUS = {
+            LOADED: "loaded",
+            STARTED: "started",
+            FIGHTING: "fighting",
+            ENDED: "ended",
+        }
     }
 
     preload() {
         this.load.image("base_tiles", "assets/scp173/level_tileset.png")
         this.load.tilemapTiledJSON("tilemap", "assets/scp173/small_map.json")
         this.load.image("poor", "assets/scp173/poor/splat.png")
+
+        this.load.atlas(
+            "skull",
+            "assets/scp173/blood/blood.png",
+            "assets/scp173/blood/blood.json"
+        )
 
         //poops
         this.load.atlas(
@@ -76,15 +101,21 @@ class Scp173 extends Phaser.Scene {
             "assets/scp173/door.png",
             "assets/scp173/door.json"
         )
+
+        // TEST SENE EVENTS
+        this.events.once("shutdown", () =>
+            console.log("scene scp 173 shutdown")
+        )
     }
 
     create() {
+        this.status = this.GAME_STATUS.LOADED
+        console.log("scene scp173 create")
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
+        this.createStartingText()
+        this.createBackgrounds()
         this.input.setPollAlways()
-        this.input.setDefaultCursor(
-            "url(assets/scp173/cursor/inactive.cur), auto"
-        )
 
         // add collider
         this.anims.create({
@@ -92,6 +123,17 @@ class Scp173 extends Phaser.Scene {
             frames: this.anims.generateFrameNames("throw_poor", {
                 start: 1,
                 end: 6,
+                prefix: "sprite",
+            }),
+            frameRate: 10,
+            repeat: -1,
+        })
+
+        this.anims.create({
+            key: "anim_throw_skull",
+            frames: this.anims.generateFrameNames("skull", {
+                start: 3,
+                end: 3,
                 prefix: "sprite",
             }),
             frameRate: 10,
@@ -106,28 +148,30 @@ class Scp173 extends Phaser.Scene {
             this.mapWidth / 2 - 2.2 * this.BOARD_GAP_TO_WORLD,
             0,
             this.currentScore
-        )
+        ).setVisible(false)
 
         this.createPlayerAllies()
         this.createTimer()
-        this.start()
         this.createCollidersAndBounds()
 
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
-            this.gameHasStarted = true
             this.createPoors()
         })
-        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
+
+        this.eventEmitter.once(PLAYER_EVENTS.PLAYER_DIED, () =>
+            this.endGame(false)
+        )
     }
 
     createTimer() {
         this.countdown = new CountdownController(this)
-        this.countdown.start(this.gameDuration)
+        this.countdown.label.setVisible(false)
     }
 
     playerDeath(reason) {
         this.countdown.stop()
         this.player.die()
+        /*
         this.add
             .text(
                 this.player.x,
@@ -138,8 +182,50 @@ class Scp173 extends Phaser.Scene {
                 }
             )
             .setDepth(7)
-        // to game over scene
-        setTimeout(() => this.scene.start("AfterGameTransition"), 5000)
+            */
+    }
+
+    createStartingText() {
+        const content = [
+            "Collect everything the monster throw",
+            "before the is up or you will die.",
+            "To collect items you need to press",
+            "the space bar while on it",
+            "",
+            "If you touch the monster you'll die too",
+            "Click on this text to start the game!",
+        ]
+
+        this.startingText = this.add.text(0, 0, content, {
+            fixedHeight: this.game.config.height,
+            fixedWidth: this.game.config.width,
+            fontSize: 32,
+            align: "center",
+            font: "28px monospace",
+            backgroundColor: "black",
+            color: "white",
+        })
+        this.startingText.setDepth(7)
+        this.startingText.setPadding(0, this.game.config.height / 3)
+        this.startingText.setInteractive().once("pointerdown", () => {
+            this.startGame()
+        })
+    }
+
+    startGame() {
+        this.status = this.GAME_STATUS.STARTED
+        this.startingText.destroy()
+        this.scoreLabel.setVisible(true)
+        this.countdown.label.setVisible(true)
+        this.countdown.start(this.gameDuration)
+        this.input.setDefaultCursor(
+            "url(assets/scp173/cursor/inactive.cur), auto"
+        )
+        this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
+        this.openEyeTimeout = setTimeout(
+            () => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE),
+            10000
+        )
     }
 
     createBackgrounds() {
@@ -172,18 +258,24 @@ class Scp173 extends Phaser.Scene {
     }
 
     createCollidersAndBounds() {
-        this.physics.add.overlap(
+        const doorCollider = this.physics.add.overlap(
             this.player,
             this.exit_door,
-            this.goToAfterGameTransitionScene,
+            () => {
+                doorCollider.active = false
+                this.win()
+            },
             null,
             this
         )
 
-        this.physics.add.overlap(
+        const enemyCollider = this.physics.add.overlap(
             this.player,
             this.enemy,
-            this.playerDeath,
+            () => {
+                enemyCollider.active = false
+                this.playerDeath()
+            },
             null,
             this
         )
@@ -210,11 +302,10 @@ class Scp173 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, false, 0.08, 0.08)
     }
 
-    start() {
-        setTimeout(() => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE), 5000)
-    }
-
     createPoors() {
+        if (this.status === this.GAME_STATUS.STARTED) {
+            this.status = this.GAME_STATUS.FIGHTING
+        }
         const visibleMaxW =
             this.BOARD_GAP_TO_WORLD +
             this.container.backgroundLayer.width -
@@ -240,25 +331,28 @@ class Scp173 extends Phaser.Scene {
                 )
             ) {
                 countPoors++
+                const selecedObjectToThrow = Utils.generateRandomEnemyObject(
+                    this.stuffToThrow
+                )
                 const loopImage = this.physics.add.image(
                     coords.x,
                     coords.y,
-                    "poor"
+                    selecedObjectToThrow.name
                 )
                 loopImage.setVisible(false)
                 loopImage.setDepth(1)
-                loopImage.setScale(0.2)
+                loopImage.setScale(selecedObjectToThrow.scale)
                 this.currentPoors.push({ image: loopImage, ...coords })
 
                 const sourceImage = this.physics.add.sprite(
                     this.enemy.x,
                     this.enemy.y,
-                    "throw_poor"
+                    selecedObjectToThrow.name
                 )
-                sourceImage.setScale(0.2)
+                sourceImage.setScale(selecedObjectToThrow.scale)
 
                 sourceImage.setDepth(0)
-                sourceImage.anims.play("anim_throw_poor")
+                sourceImage.anims.play(selecedObjectToThrow.anim)
 
                 this.physics.moveToObject(sourceImage, loopImage, 200)
                 const throwCollider = this.physics.add.overlap(
@@ -279,7 +373,11 @@ class Scp173 extends Phaser.Scene {
                 )
             }
         }
-        setTimeout(() => this.createPoors(), this.ENEMY_CREATE_POORS_MILLIS)
+
+        this.createPoorsTimeout = setTimeout(
+            () => this.createPoors(),
+            this.ENEMY_CREATE_POORS_MILLIS - 2 * this.playRounds
+        )
     }
 
     /**
@@ -320,22 +418,28 @@ class Scp173 extends Phaser.Scene {
         } else return false
     }
 
-    goToAfterGameTransitionScene() {
+    win() {
         if (
             this.exit_door.anims.currentAnim &&
             this.exit_door.anims.currentAnim.key === "open"
         ) {
-            // check door is open
-            this.scene.start("AfterGameTransition")
+            this.endGame(true)
         }
     }
 
     update() {
-        this.player.update()
-        this.countdown.update()
-        this.checkExitDoor()
-        this.movePlayerAllies()
-        this.checkPointerPosition()
+        if (
+            this.status === this.GAME_STATUS.STARTED ||
+            this.status === this.GAME_STATUS.FIGHTING
+        ) {
+            this.player.update()
+            this.countdown.update()
+            this.movePlayerAllies()
+        }
+        if (this.status === this.GAME_STATUS.FIGHTING) {
+            this.checkExitDoor()
+            this.checkPointerPosition()
+        }
     }
 
     checkPointerPosition() {
@@ -391,11 +495,40 @@ class Scp173 extends Phaser.Scene {
     }
 
     gameOver() {
+        this.status = this.GAME_STATUS.LOADED
         this.playerDeath()
         console.log(
             "%c  GAME OVER!!  ",
             "background: #063970; color: #47d2a7; font-family:sans-serif; font-size: 40px; padding: 5px 10px"
         )
+    }
+
+    endGame(hasWin) {
+        this.playRounds++
+        this.status = this.GAME_STATUS.LOADED
+        if (this.createPoorsTimeout) {
+            console.log("cleartimeout openEyeTimeout", this.createPoorsTimeout)
+            clearTimeout(this.createPoorsTimeout)
+            this.createPoorsTimeout = undefined
+        }
+        if (this.openEyeTimeout) {
+            console.log("cleartimeout openEyeTimeout", this.openEyeTimeout)
+            clearTimeout(this.openEyeTimeout)
+            this.openEyeTimeout = undefined
+        }
+        this.input.setDefaultCursor("default")
+
+        let score = this.scoreLabel.getScore()
+        if (!hasWin && score > this.MAX_SCORE) {
+            score = this.MAX_SCORE - 80
+        }
+
+        setTimeout(() => {
+            this.scene.start(Level.name, {
+                partialScore: hasWin ? this.MAX_SCORE : score,
+                gameOver: !hasWin,
+            })
+        }, 1000)
     }
 }
 
