@@ -1,14 +1,8 @@
 # cliche, right?
 
-## Assets used
+## Assets credits
 
-### main scene
-
--   bg https://opengameart.org/content/sideview-sci-fi-patreon-collection
--   doors https://opengameart.org/content/lab-textures
--   alien https://craftpix.net/freebies/2d-game-alien-character-free-sprite/
-
-### audio 
+### Audio & Music 
 
 -   door locked https://freesound.org/people/BenjaminNelan/sounds/321087/
 -   door opening https://opengameart.org/content/door-open-sfx
@@ -24,6 +18,12 @@
 -   shoot https://freesound.org/people/Aesterial-Arts/sounds/633250/
 -   blood clean https://freesound.org/people/magnuswaker/sounds/563315/
 -   hit https://opengameart.org/content/hit-sound-effects
+
+### Main Scene
+
+-   bg https://opengameart.org/content/sideview-sci-fi-patreon-collection
+-   doors https://opengameart.org/content/lab-textures
+-   alien https://craftpix.net/freebies/2d-game-alien-character-free-sprite/
 
 ### SCP-173
 
