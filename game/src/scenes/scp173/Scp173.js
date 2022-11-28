@@ -523,6 +523,11 @@ class Scp173 extends Phaser.Scene {
             score = this.MAX_SCORE - 80
         }
 
+        let sound
+        if (hasWin) { sound = this.sound.add('levelcomplete') }
+        else { sound = this.sound.add('death-monster-sound') }
+        sound.play()
+
         setTimeout(() => {
             this.scene.start(Level.name, {
                 partialScore: hasWin ? this.MAX_SCORE : score,

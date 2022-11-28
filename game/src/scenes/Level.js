@@ -113,6 +113,9 @@ class Level extends Phaser.Scene {
     // map width
     mapWidth = 16 * 90
 
+    // text sfx
+    textSound
+
     init(data) {
         console.log('init', data)
 
@@ -150,6 +153,7 @@ class Level extends Phaser.Scene {
         this.alienSprite.body.onWorldBounds = true
         this.physics.world.on("worldbounds", this.onWorldBounds, this)
         this.strings = this.cache.json.get("strings")
+        this.textSound = this.sound.add('text-blip')
     }
 
     onWorldBounds(body, up, down, left, right) {
@@ -245,7 +249,7 @@ class Level extends Phaser.Scene {
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
-            if(discourse[index] === this.strings.clicheRight[0]) { // exception in size for cliche right
+            if (discourse[index] === this.strings.clicheRight[0]) { // exception in size for cliche right
                 this.createSpeechBubble(discourse[index], null, null, 200, 100)
             } else {
                 this.createSpeechBubble(discourse[index])
@@ -277,6 +281,9 @@ class Level extends Phaser.Scene {
     }
 
     createSpeechBubble(quote, x, y, width, height) {
+        // sound play
+        this.textSound?.play()
+
         // default sizes
         if (!width) width = 400
         if (!height) height = 250
