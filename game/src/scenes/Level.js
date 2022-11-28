@@ -116,8 +116,8 @@ class Level extends Phaser.Scene {
     init(data) {
         console.log('init', data)
 
-        if(!this.totalScore) this.totalScore = 0
-        if(data.partialScore) {
+        if (!this.totalScore) this.totalScore = 0
+        if (data.partialScore) {
             this.totalScore = this.totalScore + data.partialScore
         }
 
@@ -128,6 +128,18 @@ class Level extends Phaser.Scene {
             this.totalScore
         )
 
+        if (data.gameOver) {
+            setTimeout(() => {
+                this.initAlienInteraction(true)
+            }, 300)
+        } else {
+            // const bgMusic = this.sound.add('green_gray')
+            // bgMusic.play()
+
+            setTimeout(() => {
+                this.initAlienInteraction(false)
+            }, 3000)
+        }
     }
 
     create() {
@@ -138,13 +150,6 @@ class Level extends Phaser.Scene {
         this.alienSprite.body.onWorldBounds = true
         this.physics.world.on("worldbounds", this.onWorldBounds, this)
         this.strings = this.cache.json.get("strings")
-
-        // const bgMusic = this.sound.add('green_gray')
-        // bgMusic.play()
-
-        setTimeout(() => {
-            this.initAlienInteraction()
-        }, 3000)
     }
 
     onWorldBounds(body, up, down, left, right) {
@@ -176,7 +181,7 @@ class Level extends Phaser.Scene {
         })
     }
 
-    initAlienInteraction() {
+    initAlienInteraction(gameOver) {
         console.log('initAlienInteraction')
 
         // stops
@@ -191,12 +196,16 @@ class Level extends Phaser.Scene {
             animIdle.animationKey = "armor_idle"
 
             setTimeout(() => {
-                this.talk()
+                if(gameOver) {
+                    this.talkAboutGameOver()
+                } else {
+                    this.talkAboutScp()
+                }
             }, 500)
         })
     }
 
-    talk() {
+    talkAboutScp() {
         console.log('start speech')
 
         // randomly choose scp
@@ -217,14 +226,36 @@ class Level extends Phaser.Scene {
         })
     }
 
+    talkAboutGameOver() {
+        console.log('game over!!')
+
+        const index = 0
+        let discourse = this.strings.gameOver
+
+        this.createSpeechBubble(discourse[index], null, null, 400, 80)
+
+        this.input.once("pointerdown", () => {
+            // tap anywhere in the scene
+            this.nextLine(discourse, index + 1)
+        })
+    }
+
     nextLine(discourse, index, scp) {
         this.lastBubble.bubble?.destroy()
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
             if (index + 1 === discourse.length) { // last sentence
-                console.log('enabling scp', scp)
-                this.activeScp = scp
+                if (scp) {
+                    console.log('enabling scp', scp)
+                    this.activeScp = scp
+                } else { // game over (or intro??) text
+                    this.alienSprite.anims.pause()
+                    this.alienSprite.anims.play("armor_walk")
+                    this.alienSprite.body.velocity.x = 400 // sprit away
+                    this.alienSprite.isAnimatingTurn = false
+                    this.alienSprite.body.collideWorldBounds = false // go out of room
+                }
             }
 
             this.createSpeechBubble(discourse[index], null, null, 400, 80)
