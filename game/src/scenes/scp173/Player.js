@@ -77,25 +77,36 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if (anim.key === "death") {
                 this.anims.stop("death")
                 this.setFrame("sprite14")
-                this.eventEmitter.emit(PLAYER_EVENTS.PLAYER_DIED)
+                this.eventEmitter.emit(PLAYER_EVENTS.DIED)
             }
         })
     }
 
     update() {
-        
         if (!this.isAlive) {
             return
-        } else if (this.scene.cursors.left.isDown || this.scene.input.keyboard.addKey("A").isDown) {
+        } else if (
+            this.scene.cursors.left.isDown ||
+            this.scene.input.keyboard.addKey("A").isDown
+        ) {
             this.setVelocityX(-200)
             this.anims.play("left", true)
-        } else if (this.scene.cursors.right.isDown || this.scene.input.keyboard.addKey("D").isDown) {
+        } else if (
+            this.scene.cursors.right.isDown ||
+            this.scene.input.keyboard.addKey("D").isDown
+        ) {
             this.setVelocityX(200)
             this.anims.play("right", true)
-        } else if (this.scene.cursors.down.isDown || this.scene.input.keyboard.addKey("S").isDown) {
+        } else if (
+            this.scene.cursors.down.isDown ||
+            this.scene.input.keyboard.addKey("S").isDown
+        ) {
             this.setVelocityY(200)
             this.anims.play("down", true)
-        } else if (this.scene.cursors.up.isDown || this.scene.input.keyboard.addKey("W").isDown) {
+        } else if (
+            this.scene.cursors.up.isDown ||
+            this.scene.input.keyboard.addKey("W").isDown
+        ) {
             this.setVelocityY(-200)
             this.anims.play("up", true)
         } else {
@@ -106,7 +117,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     die() {
-        console.log("player die")
         this.isAlive = false
         this.setVelocityX(0)
         this.setVelocityY(0)
@@ -115,5 +125,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 }
 
 const PLAYER_EVENTS = {
-    PLAYER_DIED: "PLAYER_DIED",
+    DIED: "DIED",
+    WIN: "WIN",
 }
