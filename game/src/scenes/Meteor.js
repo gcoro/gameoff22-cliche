@@ -260,9 +260,15 @@ class Meteor extends Phaser.Scene {
     spaceBar = undefined;
 	countdown = undefined;
 
-	showEndScreen(message, gameover) {
+	showMessage(message) {
+		this.text_1.setStyle({fixedHeight:0,
+            fixedWidth:0,
+            fontSize: 32,
+            align: "center",
+            font: "28px monospace",
+            backgroundColor: "black",
+            color: "white"})
 		this.countdown.hide();
-		this.arcadesprite_1.destroy();
 		this.rectangle_2.visible = true;
 		this.text_1.visible = true;
 		if (message)
@@ -272,6 +278,18 @@ class Meteor extends Phaser.Scene {
 		this.text_1.x = screenCenterX;
 		this.text_1.y = screenCenterY;
 		this.text_1.setOrigin(0.5)
+	}
+
+	hideMessage(){
+		this.countdown.show();
+		this.rectangle_2.visible = false;
+		this.text_1.visible = false;
+		this.text_1.text = "";
+	}
+
+	showEndScreen(message, gameover) {
+		this.arcadesprite_1.destroy();
+		this.showMessage(message)
 		this.enemies.setActive(false).setVisible(false);
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
@@ -297,13 +315,21 @@ class Meteor extends Phaser.Scene {
 	create() {
 		const actualDate = this.dates[this.getRandomInt(0,this.dates.length)];
 		this.editorCreate();
-
+		this.scene.pause(Meteor.name);
 		this.meteorBgMusic = this.sound.add('meteor_fight', { volume: 0.4 })
 		if(musicActive) this.meteorBgMusic.play()
 		this.shootMusic = this.sound.add('arcade-shoot')
 		this.hitMusic = this.sound.add('hit20')
 		this.countdown = new CountdownController(this)
-        this.countdown.start(50000)
+		this.showMessage(["Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","-shift to boost ","- A + D  or the arrow keys to move","-space to shoot","","","Press any key to continue"])
+		const resume = (event) => {
+			console.log(event)
+			this.hideMessage()
+			this.scene.resume(Meteor.name)
+			document.removeEventListener("keyup", resume)
+			this.countdown.start(50000)
+		}
+		document.addEventListener("keyup", resume);
 		this.life.text = "0%";
 		const iteration = window.iteration||0;
 		this.speed = this.speed + 20*iteration;
@@ -506,6 +532,7 @@ class Meteor extends Phaser.Scene {
 	  }
 
 	  decreaseEnergy(player, enemy) {
+		this.hitMusic.play()
 		enemy.explode();
 		const life = +this.life.text.replace("%","")
 		this.progress_bar.scaleX = life * 23* 0.01;
