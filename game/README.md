@@ -13,6 +13,9 @@
 -   door locked https://freesound.org/people/BenjaminNelan/sounds/321087/
 -   door opening https://opengameart.org/content/door-open-sfx
 -   main scene theme https://opengameart.org/content/green-gray 
+-   meteor theme https://opengameart.org/content/meteor-1 
+-   cleaning theme https://opengameart.org/content/floor-34-clean-and-dirty-area 
+-   game over theme https://opengameart.org/content/music-box-game-over-ii
 -   stone https://freesound.org/people/thanvannispen/sounds/29986/ 
 -   monster scream https://freesound.org/people/ibm5155/sounds/174912/ 
 -   explosion https://freesound.org/people/Iwiploppenisse/sounds/156031/

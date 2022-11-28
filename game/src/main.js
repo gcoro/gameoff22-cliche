@@ -1,5 +1,8 @@
 let game
 
+// switch off bg music
+let musicActive = true
+
 window.addEventListener("load", function () {
     game = new Phaser.Game({
         width: 800,

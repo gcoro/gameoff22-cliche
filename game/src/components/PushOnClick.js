@@ -41,7 +41,8 @@ class PushOnClick extends UserComponent {
                         console.log("start scene", this.sceneToStartKey)
 
                         this.scene.activeScp = null
-
+                        this.scene.bgMusic?.pause()
+                        
                         const doorOpening = this.scene.sound.add('door_open')
                         doorOpening.play()
 

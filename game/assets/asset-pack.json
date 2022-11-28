@@ -111,6 +111,13 @@
                 "key": "death-monster-sound"
             },
             {
+                "url": [
+                    "assets/music/dirty_area.mp3"
+                ],
+                "type": "audio",
+                "key": "dirty_area"
+            },
+            {
                 "url": "assets/scp2020/door_blue.png",
                 "type": "image",
                 "key": "door_blue"
@@ -145,6 +152,13 @@
                 ],
                 "type": "audio",
                 "key": "explosion"
+            },
+            {
+                "url": [
+                    "assets/music/game_over_2.mp3"
+                ],
+                "type": "audio",
+                "key": "game_over_2"
             },
             {
                 "url": "assets/Green moss and rocky walls.png",
@@ -201,6 +215,13 @@
                 ],
                 "type": "audio",
                 "key": "levelcomplete"
+            },
+            {
+                "url": [
+                    "assets/music/meteor_fight.ogg"
+                ],
+                "type": "audio",
+                "key": "meteor_fight"
             },
             {
                 "url": "assets/scp2020/pavement.png",

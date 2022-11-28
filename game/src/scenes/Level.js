@@ -116,6 +116,9 @@ class Level extends Phaser.Scene {
     // text sfx
     textSound
 
+    // bg theme music
+    bgMusic
+
     init(data) {
         console.log('init', data)
 
@@ -138,12 +141,19 @@ class Level extends Phaser.Scene {
         )
 
         if (data.gameOver) {
+            if(musicActive) {
+                this.bgMusic = this.sound.add('game_over_2', { volume: 0.4 })
+                this.bgMusic.play()
+            }
+
             setTimeout(() => {
                 this.initAlienInteraction(true)
             }, 300)
         } else {
-            // const bgMusic = this.sound.add('green_gray')
-            // bgMusic.play()
+            if(musicActive) {
+                this.bgMusic = this.sound.add('green_gray', { volume: 0.4 })
+                this.bgMusic.play()
+            }
 
             const time = this.totalScore === 0 ? 3000 : 15000;// the times after 1st you have to wait more
             setTimeout(() => {
