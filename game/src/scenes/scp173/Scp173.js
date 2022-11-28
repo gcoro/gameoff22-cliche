@@ -193,7 +193,7 @@ class Scp173 extends Phaser.Scene {
             "the space bar while on it",
             "",
             "If you touch the monster you'll die too",
-            "Click on this text to start the game!",
+            "Click to start the game!",
         ]
 
         this.startingText = this.add.text(-this.WALL_THICKNESS, 0, content, {
