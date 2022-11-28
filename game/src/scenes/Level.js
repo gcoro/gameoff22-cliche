@@ -269,7 +269,6 @@ class Level extends Phaser.Scene {
             this.lastBubble.text?.destroy()
 
             // walk again
-            this.alienSprite.anims.pause()
             this.alienSprite.anims.play("armor_walk")
             this.alienSprite.body.velocity.x = this.originalVelocity
             this.alienSprite.isAnimatingTurn = false
