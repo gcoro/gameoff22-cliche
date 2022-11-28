@@ -3,7 +3,7 @@ class CountdownController {
         this.scene = scene
 
         const timerLabel = this.scene.add.text(
-            (this.scene.mapWidth  / 2 - 75) || (this.scene.game.config.width-150),
+            this.scene.mapWidth / 2 - 75 || this.scene.game.config.width - 150,
             30,
             `00:00`,
             {
@@ -36,7 +36,7 @@ class CountdownController {
             delay: duration,
             callback: () => {
                 this.label.text = "00:00"
-                this.scene.playerDeath("timer")
+                this.scene.playerDeath()
                 this.stop()
             },
         })
@@ -61,7 +61,7 @@ class CountdownController {
     }
 
     hide() {
-        this.label.setActive(false).setVisible(false);
+        this.label.setActive(false).setVisible(false)
     }
 
     formatTime(seconds) {
