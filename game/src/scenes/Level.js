@@ -119,7 +119,13 @@ class Level extends Phaser.Scene {
     init(data) {
         console.log('init', data)
 
-        if (!this.totalScore) this.totalScore = 0
+        if (data.restart) {
+            this.totalScore = 0
+        }
+
+        if (!this.totalScore) {
+            this.totalScore = 0
+        }
         if (data.partialScore) {
             this.totalScore = this.totalScore + data.partialScore
         }
@@ -252,7 +258,7 @@ class Level extends Phaser.Scene {
         if (discourse[index]) {
             if (discourse[index] === this.strings.clicheRight[0]) { // exception in size for cliche right
                 this.createSpeechBubble(discourse[index], null, null, 200, 100)
-            } else if(gameOver) { // exception in size for game over text
+            } else if (gameOver) { // exception in size for game over text
                 this.createSpeechBubble(discourse[index], null, null, 400, 100)
             } else {
                 this.createSpeechBubble(discourse[index])
@@ -278,6 +284,10 @@ class Level extends Phaser.Scene {
             } else { // game over
                 this.alienSprite.body.velocity.x = 400 // sprit away
                 this.alienSprite.body.collideWorldBounds = false // go out of room
+
+                setTimeout(() => { // time of animation
+                    this.scene.start(GameOver.name)
+                }, 2000)
             }
 
         }
@@ -289,7 +299,7 @@ class Level extends Phaser.Scene {
 
         // default sizes
         if (!width) width = 400
-        if (!height) height = 250
+        if (!height) height = 240
 
         // default position is on top of sprite
         if (!x) x = this.alienSprite.body.position.x + this.alienSprite.body.halfWidth

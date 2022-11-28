@@ -23,6 +23,7 @@ window.addEventListener("load", function () {
     game.scene.add("Meteor", Meteor)
     game.scene.add("Menu", Menu)
     game.scene.add("Scp173", Scp173)
+    game.scene.add("GameOver", GameOver)
     game.scene.add("Boot", Boot, true)
 })
 
