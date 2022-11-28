@@ -196,7 +196,7 @@ class Level extends Phaser.Scene {
             animIdle.animationKey = "armor_idle"
 
             setTimeout(() => {
-                if(gameOver) {
+                if (gameOver) {
                     this.talkAboutGameOver()
                 } else {
                     this.talkAboutScp()
@@ -245,19 +245,6 @@ class Level extends Phaser.Scene {
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
-            if (index + 1 === discourse.length) { // last sentence
-                if (scp) {
-                    console.log('enabling scp', scp)
-                    this.activeScp = scp
-                } else { // game over (or intro??) text
-                    this.alienSprite.anims.pause()
-                    this.alienSprite.anims.play("armor_walk")
-                    this.alienSprite.body.velocity.x = 400 // sprit away
-                    this.alienSprite.isAnimatingTurn = false
-                    this.alienSprite.body.collideWorldBounds = false // go out of room
-                }
-            }
-
             this.createSpeechBubble(discourse[index], null, null, 400, 80)
 
             this.input.once("pointerdown", () => {
@@ -266,11 +253,22 @@ class Level extends Phaser.Scene {
             })
         } else { // speech ended
             console.log('end speech')
+
             // walk again
             this.alienSprite.anims.pause()
             this.alienSprite.anims.play("armor_walk")
-            this.alienSprite.body.velocity.x = this.originalVelocity
             this.alienSprite.isAnimatingTurn = false
+
+            if (scp) {
+                this.alienSprite.body.velocity.x = this.originalVelocity
+                // enable scp 
+                console.log('enabling scp', scp)
+                this.activeScp = scp
+            } else { // game over
+                this.alienSprite.body.velocity.x = 400 // sprit away
+                this.alienSprite.body.collideWorldBounds = false // go out of room
+            }
+
         }
     }
 
