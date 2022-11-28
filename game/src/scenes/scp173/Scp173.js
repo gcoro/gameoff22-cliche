@@ -187,12 +187,14 @@ class Scp173 extends Phaser.Scene {
 
     createStartingText() {
         const content = [
-            "Collect everything the monster throw",
-            "before the is up or you will die.",
-            "To collect items you need to press",
-            "the space bar while on it",
+            "Collect all the dirt the monster produces",
+            "before the time is up or you will die.",
+            "If you touch the monster you'll die too.",
             "",
-            "If you touch the monster you'll die too",
+            "- ARROWS/WASD to move",
+            "- SPACE BAR to collect items",
+            "- MOUSE POINTER to watch the monster", "while his eye is open",
+            "",
             "Click to start the game!",
         ]
 
