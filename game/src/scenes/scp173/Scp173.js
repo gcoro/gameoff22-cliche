@@ -114,8 +114,8 @@ class Scp173 extends Phaser.Scene {
         this.status = this.GAME_STATUS.LOADED
         console.log("scene scp173 create")
 
-        this.scp173bgMusic = this.sound.add('meteor_fight', { volume: 0.4 })
-        if(musicActive) this.scp173bgMusic.play()
+        this.scp173bgMusic = this.sound.add("meteor_fight", { volume: 0.4 })
+        if (musicActive) this.scp173bgMusic.play()
 
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
@@ -161,7 +161,7 @@ class Scp173 extends Phaser.Scene {
         this.createCollidersAndBounds()
 
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
-            this.createPoors()
+            if (Utils.areObjectsOverlapping) this.createPoors()
         })
 
         this.eventEmitter.once(PLAYER_EVENTS.PLAYER_DIED, () =>
@@ -177,18 +177,6 @@ class Scp173 extends Phaser.Scene {
     playerDeath(reason) {
         this.countdown.stop()
         this.player.die()
-        /*
-        this.add
-            .text(
-                this.player.x,
-                this.player.y,
-                reason === "timer" ? `Time's up!` : "Game Over!!",
-                {
-                    fontSize: 48,
-                }
-            )
-            .setDepth(7)
-            */
     }
 
     createStartingText() {
@@ -199,7 +187,8 @@ class Scp173 extends Phaser.Scene {
             "",
             "- ARROWS/WASD to move",
             "- SPACE BAR to collect items",
-            "- MOUSE POINTER to watch the monster", "while his eye is open",
+            "- MOUSE POINTER to watch the monster",
+            "while his eye is open",
             "",
             "Click to start the game!",
         ]
@@ -311,6 +300,13 @@ class Scp173 extends Phaser.Scene {
     }
 
     createPoors() {
+        // hack to avoid createPoors not finished when player dies
+        if (
+            this.status !== this.GAME_STATUS.STARTED &&
+            this.status !== this.GAME_STATUS.FIGHTING
+        )
+            return
+
         if (this.status === this.GAME_STATUS.STARTED) {
             this.status = this.GAME_STATUS.FIGHTING
         }
@@ -323,7 +319,10 @@ class Scp173 extends Phaser.Scene {
 
         let countPoors = 0
 
-        while (countPoors < this.NUM_POORS_PER_LOOP) {
+        while (
+            countPoors < this.NUM_POORS_PER_LOOP &&
+            this.status === this.GAME_STATUS.FIGHTING
+        ) {
             const coords = Utils.generateRandomCoords(
                 this.BOARD_GAP_TO_WORLD + 32, // 32 is because we need to overlap with the alien character
                 visibleMaxW - 32,
@@ -532,8 +531,11 @@ class Scp173 extends Phaser.Scene {
         }
 
         let sound
-        if (hasWin) { sound = this.sound.add('levelcomplete') }
-        else { sound = this.sound.add('death-monster-sound') }
+        if (hasWin) {
+            sound = this.sound.add("levelcomplete")
+        } else {
+            sound = this.sound.add("death-monster-sound")
+        }
         sound.play()
 
         setTimeout(() => {

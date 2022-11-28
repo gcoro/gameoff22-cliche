@@ -55,6 +55,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                     this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
                 }
             })
+
+            // need to check if pointer is on the enemy when the game starts, but we're kind and wait 1 sec before the player die
+            setTimeout(() => {
+                if (!this.isPointerOverlapping()) {
+                    this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
+                }
+            }, 1000)
         }
     }
 
