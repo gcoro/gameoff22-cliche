@@ -139,9 +139,10 @@ class Level extends Phaser.Scene {
             // const bgMusic = this.sound.add('green_gray')
             // bgMusic.play()
 
+            const time = this.totalScore === 0 ? 3000 : 15000;// the times after 1st you have to wait more
             setTimeout(() => {
                 this.initAlienInteraction(false)
-            }, 3000)
+            }, time)
         }
     }
 
@@ -236,28 +237,30 @@ class Level extends Phaser.Scene {
         const index = 0
         let discourse = this.strings.gameOver
 
-        this.createSpeechBubble(discourse[index])
+        this.createSpeechBubble(discourse[index], null, null, 400, 100)
 
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
-            this.nextLine(discourse, index + 1)
+            this.nextLine(discourse, index + 1, null, true)
         })
     }
 
-    nextLine(discourse, index, scp) {
+    nextLine(discourse, index, scp, gameOver) {
         this.lastBubble.bubble?.destroy()
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
             if (discourse[index] === this.strings.clicheRight[0]) { // exception in size for cliche right
                 this.createSpeechBubble(discourse[index], null, null, 200, 100)
+            } else if(gameOver) { // exception in size for game over text
+                this.createSpeechBubble(discourse[index], null, null, 400, 100)
             } else {
                 this.createSpeechBubble(discourse[index])
             }
 
             this.input.once("pointerdown", () => {
                 // tap anywhere in the scene
-                this.nextLine(discourse, index + 1, scp)
+                this.nextLine(discourse, index + 1, scp, gameOver)
             })
         } else { // speech ended
             console.log('end speech')
