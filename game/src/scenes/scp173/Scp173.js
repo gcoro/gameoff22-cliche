@@ -56,6 +56,8 @@ class Scp173 extends Phaser.Scene {
         }
     }
 
+    scp173bgMusic
+
     preload() {
         this.load.image("base_tiles", "assets/scp173/level_tileset.png")
         this.load.tilemapTiledJSON("tilemap", "assets/scp173/small_map.json")
@@ -111,6 +113,10 @@ class Scp173 extends Phaser.Scene {
     create() {
         this.status = this.GAME_STATUS.LOADED
         console.log("scene scp173 create")
+
+        this.scp173bgMusic = this.sound.add('meteor_fight', { volume: 0.4 })
+        if(musicActive) this.scp173bgMusic.play()
+
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
         this.createStartingText()
@@ -531,6 +537,8 @@ class Scp173 extends Phaser.Scene {
         sound.play()
 
         setTimeout(() => {
+            this.scp173bgMusic?.stop()
+
             this.scene.start(Level.name, {
                 partialScore: hasWin ? this.MAX_SCORE : score,
                 gameOver: !hasWin,
