@@ -143,6 +143,11 @@ class Level extends Phaser.Scene {
         )
 
         if (data.restart) { // first scene
+            if (musicActive) {
+                this.bgMusic = this.sound.add('green_gray', { volume: 0.4 })
+                this.bgMusic.play()
+            }
+            
             setTimeout(() => {
                 this.initAlienInteraction('restart')
             }, 500)
