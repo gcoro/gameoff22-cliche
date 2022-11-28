@@ -64,6 +64,11 @@ class CountdownController {
         this.label.setActive(false).setVisible(false)
     }
 
+    show() {
+        this.label.setActive(true).setVisible(true);
+    }
+
+
     formatTime(seconds) {
         // Minutes
         const minutes = Math.floor(seconds / 60)
