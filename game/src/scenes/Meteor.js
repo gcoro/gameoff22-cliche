@@ -237,6 +237,7 @@ class Meteor extends Phaser.Scene {
 	meteorBgMusic
 	shootMusic
 	hitMusic
+	explodedCount = 0;
 	// Write your code here
 
 	getRandomInt(min, max) {
@@ -282,7 +283,7 @@ class Meteor extends Phaser.Scene {
 		
 		setTimeout(() => {
 			this.meteorBgMusic?.stop()
-			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? 0 :100}); // fixme
+			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? this.explodedCount > 100 ? 100 : this.explodedCount :100});
 		},3000)
 	}
 
@@ -482,6 +483,7 @@ class Meteor extends Phaser.Scene {
 	  }
 
 	  hitEnemy(laser, enemy) {
+		this.explodedCount++;
 		laser.erase();
 		enemy.explode();
 
