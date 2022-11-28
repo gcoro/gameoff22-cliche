@@ -44,8 +44,6 @@ class Preload extends Phaser.Scene {
 
 	preload() {
 
-		sessionStorage.setItem("iteration",0)
-
 		this.editorCreate();
 		this.editorPreload();
 		
