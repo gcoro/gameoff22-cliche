@@ -245,7 +245,11 @@ class Level extends Phaser.Scene {
         this.lastBubble.text?.destroy()
 
         if (discourse[index]) {
-            this.createSpeechBubble(discourse[index])
+            if(discourse[index] === this.strings.clicheRight[0]) { // exception in size for cliche right
+                this.createSpeechBubble(discourse[index], null, null, 200, 100)
+            } else {
+                this.createSpeechBubble(discourse[index])
+            }
 
             this.input.once("pointerdown", () => {
                 // tap anywhere in the scene

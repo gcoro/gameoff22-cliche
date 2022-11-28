@@ -208,6 +208,13 @@
                 "url": "src/components/StartAnimation.js",
                 "type": "script",
                 "key": "StartAnimation"
+            },
+            {
+                "url": [
+                    "assets/sfx/text-blip.wav"
+                ],
+                "type": "audio",
+                "key": "text-blip"
             }
         ]
     },

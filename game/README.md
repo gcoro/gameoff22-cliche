@@ -1,4 +1,4 @@
-# clichè, right?
+# cliche, right?
 
 ## Assets used
 
@@ -17,6 +17,7 @@
 -   monster scream https://freesound.org/people/ibm5155/sounds/174912/ 
 -   explosion https://freesound.org/people/Iwiploppenisse/sounds/156031/
 -   level complete https://freesound.org/people/deleteCookies/sounds/376009/
+-   speaking https://freesound.org/people/SomeGuy22/sounds/431328/
 
 ### Scp 173
 
