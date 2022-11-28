@@ -235,6 +235,9 @@ class Meteor extends Phaser.Scene {
 
 	/* START-USER-CODE */
 	meteorBgMusic
+	shootMusic
+	hitMusic
+	explodedCount = 0;
 	// Write your code here
 
 	getRandomInt(min, max) {
@@ -280,7 +283,7 @@ class Meteor extends Phaser.Scene {
 		
 		setTimeout(() => {
 			this.meteorBgMusic?.stop()
-			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? 0 :100}); // fixme
+			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? this.explodedCount > 100 ? 100 : this.explodedCount :100});
 		},3000)
 	}
 
@@ -297,15 +300,16 @@ class Meteor extends Phaser.Scene {
 
 		this.meteorBgMusic = this.sound.add('meteor_fight', { volume: 0.4 })
 		if(musicActive) this.meteorBgMusic.play()
-
+		this.shootMusic = this.sound.add('arcade-shoot')
+		this.hitMusic = this.sound.add('hit20')
 		this.countdown = new CountdownController(this)
         this.countdown.start(50000)
 		this.life.text = "0%";
-		const iteration = sessionStorage.getItem("iteration")||0;
+		const iteration = window.iteration||0;
 		this.speed = this.speed + 20*iteration;
 		const cometVelocity = (10);
 		this.enemySpeed = this.enemySpeed + 20*iteration;
-		sessionStorage.setItem("iteration",+iteration + 1)
+		window.iteration = +iteration + 1
 		this.date.text = actualDate;
 		this.arcadesprite_1.body.velocity.y = cometVelocity;
 		this.arcadesprite_1.body.maxSpeed = cometVelocity;
@@ -439,6 +443,7 @@ class Meteor extends Phaser.Scene {
 
 		  if (laser && !this.rectangle_2.visible) {
 			laser.fire(this.player.x, this.player.y);
+			this.shootMusic.play()
 			this.lastFired = time + 150;
 		  }
 		}
@@ -478,6 +483,7 @@ class Meteor extends Phaser.Scene {
 	  }
 
 	  hitEnemy(laser, enemy) {
+		this.explodedCount++;
 		laser.erase();
 		enemy.explode();
 
@@ -491,6 +497,7 @@ class Meteor extends Phaser.Scene {
 	  }
 
 	  decreaseLife(player, enemy) {
+		this.hitMusic.play()
 		enemy.explode();
 		const life = +this.life.text.replace("%","")
 		this.progress_bar.scaleX = life * 23 * 0.01;

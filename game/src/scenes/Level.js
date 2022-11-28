@@ -122,7 +122,7 @@ class Level extends Phaser.Scene {
     init(data) {
         console.log('init', data)
 
-        if (data.restart) {
+        if (data.restart) { // first scene
             this.bgMusic?.stop()
             this.bgMusic = null
             this.totalScore = 0
@@ -142,25 +142,33 @@ class Level extends Phaser.Scene {
             this.totalScore
         )
 
-        if (data.gameOver) {
-            if(musicActive) {
+        if (data.restart) { // first scene
+            if (musicActive) {
+                this.bgMusic = this.sound.add('green_gray', { volume: 0.4 })
+                this.bgMusic.play()
+            }
+            
+            setTimeout(() => {
+                this.initAlienInteraction('restart')
+            }, 500)
+        } else if (data.gameOver) { // game over scene
+            if (musicActive) {
                 this.bgMusic = this.sound.add('game_over_2', { volume: 0.4 })
                 this.bgMusic.play()
             }
 
             setTimeout(() => {
-                this.initAlienInteraction(true)
+                this.initAlienInteraction('gameOver')
             }, 300)
-        } else {
-            if(musicActive) {
+        } else { // coming back after mini game
+            if (musicActive) {
                 this.bgMusic = this.sound.add('green_gray', { volume: 0.4 })
                 this.bgMusic.play()
             }
 
-            const time = this.totalScore === 0 ? 3000 : 15000;// the times after 1st you have to wait more
             setTimeout(() => {
-                this.initAlienInteraction(false)
-            }, time)
+                this.initAlienInteraction('minigame')
+            }, 3000)
         }
     }
 
@@ -204,8 +212,8 @@ class Level extends Phaser.Scene {
         })
     }
 
-    initAlienInteraction(gameOver) {
-        console.log('initAlienInteraction')
+    initAlienInteraction(mode) { // mode is 'gameOver' 'restart' 'minigame'
+        console.log('initAlienInteraction', mode)
 
         // stops
         this.alienSprite.anims.pause()
@@ -219,7 +227,9 @@ class Level extends Phaser.Scene {
             animIdle.animationKey = "armor_idle"
 
             setTimeout(() => {
-                if (gameOver) {
+                if (mode === 'restart') {
+                    this.talkIntro()
+                } else if (mode === 'gameOver') {
                     this.talkAboutGameOver()
                 } else {
                     this.talkAboutScp()
@@ -246,6 +256,27 @@ class Level extends Phaser.Scene {
         this.input.once("pointerdown", () => {
             // tap anywhere in the scene
             this.nextLine(discourse, index + 1, scp)
+        })
+    }
+
+    talkIntro() {
+        console.log('intro')
+
+        this.createSpeechBubble(this.strings.intro[0], null, null, 400, 220)
+
+        this.input.once("pointerdown", () => {
+            this.lastBubble.bubble?.destroy()
+            this.lastBubble.text?.destroy()
+
+            // walk again
+            this.alienSprite.anims.pause()
+            this.alienSprite.anims.play("armor_walk")
+            this.alienSprite.body.velocity.x = this.originalVelocity
+            this.alienSprite.isAnimatingTurn = false
+
+            setTimeout(() => {
+                this.initAlienInteraction('minigame')
+            }, 15000)
         })
     }
 
