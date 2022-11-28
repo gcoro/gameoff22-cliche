@@ -271,6 +271,12 @@ class Meteor extends Phaser.Scene {
 		this.enemies.setActive(false).setVisible(false);
 		this.player.setActive(false).setVisible(false);
 		this.lasers.setActive(false).setVisible(false);
+
+        let sound
+        if (!gameover) { sound = this.sound.add('levelcomplete') }
+        else { sound = this.sound.add('explosion') }
+        sound.play()
+		
 		setTimeout(() => {
 			this.scene.start(Level.name, {gameOver: !!gameover, partialScore: gameover? 0 :100}); // fixme
 		},3000)
