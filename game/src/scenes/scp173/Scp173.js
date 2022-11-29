@@ -6,16 +6,42 @@ class Scp173 extends Phaser.Scene {
     init() {
         // constants
         this.CELL_SIZE = 16
-        this.NUM_POORS_PER_LOOP = 5
-        this.SCORES_OVERLAP_POOR = 3
+        this.NUM_POORS_PER_LOOP = 1
+        this.SCORES_OVERLAP_POOR = 200
         this.OVERLAP_RANGE = 12
         this.WALL_THICKNESS = 3 * 16
         this.BOARD_GAP_TO_WORLD = 50
         this.SHOW_TEXT_TIMEOUT = 3000 //10000
         this.MAX_SCORE = 100
-
         // enemy anim times
-        this.ENEMY_CREATE_POORS_MILLIS = 20 * 1000
+        this.ENEMY_CREATE_POORS_MILLIS = 30 * 1000
+        this.HOW_IT_WORKS_TEXT = [
+            "Collect all the dirt the monster produces",
+            "before the time is up or you will die.",
+            "If you touch the monster you'll die too.",
+            "",
+            "- ARROWS/WASD to move",
+            "- SPACE BAR to collect items",
+            "- MOUSE POINTER to watch the monster",
+            "while his eye is open",
+            "",
+            "Click to start the game!",
+        ]
+        this.GAME_OVER_TEXT = ["You're so incapable....", "", "Click to exit"]
+        this.WINNER_TEXT = [
+            "You win!! Good job!!",
+            "",
+            "Click to go to the next!",
+        ]
+        this.TEXT_STYLE = {
+            fixedHeight: this.game.config.height,
+            fixedWidth: this.game.config.width,
+            fontSize: 32,
+            align: "center",
+            font: "28px monospace",
+            backgroundColor: "black",
+            color: "white",
+        }
 
         // local variables
         this.currentPoors = []
@@ -47,6 +73,7 @@ class Scp173 extends Phaser.Scene {
         this.scoreLabel = undefined
         this.countdown = undefined
         this.createPoorsTimeout = undefined
+        this.scp173bgMusic = undefined
         this.eventEmitter = EventDispatcher.getInstance()
         this.GAME_STATUS = {
             LOADED: "loaded",
@@ -55,8 +82,6 @@ class Scp173 extends Phaser.Scene {
             ENDED: "ended",
         }
     }
-
-    scp173bgMusic
 
     preload() {
         this.load.image("base_tiles", "assets/scp173/level_tileset.png")
@@ -103,16 +128,10 @@ class Scp173 extends Phaser.Scene {
             "assets/scp173/door.png",
             "assets/scp173/door.json"
         )
-
-        // TEST SENE EVENTS
-        this.events.once("shutdown", () =>
-            console.log("scene scp 173 shutdown")
-        )
     }
 
     create() {
         this.status = this.GAME_STATUS.LOADED
-        console.log("scene scp173 create")
 
         this.scp173bgMusic = this.sound.add("meteor_fight", { volume: 0.4 })
         if (musicActive) this.scp173bgMusic.play()
@@ -164,9 +183,8 @@ class Scp173 extends Phaser.Scene {
             if (Utils.areObjectsOverlapping) this.createPoors()
         })
 
-        this.eventEmitter.once(PLAYER_EVENTS.PLAYER_DIED, () =>
-            this.endGame(false)
-        )
+        this.eventEmitter.once(PLAYER_EVENTS.DIED, () => this.endGame(false))
+        this.eventEmitter.once(PLAYER_EVENTS.WIN, () => this.win())
     }
 
     createTimer() {
@@ -174,34 +192,34 @@ class Scp173 extends Phaser.Scene {
         this.countdown.label.setVisible(false)
     }
 
-    playerDeath(reason) {
+    playerDeath() {
         this.countdown.stop()
         this.player.die()
     }
 
-    createStartingText() {
-        const content = [
-            "Collect all the dirt the monster produces",
-            "before the time is up or you will die.",
-            "If you touch the monster you'll die too.",
-            "",
-            "- ARROWS/WASD to move",
-            "- SPACE BAR to collect items",
-            "- MOUSE POINTER to watch the monster",
-            "while his eye is open",
-            "",
-            "Click to start the game!",
-        ]
+    createResultText(resultData) {
+        const content = resultData.gameOver
+            ? this.GAME_OVER_TEXT
+            : this.WINNER_TEXT
 
-        this.startingText = this.add.text(-this.WALL_THICKNESS, 0, content, {
-            fixedHeight: this.game.config.height,
-            fixedWidth: this.game.config.width,
-            fontSize: 32,
-            align: "center",
-            font: "28px monospace",
-            backgroundColor: "black",
-            color: "white",
+        const { x, y } = this.cameras.main.worldView
+
+        this.startingText = this.add.text(x, y, content, this.TEXT_STYLE)
+        this.startingText.setDepth(7)
+        this.startingText.setPadding(0, this.game.config.height / 3)
+        this.startingText.setInteractive().once("pointerdown", () => {
+            this.scp173bgMusic?.stop()
+            this.scene.start(Level.name, resultData)
         })
+    }
+
+    createStartingText() {
+        this.startingText = this.add.text(
+            -this.WALL_THICKNESS,
+            0,
+            this.HOW_IT_WORKS_TEXT,
+            this.TEXT_STYLE
+        )
         this.startingText.setDepth(7)
         this.startingText.setPadding(0, this.game.config.height / 3)
         this.startingText.setInteractive().once("pointerdown", () => {
@@ -260,7 +278,7 @@ class Scp173 extends Phaser.Scene {
             this.exit_door,
             () => {
                 doorCollider.active = false
-                this.win()
+                this.eventEmitter.emit(PLAYER_EVENTS.WIN)
             },
             null,
             this
@@ -395,7 +413,10 @@ class Scp173 extends Phaser.Scene {
     handlePoorOverlap(player, image) {
         if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
             this.currentScore += this.SCORES_OVERLAP_POOR
-            this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
+            const currentScore = this.scoreLabel.getScore()
+            if (currentScore + this.SCORES_OVERLAP_POOR < this.MAX_SCORE) {
+                this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
+            } else this.scoreLabel.setScore(this.MAX_SCORE)
         }
     }
 
@@ -460,8 +481,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     checkExitDoor() {
-        if (this.currentPoors.length === 0 && this.gameHasStarted) {
-            // play animation
+        if (this.currentPoors.length === 0) {
             this.exit_door.anims.play("open")
         } else {
             this.exit_door.anims.play("close")
@@ -514,21 +534,14 @@ class Scp173 extends Phaser.Scene {
         this.playRounds++
         this.status = this.GAME_STATUS.LOADED
         if (this.createPoorsTimeout) {
-            console.log("cleartimeout openEyeTimeout", this.createPoorsTimeout)
             clearTimeout(this.createPoorsTimeout)
             this.createPoorsTimeout = undefined
         }
         if (this.openEyeTimeout) {
-            console.log("cleartimeout openEyeTimeout", this.openEyeTimeout)
             clearTimeout(this.openEyeTimeout)
             this.openEyeTimeout = undefined
         }
         this.input.setDefaultCursor("default")
-
-        let score = this.scoreLabel.getScore()
-        if (!hasWin && score > this.MAX_SCORE) {
-            score = this.MAX_SCORE - 80
-        }
 
         let sound
         if (hasWin) {
@@ -539,10 +552,10 @@ class Scp173 extends Phaser.Scene {
         sound.play()
 
         setTimeout(() => {
-            this.scp173bgMusic?.stop()
-
-            this.scene.start(Level.name, {
-                partialScore: hasWin ? this.MAX_SCORE : score,
+            this.createResultText({
+                partialScore: hasWin
+                    ? this.MAX_SCORE
+                    : Math.min(this.scoreLabel.getScore(), this.MAX_SCORE - 80),
                 gameOver: !hasWin,
             })
         }, 1000)
