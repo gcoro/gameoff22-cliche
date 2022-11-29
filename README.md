@@ -1,4 +1,4 @@
-# cliche, right?
+# Cliche, right?
 
 Our take on the "cliche" theme revolves around the iconic catchphrase of this character, SCP-2020. In the shape of alien, this "entity" wishes to be a scifi novel writer, and always comes up with some cliche story plots. 
 
