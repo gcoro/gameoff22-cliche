@@ -1,9 +1,9 @@
-const formatData = (data) => `Remaining ${data} excrements to clean`
+const formatData = (data) => `Still ${data} feces and blood to clean`
 
 class MissingEscrements extends Phaser.GameObjects.Text {
     constructor(scene, x, y, score) {
         const style = {
-            fixedWidth: 450,
+            fixedWidth: 500,
             fixedHeight: 30,
             fontSize: "24px",
             fill: "white",
@@ -22,7 +22,7 @@ class MissingEscrements extends Phaser.GameObjects.Text {
     }
 
     setData(data) {
-        this.style.fixedWidth = 400
+        if (data === 0) this.style.fixedWidth = 400
         this.setText(data === 0 ? "Run to the door to exit" : formatData(data))
     }
 }

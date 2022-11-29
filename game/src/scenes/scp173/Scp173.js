@@ -63,12 +63,8 @@ class Scp173 extends Phaser.Scene {
                 "Click to start the game!",
             ],
         ]
-        this.GAME_OVER_TEXT = ["You're so incapable....", "", "Click to exit"]
-        this.WINNER_TEXT = [
-            "You win!! Good job!!",
-            "",
-            "Click to go to the next!",
-        ]
+        this.GAME_OVER_TEXT = ["You're so incapable...."]
+        this.WINNER_TEXT = ["You win!! Good job!!"]
         // map layout configuration
         this.MAP_CONFIG = MAP_LAYOUT["small"]
 
@@ -258,10 +254,10 @@ class Scp173 extends Phaser.Scene {
         this.startingText = this.add.text(x, y, content, this.TEXT_STYLE)
         this.startingText.setDepth(7)
         this.startingText.setPadding(0, this.game.config.height / 3)
-        this.startingText.setInteractive().once("pointerdown", () => {
+        setTimeout(() => {
             this.scp173bgMusic?.stop()
             this.scene.start(Level.name, resultData)
-        })
+        }, 3000)
     }
 
     createStartingText() {
@@ -596,6 +592,7 @@ class Scp173 extends Phaser.Scene {
     endGame(hasWin) {
         this.currentLevel++
         this.status = this.GAME_STATUS.LOADED
+        this.missingEscrementsLabel.setVisible(false)
         if (this.createPoorsTimeout) {
             clearTimeout(this.createPoorsTimeout)
             this.createPoorsTimeout = undefined
