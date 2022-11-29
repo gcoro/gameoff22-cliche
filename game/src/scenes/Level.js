@@ -301,7 +301,7 @@ class Level extends Phaser.Scene {
             if (discourse[index] === this.strings.clicheRight[0]) { // exception in size for cliche right
                 this.createSpeechBubble(discourse[index], null, null, 200, 100)
             } else if (gameOver) { // exception in size for game over text
-                this.createSpeechBubble(discourse[index], null, null, 400, 100)
+                this.createSpeechBubble(discourse[index], null, null, 400, 150)
             } else {
                 this.createSpeechBubble(discourse[index])
             }
