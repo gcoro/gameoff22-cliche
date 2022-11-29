@@ -24,5 +24,9 @@ class MissingEscrements extends Phaser.GameObjects.Text {
     setData(data) {
         if (data === 0) this.style.fixedWidth = 400
         this.setText(data === 0 ? "Run to the door to exit" : formatData(data))
+        if(data === 0) {
+            const music = this.scene.sound.add('win_sound')
+            music.play()
+        }
     }
 }
