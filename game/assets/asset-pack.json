@@ -267,6 +267,13 @@
                 ],
                 "type": "audio",
                 "key": "text-blip"
+            },
+            {
+                "url": [
+                    "assets/sfx/win_sound.wav"
+                ],
+                "type": "audio",
+                "key": "win_sound"
             }
         ]
     },
