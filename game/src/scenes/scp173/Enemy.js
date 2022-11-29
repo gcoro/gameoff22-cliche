@@ -4,11 +4,14 @@ const ENEMY_ANIMS = {
 }
 
 class Enemy extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
+    constructor(scene, x, y, level) {
         super(scene, x, y, "enemy", "sprite24")
-        this.setInteractive({
-            cursor: "url(assets/scp173/cursor/paternus_hit.cur), pointer",
-        })
+        this.level = level
+        if (this.level > 0) {
+            this.setInteractive({
+                cursor: "url(assets/scp173/cursor/paternus_hit.cur), pointer",
+            })
+        }
 
         this.anims.create({
             key: ENEMY_ANIMS.OPEN_EYE,
@@ -42,28 +45,30 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this)
         this.setDepth(6)
         this.eventEmitter = EventDispatcher.getInstance()
-        this.eventEmitter.once(PLAYER_EVENTS.WIN, () => {
-            this.off("pointerout")
-        })
+        if (this.level > 0) {
+            this.eventEmitter.once(PLAYER_EVENTS.WIN, () => {
+                this.off("pointerout")
+            })
+        }
     }
 
     handleEnemyAnimationEnd(anim) {
         if (anim.key === ENEMY_ANIMS.OPEN_EYE) {
             this.anims.stop(ENEMY_ANIMS.OPEN_EYE)
             this.eventEmitter.emit(ENEMY_EVENTS.EYE_OPENED)
-
-            this.setInteractive().on("pointerout", () => {
-                if (this.anims.currentAnim.key === ENEMY_ANIMS.OPEN_EYE) {
-                    this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
-                }
-            })
-
-            // need to check if pointer is on the enemy when the game starts, but we're kind and wait 1 sec before the player die
-            setTimeout(() => {
-                if (!this.isPointerOverlapping()) {
-                    this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
-                }
-            }, 1000)
+            if (this.level > 0) {
+                this.setInteractive().on("pointerout", () => {
+                    if (this.anims.currentAnim.key === ENEMY_ANIMS.OPEN_EYE) {
+                        this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
+                    }
+                })
+                // need to check if pointer is on the enemy when the game starts, but we're kind and wait 1 sec before the player die
+                setTimeout(() => {
+                    if (!this.isPointerOverlapping()) {
+                        this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
+                    }
+                }, 1000)
+            }
         }
     }
 
