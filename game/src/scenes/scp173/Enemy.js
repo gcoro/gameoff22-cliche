@@ -68,7 +68,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                         this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
                     }
                 }, 1000)
+            } else if(this.level === 0) { 
+                this.anims.play(ENEMY_ANIMS.CLOSE_EYE)
             }
+        } else if(anim.key === ENEMY_ANIMS.CLOSE_EYE && this.level === 0){
+            setTimeout(() => {
+                this.anims.play(ENEMY_ANIMS.OPEN_EYE)
+            }, this.scene.ENEMY_CREATE_POORS_MILLIS)
         }
     }
 
