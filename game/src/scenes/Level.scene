@@ -38,6 +38,17 @@
         },
         {
             "type": "Image",
+            "id": "89ffb74a-93ae-450b-ace1-1b6728633c6f",
+            "label": "scp173",
+            "components": [],
+            "texture": {
+                "key": "scp173"
+            },
+            "x": 622,
+            "y": 298
+        },
+        {
+            "type": "Image",
             "id": "d9e1e16b-973b-49c0-99b1-37921bdc781c",
             "label": "back_structures",
             "components": [],
@@ -110,6 +121,17 @@
             "body.height": 420,
             "body.offset.x": -150,
             "body.offset.y": 0
+        },
+        {
+            "type": "Image",
+            "id": "e8af4e5a-407f-451c-b6fc-6fe4ff04ae8d",
+            "label": "scp5153",
+            "components": [],
+            "texture": {
+                "key": "scp5153"
+            },
+            "x": 213,
+            "y": 298
         }
     ],
     "plainObjects": [

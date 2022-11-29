@@ -3,7 +3,7 @@ class CountdownController {
         this.scene = scene
 
         const timerLabel = this.scene.add.text(
-            this.scene.mapWidth / 2 - 75 || this.scene.game.config.width - 150,
+            scene.cameras.main.worldView.width - 120,
             30,
             `00:00`,
             {

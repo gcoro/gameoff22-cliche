@@ -32,6 +32,38 @@
             },
             "x": 612,
             "y": 236
+        },
+        {
+            "type": "Image",
+            "id": "aa932c66-6d60-4de6-a037-cf5096ef38a2",
+            "label": "scp173",
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "url_173",
+            "texture": {
+                "key": "scp173"
+            },
+            "x": 470,
+            "y": 520,
+            "scaleX": 1.4,
+            "scaleY": 1.5
+        },
+        {
+            "type": "Image",
+            "id": "093bee3d-f82b-4cf3-b074-3fff9660516b",
+            "label": "scp5153",
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "url_5153",
+            "texture": {
+                "key": "scp5153"
+            },
+            "x": 655,
+            "y": 520,
+            "scaleX": 1.4,
+            "scaleY": 1.5
         }
     ],
     "plainObjects": [],

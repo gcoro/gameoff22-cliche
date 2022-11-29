@@ -24,7 +24,7 @@ class Scp173 extends Phaser.Scene {
         // constants
         this.CELL_SIZE = 16
         this.NUM_POORS_PER_LOOP = 4
-        this.SCORES_OVERLAP_POOR = 200
+        this.SCORES_OVERLAP_POOR = 3
         this.OVERLAP_RANGE = 12
         this.WALL_THICKNESS = 3 * 16
         this.BOARD_GAP_TO_WORLD = 50
@@ -39,11 +39,10 @@ class Scp173 extends Phaser.Scene {
                 "Collect all the dirt the monster produces",
                 "before the time is up or you will die.",
                 "If you touch the monster you'll die too.",
+                "When the red door opens, you can exit",
                 "",
-                "- ARROWS/WASD to move",
+                "- ARROWS / WASD to move",
                 "- SPACE BAR to collect items",
-                "- ESCAPE from the container to stay alive",
-                " when the red door opens",
                 "",
                 "Click to start the game!",
             ],
@@ -54,7 +53,7 @@ class Scp173 extends Phaser.Scene {
                 "before the time is up or you will die.",
                 "If you touch the monster you'll die too.",
                 "",
-                "- ARROWS/WASD to move",
+                "- ARROWS / WASD to move",
                 "- SPACE BAR to collect items",
                 "- MOUSE POINTER to watch the monster: ",
                 "     you have to keep your mouse pointer ",
@@ -64,12 +63,8 @@ class Scp173 extends Phaser.Scene {
                 "Click to start the game!",
             ],
         ]
-        this.GAME_OVER_TEXT = ["You're so incapable....", "", "Click to exit"]
-        this.WINNER_TEXT = [
-            "You win!! Good job!!",
-            "",
-            "Click to go to the next!",
-        ]
+        this.GAME_OVER_TEXT = ["You're so incapable...."]
+        this.WINNER_TEXT = ["You win!! Good job!!"]
         // map layout configuration
         this.MAP_CONFIG = MAP_LAYOUT["small"]
 
@@ -220,17 +215,19 @@ class Scp173 extends Phaser.Scene {
         )
         this.scoreLabel = new ScoreLabel(
             this,
-            this.mapWidth / 2 - 2.2 * this.BOARD_GAP_TO_WORLD,
+            this.cameras.main.worldView.width - 200,
             0,
             this.currentScore
         ).setVisible(false)
+
+        this.missingEscrementsLabel = new MissingEscrements(this, 0, 0, 0)
 
         this.createPlayerAllies()
         this.createTimer()
         this.createCollidersAndBounds()
 
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
-            if (Utils.areObjectsOverlapping) this.createPoors()
+            this.createPoors()
         })
 
         this.eventEmitter.once(PLAYER_EVENTS.DIED, () => this.endGame(false))
@@ -257,10 +254,10 @@ class Scp173 extends Phaser.Scene {
         this.startingText = this.add.text(x, y, content, this.TEXT_STYLE)
         this.startingText.setDepth(7)
         this.startingText.setPadding(0, this.game.config.height / 3)
-        this.startingText.setInteractive().once("pointerdown", () => {
+        setTimeout(() => {
             this.scp173bgMusic?.stop()
             this.scene.start(Level.name, resultData)
-        })
+        }, 3000)
     }
 
     createStartingText() {
@@ -454,6 +451,10 @@ class Scp173 extends Phaser.Scene {
                 )
             }
         }
+        if (!this.missingEscrementsLabel.visible) {
+            this.missingEscrementsLabel.setVisible(true)
+        }
+        this.missingEscrementsLabel.setData(this.currentPoors.length)
 
         if(this.currentLevel > 0){
             this.createPoorsTimeout = setTimeout(
@@ -476,6 +477,7 @@ class Scp173 extends Phaser.Scene {
                 this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
             } else this.scoreLabel.setScore(this.MAX_SCORE)
         }
+        this.missingEscrementsLabel.setData(this.currentPoors.length)
     }
 
     /**
@@ -581,6 +583,7 @@ class Scp173 extends Phaser.Scene {
 
     gameOver() {
         this.status = this.GAME_STATUS.LOADED
+        this.currentLevel = 0
         this.playerDeath()
         console.log(
             "%c  GAME OVER!!  ",
@@ -591,6 +594,7 @@ class Scp173 extends Phaser.Scene {
     endGame(hasWin) {
         this.currentLevel++
         this.status = this.GAME_STATUS.LOADED
+        this.missingEscrementsLabel.setVisible(false)
         if (this.createPoorsTimeout) {
             clearTimeout(this.createPoorsTimeout)
             this.createPoorsTimeout = undefined

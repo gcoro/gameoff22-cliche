@@ -18,6 +18,7 @@
 -   shoot https://freesound.org/people/Aesterial-Arts/sounds/633250/
 -   blood clean https://freesound.org/people/magnuswaker/sounds/563315/
 -   hit https://opengameart.org/content/hit-sound-effects
+-   win https://opengameart.org/content/win-sound-effect
 
 ### Main Scene
 
@@ -33,7 +34,7 @@
 -   alien guards: https://secrethideout.itch.io/team-wars-platformer-battle
 -   eye monster: https://kuuly.itch.io/covid-boss
 -   cursor: https://opengameart.org/content/%E2%80%9Calien%E2%80%9D-crosshairs
--   tile: quelle di davide che non abbiamo
+-   tiles: same as below
 
 ### SCP-2000
 -   background https://pxhere.com/it/photo/1460581 
