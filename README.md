@@ -8,6 +8,10 @@ Your total score will be the sum of your partial scores.
 
 Have fun <3
 
+## Play 
+
+Try it on [itch.io](https://gcoro.itch.io/cliche-right)
+
 ## Team
 Developers gcoro​, wiulma​, ale958, trexy94​, nadenadenade​​;
 
