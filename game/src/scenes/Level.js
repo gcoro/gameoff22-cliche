@@ -337,7 +337,7 @@ class Level extends Phaser.Scene {
                 this.alienSprite.body.collideWorldBounds = false // go out of room
 
                 setTimeout(() => { // time of animation
-                    this.scene.start(GameOver.name)
+                    this.scene.start(GameOver.name, { totalScore: this.totalScore })
                 }, 2000)
             }
 

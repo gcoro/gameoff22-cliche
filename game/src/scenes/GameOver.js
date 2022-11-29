@@ -33,9 +33,18 @@ class GameOver extends Phaser.Scene {
 
 	// Write your code here
 
-	create() {
+	// score to show
+	score
 
+	create() {
 		this.editorCreate();
+	}
+
+	init(data) {
+		console.log('game over', data)
+
+		this.score = data.totalScore
+
 	}
 
 	/* END-USER-CODE */
