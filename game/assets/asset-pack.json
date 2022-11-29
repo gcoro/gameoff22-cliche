@@ -234,6 +234,16 @@
                 "key": "pavement_full"
             },
             {
+                "url": "assets/scp173.png",
+                "type": "image",
+                "key": "scp173"
+            },
+            {
+                "url": "assets/scp5153.png",
+                "type": "image",
+                "key": "scp5153"
+            },
+            {
                 "url": "assets/ship.png",
                 "frameConfig": {
                     "frameWidth": 66,
