@@ -323,7 +323,7 @@ class Meteor extends Phaser.Scene {
 		this.shootMusic = this.sound.add('arcade-shoot')
 		this.hitMusic = this.sound.add('hit20')
 		this.countdown = new CountdownController(this)
-		this.showMessage(["Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","-shift to boost ","- A + D  or the arrow keys to move","-space to shoot","","","Press any key to continue"])
+		this.showMessage([`LEVEL ${window.iteration ?? 0}`,"","Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","- ARROW/WASD to move","-SPACE BAR to shoot","-SHIFT to boost ","","","Press any key to start game!"])
 		const resume = (event) => {
 			console.log(event)
 			this.hideMessage()
@@ -419,7 +419,7 @@ class Meteor extends Phaser.Scene {
 	}
 
 	win() {
-		this.showEndScreen(["You have been able to charge SCP-2000 In time,","humanity is saved!"])
+		this.showEndScreen(["You have been able to charge SCP-2000,","humanity is saved!"])
 	}
 
 	createPlayer() {
