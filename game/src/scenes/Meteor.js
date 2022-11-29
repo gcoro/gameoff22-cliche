@@ -260,24 +260,26 @@ class Meteor extends Phaser.Scene {
     spaceBar = undefined;
 	countdown = undefined;
 
-	showMessage(message) {
-		this.text_1.setStyle({fixedHeight:0,
+	showMessage(message, style) {
+		if (message){
+			this.text_1.text=message
+		}
+		this.countdown.hide();
+		this.rectangle_2.visible = true;
+		this.text_1.visible = true;
+		const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
+		const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
+		this.text_1.x = screenCenterX;
+		this.text_1.y = screenCenterY;
+		this.text_1.setOrigin(0.5)
+		this.text_1.setStyle({
+			fixedHeight:0,
             fixedWidth:0,
             fontSize: 32,
             align: "center",
             font: "28px monospace",
             backgroundColor: "black",
             color: "white"})
-		this.countdown.hide();
-		this.rectangle_2.visible = true;
-		this.text_1.visible = true;
-		if (message)
-		this.text_1.text = message;
-		const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-		const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 2;
-		this.text_1.x = screenCenterX;
-		this.text_1.y = screenCenterY;
-		this.text_1.setOrigin(0.5)
 	}
 
 	hideMessage(){
@@ -417,7 +419,7 @@ class Meteor extends Phaser.Scene {
 	}
 
 	win() {
-		this.showEndScreen("You have been able to charge SCP-2000 In time, humanity is saved")
+		this.showEndScreen(["You have been able to charge SCP-2000 In time,","humanity is saved!"])
 	}
 
 	createPlayer() {
