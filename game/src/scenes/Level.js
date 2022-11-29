@@ -119,6 +119,9 @@ class Level extends Phaser.Scene {
     // bg theme music
     bgMusic
 
+    // last minigame played (so it changes)
+    lastMinigame
+
     init(data) {
         console.log('init', data)
 
@@ -147,7 +150,7 @@ class Level extends Phaser.Scene {
                 this.bgMusic = this.sound.add('green_gray', { volume: 0.4 })
                 this.bgMusic.play()
             }
-            
+
             setTimeout(() => {
                 this.initAlienInteraction('restart')
             }, 500)
@@ -243,7 +246,13 @@ class Level extends Phaser.Scene {
 
         // randomly choose scp
         const items = [Scp173.name, Meteor.name]
-        const scp = items[Math.floor(Math.random() * items.length)]
+        let scp
+        if (!this.lastMinigame) scp = items[Math.floor(Math.random() * items.length)]
+        else if (this.lastMinigame === Scp173.name) scp = Meteor.name
+        else if (this.lastMinigame === Meteor.name) scp = Scp173.name
+
+        // then update variable
+        this.lastMinigame = scp
 
         const index = 0
         let discourse = scp === Scp173.name ? this.strings.scp173 : this.strings.scp5153
@@ -314,6 +323,7 @@ class Level extends Phaser.Scene {
             console.log('end speech')
 
             // walk again
+            this.alienSprite.anims.pause()
             this.alienSprite.anims.play("armor_walk")
             this.alienSprite.isAnimatingTurn = false
 
