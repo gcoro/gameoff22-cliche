@@ -9,9 +9,11 @@ Your total score will be the sum of your partial scores.
 Have fun <3
 
 ## Team
-Developers gcoro​, wiulma​, ale958, trexy94​, nadenadenade​​
-​Game designer Alessandro Marani 
-Screen graphics Giulia Garulli 
+Developers gcoro​, wiulma​, ale958, trexy94​, nadenadenade​​;
+
+​Game designer Alessandro Marani;
+
+Screen graphics Giulia Garulli;
 
 ## Assets credits
 
