@@ -314,7 +314,6 @@ class Level extends Phaser.Scene {
             console.log('end speech')
 
             // walk again
-            this.alienSprite.anims.pause()
             this.alienSprite.anims.play("armor_walk")
             this.alienSprite.isAnimatingTurn = false
 
