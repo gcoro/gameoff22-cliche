@@ -24,8 +24,12 @@ class CountdownController {
 
         this.eventEmitter = EventDispatcher.getInstance()
         this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => {
-            this.label.text = "00:00"
-            this.stop()
+            try {
+                this.label.text = "00:00"
+                this.stop()
+            } catch (exc) {
+                // hack to avoid to break it
+            }
         })
     }
 
@@ -36,8 +40,7 @@ class CountdownController {
             delay: duration,
             callback: () => {
                 this.label.text = "00:00"
-                this.scene.playerDeath()
-                this.stop()
+                this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
             },
         })
     }
@@ -65,9 +68,8 @@ class CountdownController {
     }
 
     show() {
-        this.label.setActive(true).setVisible(true);
+        this.label.setActive(true).setVisible(true)
     }
-
 
     formatTime(seconds) {
         // Minutes

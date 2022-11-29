@@ -1,12 +1,29 @@
+const MAP_LAYOUT = {
+    small: {
+        layout: "small_map.json",
+        tilesW: 65,
+        tilesH: 55,
+    },
+    medium: {
+        layout: "medium_map.json",
+        tilesW: 72,
+        tilesH: 60,
+    },
+    large: {
+        layout: "large_map.json",
+        tilesW: 90,
+        tilesH: 75,
+    },
+}
+
 class Scp173 extends Phaser.Scene {
     constructor() {
         super("Scp173")
-    }
+        this.currentLevel = 0
 
-    init() {
         // constants
         this.CELL_SIZE = 16
-        this.NUM_POORS_PER_LOOP = 1
+        this.NUM_POORS_PER_LOOP = 4
         this.SCORES_OVERLAP_POOR = 200
         this.OVERLAP_RANGE = 12
         this.WALL_THICKNESS = 3 * 16
@@ -16,16 +33,36 @@ class Scp173 extends Phaser.Scene {
         // enemy anim times
         this.ENEMY_CREATE_POORS_MILLIS = 30 * 1000
         this.HOW_IT_WORKS_TEXT = [
-            "Collect all the dirt the monster produces",
-            "before the time is up or you will die.",
-            "If you touch the monster you'll die too.",
-            "",
-            "- ARROWS/WASD to move",
-            "- SPACE BAR to collect items",
-            "- MOUSE POINTER to watch the monster",
-            "while his eye is open",
-            "",
-            "Click to start the game!",
+            [
+                `LEVEL ${this.currentLevel}`,
+                "",
+                "Collect all the dirt the monster produces",
+                "before the time is up or you will die.",
+                "If you touch the monster you'll die too.",
+                "",
+                "- ARROWS/WASD to move",
+                "- SPACE BAR to collect items",
+                "- ESCAPE from the container to stay alive",
+                " when the red door opens",
+                "",
+                "Click to start the game!",
+            ],
+            [
+                `LEVEL ${this.currentLevel}`,
+                "",
+                "Collect all the dirt the monster produces",
+                "before the time is up or you will die.",
+                "If you touch the monster you'll die too.",
+                "",
+                "- ARROWS/WASD to move",
+                "- SPACE BAR to collect items",
+                "- MOUSE POINTER to watch the monster: ",
+                "     you have to keep your mouse pointer ",
+                "    OVER the monster after it opens its eyes",
+                "- ESCAPE from the container when the red door opens",
+                "",
+                "Click to start the game!",
+            ],
         ]
         this.GAME_OVER_TEXT = ["You're so incapable....", "", "Click to exit"]
         this.WINNER_TEXT = [
@@ -33,15 +70,8 @@ class Scp173 extends Phaser.Scene {
             "",
             "Click to go to the next!",
         ]
-        this.TEXT_STYLE = {
-            fixedHeight: this.game.config.height,
-            fixedWidth: this.game.config.width,
-            fontSize: 32,
-            align: "center",
-            font: "28px monospace",
-            backgroundColor: "black",
-            color: "white",
-        }
+        // map layout configuration
+        this.MAP_CONFIG = MAP_LAYOUT["small"]
 
         // local variables
         this.currentPoors = []
@@ -49,8 +79,8 @@ class Scp173 extends Phaser.Scene {
         this.currentScore = 0
         this.player = undefined
         this.enemy = undefined
-        this.mapHeight = 1200
-        this.mapWidth = 16 * 90
+        this.mapHeight = +this.MAP_CONFIG.tilesH * 16 // tiles  * tile height
+        this.mapWidth = +this.MAP_CONFIG.tilesW * 16 // tiles  * tile width
         this.gameDuration = 180000
         this.stuffToThrow = [
             {
@@ -64,7 +94,25 @@ class Scp173 extends Phaser.Scene {
                 scale: 0.2,
             },
         ]
-        this.playRounds = 0
+        this.GAME_STATUS = {
+            LOADED: "loaded",
+            STARTED: "started",
+            FIGHTING: "fighting",
+            ENDED: "ended",
+        }
+    }
+
+    init() {
+        this.TEXT_STYLE = {
+            fixedHeight: this.game.config.height,
+            fixedWidth: this.game.config.width,
+            fontSize: 32,
+            align: "center",
+            font: "28px monospace",
+            backgroundColor: "black",
+            color: "white",
+        }
+
         // we can have a class wrapping them extending Phaser.Physics.Arcade.Sprite
         this.player_alien_ally1 = undefined
         this.player_alien_ally2 = undefined
@@ -75,17 +123,14 @@ class Scp173 extends Phaser.Scene {
         this.createPoorsTimeout = undefined
         this.scp173bgMusic = undefined
         this.eventEmitter = EventDispatcher.getInstance()
-        this.GAME_STATUS = {
-            LOADED: "loaded",
-            STARTED: "started",
-            FIGHTING: "fighting",
-            ENDED: "ended",
-        }
     }
 
     preload() {
         this.load.image("base_tiles", "assets/scp173/level_tileset.png")
-        this.load.tilemapTiledJSON("tilemap", "assets/scp173/small_map.json")
+        this.load.tilemapTiledJSON(
+            "tilemap",
+            `assets/scp173/${this.MAP_CONFIG.layout}`
+        )
         this.load.image("poor", "assets/scp173/poor/splat.png")
 
         this.load.atlas(
@@ -167,7 +212,12 @@ class Scp173 extends Phaser.Scene {
 
         this.player = new Player(this, 100, 250)
         this.exit_door = new ExitDoor(this, 15, 80)
-        this.enemy = new Enemy(this, this.mapWidth / 2, this.mapHeight / 2)
+        this.enemy = new Enemy(
+            this,
+            this.mapWidth / 2,
+            this.mapHeight / 2,
+            this.currentLevel
+        )
         this.scoreLabel = new ScoreLabel(
             this,
             this.mapWidth / 2 - 2.2 * this.BOARD_GAP_TO_WORLD,
@@ -217,11 +267,13 @@ class Scp173 extends Phaser.Scene {
         this.startingText = this.add.text(
             -this.WALL_THICKNESS,
             0,
-            this.HOW_IT_WORKS_TEXT,
+            !this.currentLevel
+                ? this.HOW_IT_WORKS_TEXT[0]
+                : this.HOW_IT_WORKS_TEXT[1],
             this.TEXT_STYLE
         )
         this.startingText.setDepth(7)
-        this.startingText.setPadding(0, this.game.config.height / 3)
+        this.startingText.setPadding(0, this.game.config.height / 6)
         this.startingText.setInteractive().once("pointerdown", () => {
             this.startGame()
         })
@@ -233,9 +285,11 @@ class Scp173 extends Phaser.Scene {
         this.scoreLabel.setVisible(true)
         this.countdown.label.setVisible(true)
         this.countdown.start(this.gameDuration)
-        this.input.setDefaultCursor(
-            "url(assets/scp173/cursor/inactive.cur), auto"
-        )
+        if (this.currentLevel > 0) {
+            this.input.setDefaultCursor(
+                "url(assets/scp173/cursor/inactive.cur), auto"
+            )
+        }
         this.eventEmitter.once(SCENE_EVENTS.GAME_OVER, () => this.gameOver())
         this.openEyeTimeout = setTimeout(
             () => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE),
@@ -289,7 +343,9 @@ class Scp173 extends Phaser.Scene {
             this.enemy,
             () => {
                 enemyCollider.active = false
-                this.playerDeath()
+                this.eventEmitter.emit(
+                    this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
+                )
             },
             null,
             this
@@ -401,7 +457,7 @@ class Scp173 extends Phaser.Scene {
 
         this.createPoorsTimeout = setTimeout(
             () => this.createPoors(),
-            this.ENEMY_CREATE_POORS_MILLIS - 2 * this.playRounds
+            this.ENEMY_CREATE_POORS_MILLIS - 2 * this.currentLevel
         )
     }
 
@@ -531,7 +587,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     endGame(hasWin) {
-        this.playRounds++
+        this.currentLevel++
         this.status = this.GAME_STATUS.LOADED
         if (this.createPoorsTimeout) {
             clearTimeout(this.createPoorsTimeout)

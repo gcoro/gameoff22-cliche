@@ -14,7 +14,7 @@ class ScoreLabel extends Phaser.GameObjects.Text {
         this.setPadding(0, 4)
         this.score = score
         this.alpha = 0.6
-        this.setDepth(7)
+        this.setDepth(8)
         this.setScrollFactor(0)
 
         this.scene.add.existing(this)
