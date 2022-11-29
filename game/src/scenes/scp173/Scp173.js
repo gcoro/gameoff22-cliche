@@ -279,7 +279,7 @@ class Scp173 extends Phaser.Scene {
     startGame() {
         this.status = this.GAME_STATUS.STARTED
         this.startingText.destroy()
-        this.scoreLabel.setVisible(true)
+        //this.scoreLabel.setVisible(true)
         this.countdown.label.setVisible(true)
         this.countdown.start(this.gameDuration)
         if (this.currentLevel > 0) {
@@ -456,10 +456,12 @@ class Scp173 extends Phaser.Scene {
         }
         this.missingEscrementsLabel.setData(this.currentPoors.length)
 
-        this.createPoorsTimeout = setTimeout(
-            () => this.createPoors(),
-            this.ENEMY_CREATE_POORS_MILLIS - 2 * this.currentLevel
-        )
+        if(this.currentLevel > 0){
+            this.createPoorsTimeout = setTimeout(
+                () => this.createPoors(),
+                this.ENEMY_CREATE_POORS_MILLIS - 2 * this.currentLevel
+            )
+        }
     }
 
     /**
