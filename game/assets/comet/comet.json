@@ -1,0 +1,168 @@
+{
+    "anims": [
+        {
+            "key": "comet",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "img_0",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_1",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_2",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_3",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_4",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_5",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_6",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_7",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_8",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_9",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_10",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_11",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_12",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_13",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_14",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_15",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_16",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_17",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_18",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_19",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_20",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_21",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_22",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_23",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_24",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_25",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_26",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_27",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_28",
+                    "duration": 0,
+                    "keyframe": false
+                },
+                {
+                    "key": "img_29",
+                    "duration": 0,
+                    "keyframe": false
+                }
+            ],
+            "frameRate": 24,
+            "skipMissedFrames": true,
+            "repeat": -1
+        }
+    ],
+    "globalTimeScale": 1,
+    "meta": {
+        "app": "Phaser Editor 2D v3",
+        "contentType": "Phaser v3 Animations"
+    }
+}

@@ -1,0 +1,287 @@
+{
+    "section1": {
+        "files": [
+            {
+                "url": "assets/animations.json",
+                "type": "animation",
+                "key": "animations"
+            },
+            {
+                "url": [
+                    "assets/sfx/arcade-shoot.wav"
+                ],
+                "type": "audio",
+                "key": "arcade-shoot"
+            },
+            {
+                "url": "assets/scp2020/armor_idle_1.png",
+                "type": "image",
+                "key": "armor_idle_1"
+            },
+            {
+                "url": "assets/scp2020/armor_idle_2.png",
+                "type": "image",
+                "key": "armor_idle_2"
+            },
+            {
+                "url": "assets/scp2020/armor_idle_3.png",
+                "type": "image",
+                "key": "armor_idle_3"
+            },
+            {
+                "url": "assets/scp2020/armor_turn_1.png",
+                "type": "image",
+                "key": "armor_turn_1"
+            },
+            {
+                "url": "assets/scp2020/armor_turn_2.png",
+                "type": "image",
+                "key": "armor_turn_2"
+            },
+            {
+                "url": "assets/scp2020/armor_turn_3.png",
+                "type": "image",
+                "key": "armor_turn_3"
+            },
+            {
+                "url": "assets/scp2020/armor_turn_reverse_1.png",
+                "type": "image",
+                "key": "armor_turn_reverse_1"
+            },
+            {
+                "url": "assets/scp2020/armor_turn_reverse_2.png",
+                "type": "image",
+                "key": "armor_turn_reverse_2"
+            },
+            {
+                "url": "assets/scp2020/armor_turn_reverse_3.png",
+                "type": "image",
+                "key": "armor_turn_reverse_3"
+            },
+            {
+                "url": "assets/scp2020/armor_walk_1.png",
+                "type": "image",
+                "key": "armor_walk_1"
+            },
+            {
+                "url": "assets/scp2020/armor_walk_2.png",
+                "type": "image",
+                "key": "armor_walk_2"
+            },
+            {
+                "url": "assets/scp2020/armor_walk_3.png",
+                "type": "image",
+                "key": "armor_walk_3"
+            },
+            {
+                "url": "assets/scp2020/armor_walk_4.png",
+                "type": "image",
+                "key": "armor_walk_4"
+            },
+            {
+                "url": "assets/scp2020/armor_walk_5.png",
+                "type": "image",
+                "key": "armor_walk_5"
+            },
+            {
+                "url": "assets/scp2020/armor_walk_6.png",
+                "type": "image",
+                "key": "armor_walk_6"
+            },
+            {
+                "url": "assets/scp2020/back-structures.png",
+                "type": "image",
+                "key": "back-structures"
+            },
+            {
+                "url": "assets/scp2020/background_alien.png",
+                "type": "image",
+                "key": "background_alien"
+            },
+            {
+                "url": "assets/scp2020/background_scifi_interior.png",
+                "type": "image",
+                "key": "background_scifi_interior"
+            },
+            {
+                "url": [
+                    "assets/sfx/death-monster-sound.ogg"
+                ],
+                "type": "audio",
+                "key": "death-monster-sound"
+            },
+            {
+                "url": [
+                    "assets/music/dirty_area.mp3"
+                ],
+                "type": "audio",
+                "key": "dirty_area"
+            },
+            {
+                "url": "assets/scp2020/door_blue.png",
+                "type": "image",
+                "key": "door_blue"
+            },
+            {
+                "url": [
+                    "assets/sfx/door_locked.wav"
+                ],
+                "type": "audio",
+                "key": "door_locked"
+            },
+            {
+                "url": [
+                    "assets/sfx/door_open.wav"
+                ],
+                "type": "audio",
+                "key": "door_open"
+            },
+            {
+                "url": "assets/scp2020/door_red.png",
+                "type": "image",
+                "key": "door_red"
+            },
+            {
+                "url": "assets/scp2020/door0.png",
+                "type": "image",
+                "key": "door0"
+            },
+            {
+                "url": [
+                    "assets/sfx/explosion.mp3"
+                ],
+                "type": "audio",
+                "key": "explosion"
+            },
+            {
+                "url": [
+                    "assets/music/game_over_2.mp3"
+                ],
+                "type": "audio",
+                "key": "game_over_2"
+            },
+            {
+                "url": "assets/Green moss and rocky walls.png",
+                "type": "image",
+                "key": "Green moss and rocky walls"
+            },
+            {
+                "url": [
+                    "assets/music/green_gray.mp3"
+                ],
+                "type": "audio",
+                "key": "green_gray"
+            },
+            {
+                "url": "assets/ground.json",
+                "type": "tilemapTiledJSON",
+                "key": "ground"
+            },
+            {
+                "url": [
+                    "assets/sfx/gushing-flesh.wav"
+                ],
+                "type": "audio",
+                "key": "gushing-flesh"
+            },
+            {
+                "url": [
+                    "assets/sfx/hit20.mp3"
+                ],
+                "type": "audio",
+                "key": "hit20"
+            },
+            {
+                "url": "assets/laser.png",
+                "frameConfig": {
+                    "frameWidth": 16,
+                    "frameHeight": 16,
+                    "startFrame": 0,
+                    "endFrame": 4,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "laser"
+            },
+            {
+                "url": "assets/level_tileset.png",
+                "type": "image",
+                "key": "level_tileset"
+            },
+            {
+                "url": [
+                    "assets/sfx/levelcomplete.mp3"
+                ],
+                "type": "audio",
+                "key": "levelcomplete"
+            },
+            {
+                "url": [
+                    "assets/music/meteor_fight.ogg"
+                ],
+                "type": "audio",
+                "key": "meteor_fight"
+            },
+            {
+                "url": "assets/scp2020/pavement.png",
+                "type": "image",
+                "key": "pavement"
+            },
+            {
+                "url": "assets/scp2020/pavement_full.png",
+                "type": "image",
+                "key": "pavement_full"
+            },
+            {
+                "url": "assets/scp173.png",
+                "type": "image",
+                "key": "scp173"
+            },
+            {
+                "url": "assets/scp5153.png",
+                "type": "image",
+                "key": "scp5153"
+            },
+            {
+                "url": "assets/ship.png",
+                "frameConfig": {
+                    "frameWidth": 66,
+                    "frameHeight": 66,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "ship"
+            },
+            {
+                "url": "src/components/StartAnimation.js",
+                "type": "script",
+                "key": "StartAnimation"
+            },
+            {
+                "url": [
+                    "assets/sfx/text-blip.wav"
+                ],
+                "type": "audio",
+                "key": "text-blip"
+            },
+            {
+                "url": [
+                    "assets/sfx/win_sound.wav"
+                ],
+                "type": "audio",
+                "key": "win_sound"
+            }
+        ]
+    },
+    "meta": {
+        "app": "Phaser Editor 2D - Asset Pack Editor",
+        "contentType": "phasereditor2d.pack.core.AssetContentType",
+        "url": "https://phasereditor2d.com",
+        "version": 2,
+        "showAllFilesInBlocks": false
+    }
+}
