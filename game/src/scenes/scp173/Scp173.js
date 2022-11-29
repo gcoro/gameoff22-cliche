@@ -64,7 +64,7 @@ class Scp173 extends Phaser.Scene {
             ],
         ]
         this.GAME_OVER_TEXT = ["You're so incapable...."]
-        this.WINNER_TEXT = ["You win!! Good job!!"]
+        this.WINNER_TEXT = ["Enclosure cleaned successfully"]
         // map layout configuration
         this.MAP_CONFIG = MAP_LAYOUT["small"]
 
@@ -469,6 +469,9 @@ class Scp173 extends Phaser.Scene {
      */
     handlePoorOverlap(player, image) {
         if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
+            const music = this.sound.add('gushing-flesh')
+            music.play()
+
             this.currentScore += this.SCORES_OVERLAP_POOR
             const currentScore = this.scoreLabel.getScore()
             if (currentScore + this.SCORES_OVERLAP_POOR < this.MAX_SCORE) {
