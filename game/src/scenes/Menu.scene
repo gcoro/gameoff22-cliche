@@ -41,7 +41,10 @@
             "type": "Image",
             "id": "370def5f-82b5-40da-8ef8-b2c73cbe64dc",
             "label": "iNSTRUCTIONS",
-            "components": [],
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "Instructions",
             "texture": {
                 "key": "INSTRUCTIONS"
             },

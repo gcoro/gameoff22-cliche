@@ -2,6 +2,11 @@
     "section1": {
         "files": [
             {
+                "url": "assets/original_graphics/about.png",
+                "type": "image",
+                "key": "about"
+            },
+            {
                 "url": "assets/animations.json",
                 "type": "animation",
                 "key": "animations"
@@ -291,6 +296,11 @@
                 "url": "assets/scp2020/pavement_full.png",
                 "type": "image",
                 "key": "pavement_full"
+            },
+            {
+                "url": "assets/original_graphics/porte.png",
+                "type": "image",
+                "key": "porte"
             },
             {
                 "url": "assets/scp173.png",
