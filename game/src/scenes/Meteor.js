@@ -246,7 +246,7 @@ class Meteor extends Phaser.Scene {
 		return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 	  }
 
-	dates = ["30 June 1908, Tunguska River, Russia", "9 April 1941, Chelyabinsk, USSR", "12 February 1947, Sikhote-Alin Mountains, USSR", "25 September 2002,Bodaybo, Russia", "7 February 2009,Tyumen Oblast, Russia", "15 February 2013,Chelyabinsk, Russia", "15 December 2017,Kamchatka, Russia", "18 December 2018,Kamchatka, Russia", "25 February 2020,Lake Baikal, Russia" ]
+	dates = ["30 June 1908, Tunguska River, Russia", "9 April 1941, Chelyabinsk, USSR", "12 February 1947, Sikhote-Alin Mountains, USSR", "25 September 2002, Bodaybo, Russia", "7 February 2009, Tyumen Oblast, Russia", "15 February 2013, Chelyabinsk, Russia", "15 December 2017, Kamchatka, Russia", "18 December 2018, Kamchatka, Russia", "25 February 2020, Lake Baikal, Russia" ]
 
     shoot = false;
     speed = 300;
@@ -323,7 +323,7 @@ class Meteor extends Phaser.Scene {
 		this.shootMusic = this.sound.add('arcade-shoot')
 		this.hitMusic = this.sound.add('hit20')
 		this.countdown = new CountdownController(this)
-		this.showMessage([`LEVEL ${window.iteration ?? 0}`,"","Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","- ARROWS / WASD to move","-SPACE BAR to shoot","-SHIFT to boost ","","","Press any key to start game!"])
+		this.showMessage([`LEVEL ${window.iteration ?? 0}`,"","Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","- ARROWS / WASD to move","- SPACE BAR to shoot","- SHIFT to boost ","","","Click to start the game!"])
 		const resume = (event) => {
 			this.hideMessage()
 			this.scene.resume(Meteor.name)
