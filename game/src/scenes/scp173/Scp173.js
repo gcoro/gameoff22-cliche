@@ -34,7 +34,7 @@ class Scp173 extends Phaser.Scene {
         this.ENEMY_CREATE_POORS_MILLIS = 30 * 1000
         this.HOW_IT_WORKS_TEXT = [
             [
-                `LEVEL ${this.currentLevel}`,
+                `LEVEL ${+this.currentLevel + 1}`,
                 "",
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
@@ -170,6 +170,13 @@ class Scp173 extends Phaser.Scene {
             "assets/scp173/door.png",
             "assets/scp173/door.json"
         )
+
+        this.events.once("shutdown", () => {
+            this.eventEmitter.off(SCENE_EVENTS.GAME_OVER)
+            this.eventEmitter.off(PLAYER_EVENTS.DIED)
+            this.eventEmitter.off(PLAYER_EVENTS.WIN)
+            this.eventEmitter.off(ENEMY_EVENTS.EYE_OPENED)
+        })
     }
 
     create() {
@@ -457,7 +464,7 @@ class Scp173 extends Phaser.Scene {
         }
         this.missingEscrementsLabel.setData(this.currentPoors.length)
 
-        if(this.currentLevel > 0){
+        if (this.currentLevel > 0) {
             this.createPoorsTimeout = setTimeout(
                 () => this.createPoors(),
                 this.ENEMY_CREATE_POORS_MILLIS - 2 * this.currentLevel
@@ -472,7 +479,7 @@ class Scp173 extends Phaser.Scene {
      */
     handlePoorOverlap(player, image) {
         if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
-            const music = this.sound.add('gushing-flesh')
+            const music = this.sound.add("gushing-flesh")
             music.play()
 
             this.currentScore += this.SCORES_OVERLAP_POOR
