@@ -22,7 +22,7 @@ class Scp173 extends Phaser.Scene {
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
                 "If you touch the monster you'll die too.",
-                "When the red door opens, you can exit",
+                "When the red door opens, you must escape!",
                 "",
                 "- ARROWS / WASD to move",
                 "- SPACE BAR to collect items",
@@ -35,11 +35,11 @@ class Scp173 extends Phaser.Scene {
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
                 "If you touch the monster you'll die too.",
-                "When the red door opens, you can exit",
+                "When the red door opens, you must escape!",
                 "",
                 "- ARROWS / WASD to move",
                 "- SPACE BAR to collect items",
-                "- ⚠️⚠️⚠️⚠️⚠️ MOUSE POINTER ⚠️⚠️⚠️⚠️⚠️:",
+                "- ⚠️⚠️⚠️⚠️⚠️ MOUSE POINTER ⚠️⚠️⚠️⚠️⚠️",
                 "  keep the mouse pointer OVER THE MONSTER",
                 "  while his eye is open",
                 "",
@@ -303,9 +303,16 @@ class Scp173 extends Phaser.Scene {
                 this.openEyeCountdownInterval = setInterval(() => {
                     console.log(this.openEyeCountdown)
                     this.countDownLabel.setValue(this.openEyeCountdown)
+                    
                     if (this.openEyeCountdown === 0) {
+                        const cd2 = this.sound.add('countdown-a')
+                        cd2.play()
+                        
                         clearInterval(this.openEyeCountdownInterval)
                         this.openEyeCountdownInterval = undefined
+                    } else {
+                        const cd1 = this.sound.add('countdown-b')
+                        cd1.play()
                     }
                     this.openEyeCountdown -= 1
                 }, 1000)
