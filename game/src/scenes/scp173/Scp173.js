@@ -238,6 +238,9 @@ class Scp173 extends Phaser.Scene {
         this.group = this.physics.add.group()
         this.group.enableBody = true;
         this.physics.add.overlap(this.player, this.group, this.handlePoopOverlap, null, this);
+
+        this.res = this.group.getFirstDead(true, 100, 100, "poor");
+        this.res.setVisible(false)
     }
 
     createTimer() {
@@ -451,7 +454,7 @@ class Scp173 extends Phaser.Scene {
 
                 const throwCollider = this.physics.add.overlap(
                     sourceImage,
-                    currObject,
+                    loopImage,
                     (source, dest) => {
                         source.body.stop()
                         //dest.setVisible(true)
