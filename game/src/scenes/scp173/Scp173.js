@@ -170,6 +170,13 @@ class Scp173 extends Phaser.Scene {
             "assets/scp173/door.png",
             "assets/scp173/door.json"
         )
+
+        this.events.once("shutdown", () => {
+            this.eventEmitter.off(SCENE_EVENTS.GAME_OVER)
+            this.eventEmitter.off(PLAYER_EVENTS.DIED)
+            this.eventEmitter.off(PLAYER_EVENTS.WIN)
+            this.eventEmitter.off(ENEMY_EVENTS.EYE_OPENED)
+        })
     }
 
     create() {
@@ -227,11 +234,17 @@ class Scp173 extends Phaser.Scene {
         this.createTimer()
         this.createCollidersAndBounds()
         this.monsterRubbishGroup = this.physics.add.group()
-        this.monsterRubbishGroup.enableBody = true;
-        this.physics.add.overlap(this.player, this.monsterRubbishGroup, this.handlePoopOverlap, null, this);
-   
+        this.monsterRubbishGroup.enableBody = true
+        this.physics.add.overlap(
+            this.player,
+            this.monsterRubbishGroup,
+            this.handlePoopOverlap,
+            null,
+            this
+        )
+
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
-           this.createPoors()
+            this.createPoors()
         })
 
         this.eventEmitter.once(PLAYER_EVENTS.DIED, () => this.endGame(false))
@@ -429,10 +442,10 @@ class Scp173 extends Phaser.Scene {
                 sourceImage.anims.play(selecedObjectToThrow.anim)
 
                 const currObject = this.monsterRubbishGroup.create(
-                    coords.x, 
-                    coords.y, 
+                    coords.x,
+                    coords.y,
                     selecedObjectToThrow.name
-                );
+                )
                 currObject.setVisible(false)
                 currObject.setScale(selecedObjectToThrow.scale)
                 this.physics.moveToObject(sourceImage, currObject, 200)
@@ -452,9 +465,11 @@ class Scp173 extends Phaser.Scene {
         if (!this.missingEscrementsLabel.visible) {
             this.missingEscrementsLabel.setVisible(true)
         }
-        this.missingEscrementsLabel.setData(this.monsterRubbishGroup.getTotalUsed())
+        this.missingEscrementsLabel.setData(
+            this.monsterRubbishGroup.getTotalUsed()
+        )
 
-        if(this.currentLevel > 0){
+        if (this.currentLevel > 0) {
             this.createPoorsTimeout = setTimeout(
                 () => this.createPoors(),
                 this.ENEMY_CREATE_POORS_MILLIS - 2 * this.currentLevel
@@ -465,7 +480,7 @@ class Scp173 extends Phaser.Scene {
     handlePoopOverlap(player, poop) {
         if (this.cursors.space.isDown) {
             poop.disableBody(true, true)
-            const music = this.sound.add('gushing-flesh')
+            const music = this.sound.add("gushing-flesh")
             music.play()
 
             this.currentScore += this.SCORES_OVERLAP_POOR
@@ -474,7 +489,9 @@ class Scp173 extends Phaser.Scene {
                 this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
             } else this.scoreLabel.setScore(this.MAX_SCORE)
         }
-        this.missingEscrementsLabel.setData(this.monsterRubbishGroup.countActive(true))
+        this.missingEscrementsLabel.setData(
+            this.monsterRubbishGroup.getTotalUsed()
+        )
     }
 
     win() {
