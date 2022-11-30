@@ -10,38 +10,26 @@
     "displayList": [
         {
             "type": "Image",
-            "id": "287a7ec8-cac6-4948-b018-3ad255b1e56a",
-            "label": "background",
+            "id": "e845b518-c4a2-452b-af6d-742ddca41b80",
+            "label": "gameover",
             "components": [],
             "texture": {
-                "key": "background"
+                "key": "gameover"
             },
-            "x": 399,
-            "y": 305
-        },
-        {
-            "type": "Image",
-            "id": "aab03121-8035-40f9-98f7-932660242df0",
-            "label": "guapen",
-            "components": [
-                "PushOnClick"
-            ],
-            "PushOnClick.sceneToStartKey": "Level",
-            "texture": {
-                "key": "guapen"
-            },
-            "x": 612,
-            "y": 236
+            "x": 396,
+            "y": 301,
+            "scaleX": 0.1932161208510199,
+            "scaleY": 0.19119029385330585
         },
         {
             "type": "Text",
             "id": "172df1f7-232b-4dbe-92ef-4514c32ec5a6",
             "label": "totalScoreLabel",
             "components": [],
-            "x": 292,
-            "y": 250,
-            "scaleX": 0.8212460957415846,
-            "scaleY": 0.632575333378406,
+            "x": 375,
+            "y": 215,
+            "scaleX": 0.5,
+            "scaleY": 0.41445688211003173,
             "text": "000",
             "align": "center",
             "fontFamily": "Audiowide",
@@ -86,12 +74,28 @@
             "label": "labelReadAbout",
             "components": [],
             "x": 56,
-            "y": 428,
-            "scaleX": 0.44077484023557145,
-            "scaleY": 0.4272955886621027,
+            "y": 441,
+            "scaleX": 0.3441871684140159,
+            "scaleY": 0.33239186084327976,
             "text": "More info:",
             "fontFamily": "Audiowide",
             "fontSize": "100px"
+        },
+        {
+            "type": "Image",
+            "id": "c596c257-7f38-4aef-8999-72a66acf2425",
+            "label": "tRY_AGAIN",
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "Level",
+            "texture": {
+                "key": "TRY_AGAIN"
+            },
+            "x": 619,
+            "y": 423,
+            "scaleX": 0.47737796937816135,
+            "scaleY": 0.48460807997325583
         }
     ],
     "plainObjects": [],
