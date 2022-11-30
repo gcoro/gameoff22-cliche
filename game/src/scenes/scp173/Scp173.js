@@ -1,7 +1,6 @@
 class Scp173 extends Phaser.Scene {
     constructor() {
         super("Scp173")
-        console.log("set current level 0")
         this.currentLevel = 0
 
         // constants
@@ -17,7 +16,7 @@ class Scp173 extends Phaser.Scene {
         this.ENEMY_CREATE_POORS_MILLIS = 30 * 1000
         this.HOW_IT_WORKS_TEXT = [
             [
-                `LEVEL ${this.currentLevel}`,
+                `LEVEL 0`,
                 "",
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
@@ -30,7 +29,7 @@ class Scp173 extends Phaser.Scene {
                 "Click to start the game!",
             ],
             [
-                `LEVEL ${this.currentLevel}`,
+                `LEVEL %level`,
                 "",
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
@@ -267,12 +266,17 @@ class Scp173 extends Phaser.Scene {
     }
 
     createStartingText() {
+        const txt = !this.currentLevel
+            ? this.HOW_IT_WORKS_TEXT[0]
+            : this.HOW_IT_WORKS_TEXT[1]
+        if (this.currentLevel > 0) {
+            txt[0] = txt[0].replace("%level", this.currentLevel)
+        }
+
         this.startingText = this.add.text(
             -this.WALL_THICKNESS,
             0,
-            !this.currentLevel
-                ? this.HOW_IT_WORKS_TEXT[0]
-                : this.HOW_IT_WORKS_TEXT[1],
+            txt,
             this.TEXT_STYLE
         )
         this.startingText.setDepth(7)
@@ -301,7 +305,6 @@ class Scp173 extends Phaser.Scene {
             this.openEyeCountdownTimeout = setTimeout(() => {
                 this.openEyeCountdown = 5
                 this.openEyeCountdownInterval = setInterval(() => {
-                    console.log(this.openEyeCountdown)
                     this.countDownLabel.setValue(this.openEyeCountdown)
                     
                     if (this.openEyeCountdown === 0) {
@@ -579,7 +582,6 @@ class Scp173 extends Phaser.Scene {
 
     gameOver() {
         this.status = this.GAME_STATUS.LOADED
-        console.log("set current level to 0")
         this.currentLevel = 0
         this.playerDeath()
         console.log(
@@ -590,7 +592,6 @@ class Scp173 extends Phaser.Scene {
 
     endGame(hasWin) {
         this.currentLevel += 1
-        console.log("new level ", this.currentLevel)
         this.status = this.GAME_STATUS.LOADED
         this.missingEscrementsLabel.setVisible(false)
         if (this.createPoorsTimeout) {

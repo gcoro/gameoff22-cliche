@@ -64,6 +64,7 @@ class GameOver extends Phaser.Scene {
 
 	create() {
 		this.editorCreate();
+		window.iteration = 0;
 	}
 
 	init(data) {
