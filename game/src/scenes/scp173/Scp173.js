@@ -25,7 +25,7 @@ class Scp173 extends Phaser.Scene {
         this.CELL_SIZE = 16
         this.NUM_POORS_PER_LOOP = 4
         this.SCORES_OVERLAP_POOR = 3
-        this.OVERLAP_RANGE = 12
+        this.OVERLAP_RANGE = 35
         this.WALL_THICKNESS = 3 * 16
         this.BOARD_GAP_TO_WORLD = 50
         this.SHOW_TEXT_TIMEOUT = 3000 //10000
@@ -36,7 +36,7 @@ class Scp173 extends Phaser.Scene {
             [
                 `LEVEL ${this.currentLevel}`,
                 "",
-                "Collect all the dirt the monster produces",
+                "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
                 "If you touch the monster you'll die too.",
                 "When the red door opens, you can exit",
@@ -49,21 +49,23 @@ class Scp173 extends Phaser.Scene {
             [
                 `LEVEL ${this.currentLevel}`,
                 "",
-                "Collect all the dirt the monster produces",
+                "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
                 "If you touch the monster you'll die too.",
                 "",
                 "- ARROWS / WASD to move",
                 "- SPACE BAR to collect items",
-                "- MOUSE POINTER to watch the monster: ",
-                "     you have to keep your mouse pointer ",
-                "    OVER the monster after it opens its eyes",
-                "- ESCAPE from the container when the red door opens",
+                "- MOUSE POINTER to keep eye contact",
+                "   with the monster:",
+                "  you have to keep your mouse pointer ",
+                "  OVER the monster after it opens its eyes",
+                "- ESCAPE from the container",
+                "   when the red door opens",
                 "",
                 "Click to start the game!",
             ],
         ]
-        this.GAME_OVER_TEXT = ["You're so incapable...."]
+        this.GAME_OVER_TEXT = ["You're so useless...."]
         this.WINNER_TEXT = ["Enclosure cleaned successfully"]
         // map layout configuration
         this.MAP_CONFIG = MAP_LAYOUT["small"]
@@ -179,7 +181,6 @@ class Scp173 extends Phaser.Scene {
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
         this.createStartingText()
-        this.createBackgrounds()
         this.input.setPollAlways()
 
         // add collider
