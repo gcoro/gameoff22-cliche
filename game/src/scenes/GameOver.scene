@@ -16,8 +16,8 @@
             "texture": {
                 "key": "background"
             },
-            "x": 442,
-            "y": 188
+            "x": 399,
+            "y": 305
         },
         {
             "type": "Image",
@@ -64,6 +64,20 @@
             "y": 520,
             "scaleX": 1.4,
             "scaleY": 1.5
+        },
+        {
+            "type": "Text",
+            "id": "172df1f7-232b-4dbe-92ef-4514c32ec5a6",
+            "label": "totalScoreLabel",
+            "components": [],
+            "x": 281,
+            "y": 237,
+            "scaleX": 4.211768384817183,
+            "scaleY": 6.336770485036885,
+            "text": "",
+            "align": "center",
+            "fontFamily": "Arial",
+            "fontStyle": "bold"
         }
     ],
     "plainObjects": [],
