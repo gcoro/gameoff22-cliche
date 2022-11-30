@@ -227,20 +227,16 @@ class Scp173 extends Phaser.Scene {
         this.createPlayerAllies()
         this.createTimer()
         this.createCollidersAndBounds()
-
+        this.group = this.physics.add.group()
+        this.group.enableBody = true;
+        this.physics.add.overlap(this.player, this.group, this.handlePoopOverlap, null, this);
+   
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
            this.createPoors()
         })
 
         this.eventEmitter.once(PLAYER_EVENTS.DIED, () => this.endGame(false))
         this.eventEmitter.once(PLAYER_EVENTS.WIN, () => this.win())
-
-        this.group = this.physics.add.group()
-        this.group.enableBody = true;
-        this.physics.add.overlap(this.player, this.group, this.handlePoopOverlap, null, this);
-
-        this.res = this.group.getFirstDead(true, 100, 100, "poor");
-        this.res.setVisible(false)
     }
 
     createTimer() {
@@ -381,6 +377,7 @@ class Scp173 extends Phaser.Scene {
 
     createPoors() {
         // hack to avoid createPoors not finished when player dies
+        console.log("createPoors")
         if (
             this.status !== this.GAME_STATUS.STARTED &&
             this.status !== this.GAME_STATUS.FIGHTING
@@ -429,7 +426,6 @@ class Scp173 extends Phaser.Scene {
                 loopImage.setVisible(false)
                 loopImage.setDepth(1)
                 loopImage.setScale(selecedObjectToThrow.scale)
-                this.currentPoors.push({ image: loopImage, ...coords })
 
                 const sourceImage = this.physics.add.sprite(
                     this.enemy.x,
@@ -441,20 +437,18 @@ class Scp173 extends Phaser.Scene {
                 sourceImage.setDepth(0)
                 sourceImage.anims.play(selecedObjectToThrow.anim)
 
-                this.physics.moveToObject(sourceImage, loopImage, 200)
-
-                const currObject = this.group.getFirstDead(
-                    true, 
+                const currObject = this.group.create(
                     coords.x, 
                     coords.y, 
                     selecedObjectToThrow.name
                 );
-                currObject.setScale(selecedObjectToThrow.scale)
                 currObject.setVisible(false)
+                currObject.setScale(selecedObjectToThrow.scale)
+                this.physics.moveToObject(sourceImage, currObject, 200)
 
                 const throwCollider = this.physics.add.overlap(
                     sourceImage,
-                    loopImage,
+                    currObject,
                     (source, dest) => {
                         source.body.stop()
                         //dest.setVisible(true)
