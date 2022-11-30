@@ -48,7 +48,7 @@ class Preload extends Phaser.Scene {
 		this.editorPreload();
 		
 		//TODO: put back main scene
-		this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Scp173"));
+		this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Menu"));
 	}
 
 	/* END-USER-CODE */
