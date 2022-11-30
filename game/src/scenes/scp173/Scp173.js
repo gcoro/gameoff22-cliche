@@ -7,7 +7,7 @@ class Scp173 extends Phaser.Scene {
         this.CELL_SIZE = 16
         this.NUM_POORS_PER_LOOP = 4
         this.SCORES_OVERLAP_POOR = 3
-        this.OVERLAP_RANGE = 35
+        this.OVERLAP_RANGE = 20
         this.WALL_THICKNESS = 3 * 16
         this.BOARD_GAP_TO_WORLD = 50
         this.SHOW_TEXT_TIMEOUT = 3000 //10000
@@ -306,15 +306,16 @@ class Scp173 extends Phaser.Scene {
                 this.openEyeCountdown = 5
                 this.openEyeCountdownInterval = setInterval(() => {
                     this.countDownLabel.setValue(this.openEyeCountdown)
-                    
+
                     if (this.openEyeCountdown === 0) {
-                        const cd2 = this.sound.add('countdown-a')
+                        const cd2 = this.sound.add("countdown-a")
                         cd2.play()
-                        
+
                         clearInterval(this.openEyeCountdownInterval)
                         this.openEyeCountdownInterval = undefined
-                    } else if(this.openEyeCountdown <= 2) { // only last 3 plin
-                        const cd1 = this.sound.add('countdown-b')
+                    } else if (this.openEyeCountdown <= 2) {
+                        // only last 3 plin
+                        const cd1 = this.sound.add("countdown-b")
                         cd1.play()
                     }
                     this.openEyeCountdown -= 1
@@ -491,7 +492,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     handlePoopOverlap(player, poop) {
-        if (this.cursors.space.isDown) {
+        if (this.cursors.space.isDown && poop.visible) {
             poop.disableBody(true, true)
             const music = this.sound.add("gushing-flesh")
             music.play()

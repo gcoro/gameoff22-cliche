@@ -41,6 +41,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.handleEnemyAnimationEnd(anim)
         )
 
+        this.GAME_OVER_DEBOUNCE = 500
+        this.gameOverDebounceTimeout = undefined
+
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
         this.setDepth(6)
@@ -50,6 +53,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         if (this.level > 0) {
             this.eventEmitter.once(PLAYER_EVENTS.WIN, () => {
                 this.off("pointerout")
+                this.off("pointerover")
             })
         }
     }
@@ -59,9 +63,21 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.anims.stop(ENEMY_ANIMS.OPEN_EYE)
             this.eventEmitter.emit(ENEMY_EVENTS.EYE_OPENED)
             if (this.level > 0) {
+                this.setInteractive().on("pointerover", () => {
+                    if (this.gameOverDebounceTimeout) {
+                        clearTimeout(this.gameOverDebounceTimeout)
+                        this.gameOverDebounceTimeout = undefined
+                    }
+                })
                 this.setInteractive().on("pointerout", () => {
                     if (this.anims.currentAnim.key === ENEMY_ANIMS.OPEN_EYE) {
-                        this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
+                        if (this.gameOverDebounceTimeout) {
+                            clearTimeout(this.gameOverDebounceTimeout)
+                            this.gameOverDebounceTimeout = undefined
+                        }
+                        this.gameOverDebounceTimeout = setTimeout(() => {
+                            this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
+                        }, this.GAME_OVER_DEBOUNCE)
                     }
                 })
                 // need to check if pointer is on the enemy when the game starts, but we're kind and wait 1 sec before the player die
@@ -70,10 +86,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                         this.eventEmitter.emit(SCENE_EVENTS.GAME_OVER)
                     }
                 }, 1000)
-            } else if(this.level === 0) { 
+            } else if (this.level === 0) {
                 this.anims.play(ENEMY_ANIMS.CLOSE_EYE)
             }
-        } else if(anim.key === ENEMY_ANIMS.CLOSE_EYE && this.level === 0){
+        } else if (anim.key === ENEMY_ANIMS.CLOSE_EYE && this.level === 0) {
             this.scene.createPoorsTimeout = setTimeout(() => {
                 this.anims.play(ENEMY_ANIMS.OPEN_EYE)
             }, this.scene.ENEMY_CREATE_POORS_MILLIS)
