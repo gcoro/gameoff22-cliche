@@ -441,19 +441,23 @@ class Scp173 extends Phaser.Scene {
                 sourceImage.anims.play(selecedObjectToThrow.anim)
 
                 this.physics.moveToObject(sourceImage, loopImage, 200)
+
+                const currObject = this.group.getFirstDead(
+                    true, 
+                    coords.x, 
+                    coords.y, 
+                    selecedObjectToThrow.name
+                );
+                currObject.setScale(selecedObjectToThrow.scale)
+                currObject.setVisible(false)
+
                 const throwCollider = this.physics.add.overlap(
                     sourceImage,
                     loopImage,
                     (source, dest) => {
                         source.body.stop()
                         //dest.setVisible(true)
-                        const currObject = this.group.getFirstDead(
-                            true, 
-                            coords.x, 
-                            coords.y, 
-                            selecedObjectToThrow.name
-                        );
-                        currObject.setScale(selecedObjectToThrow.scale)
+                        currObject.setVisible(true)
                         source.destroy()
                         this.physics.world.removeCollider(throwCollider)
                     }
@@ -463,7 +467,7 @@ class Scp173 extends Phaser.Scene {
         if (!this.missingEscrementsLabel.visible) {
             this.missingEscrementsLabel.setVisible(true)
         }
-        this.missingEscrementsLabel.setData(this.currentPoors.length)
+        this.missingEscrementsLabel.setData(this.group.getTotalUsed())
 
         if(this.currentLevel > 0){
             this.createPoorsTimeout = setTimeout(
@@ -486,26 +490,7 @@ class Scp173 extends Phaser.Scene {
                 this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
             } else this.scoreLabel.setScore(this.MAX_SCORE)
         }
-        this.missingEscrementsLabel.setData(this.currentPoors.length)
-    }
-
-    /**
-     * handle player overlap poor
-     * @param {*} player
-     * @param {*} image
-     */
-    handlePoorOverlap(player, image) {
-        if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
-            const music = this.sound.add('gushing-flesh')
-            music.play()
-
-            this.currentScore += this.SCORES_OVERLAP_POOR
-            const currentScore = this.scoreLabel.getScore()
-            if (currentScore + this.SCORES_OVERLAP_POOR < this.MAX_SCORE) {
-                this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
-            } else this.scoreLabel.setScore(this.MAX_SCORE)
-        }
-        this.missingEscrementsLabel.setData(this.currentPoors.length)
+        this.missingEscrementsLabel.setData(this.group.countActive(true))
     }
 
     /**
@@ -569,7 +554,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     checkExitDoor() {
-        if (this.currentPoors.length === 0) {
+        if (this.group.getTotalUsed() === 0) {
             this.exit_door.anims.play("open")
         } else {
             this.exit_door.anims.play("close")
