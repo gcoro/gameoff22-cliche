@@ -16,12 +16,10 @@ class GameOver extends Phaser.Scene {
 	/** @returns {void} */
 	editorCreate() {
 
-		// background
-		this.add.image(399, 305, "background");
-
-		// guapen
-		const guapen = this.add.image(612, 236, "guapen");
-
+		// gameover
+		const gameover = this.add.image(396, 301, "gameover");
+		gameover.scaleX = 0.1932161208510199;
+		gameover.scaleY = 0.19119029385330585;
 
 		// scp5153
 		const scp5153 = this.add.text(56, 519, "", {});
@@ -38,15 +36,16 @@ class GameOver extends Phaser.Scene {
 		scp173.setStyle({ "fontFamily": "Audiowide", "fontSize": "100px" });
 
 		// labelReadAbout
-		const labelReadAbout = this.add.text(56, 428, "", {});
-		labelReadAbout.scaleX = 0.44077484023557145;
-		labelReadAbout.scaleY = 0.4272955886621027;
+		const labelReadAbout = this.add.text(56, 441, "", {});
+		labelReadAbout.scaleX = 0.3441871684140159;
+		labelReadAbout.scaleY = 0.33239186084327976;
 		labelReadAbout.text = "More info:";
 		labelReadAbout.setStyle({ "fontFamily": "Audiowide", "fontSize": "100px" });
 
-		// guapen (components)
-		const guapenPushOnClick = new PushOnClick(guapen);
-		guapenPushOnClick.sceneToStartKey = "Level";
+		// tRY_AGAIN
+		const tRY_AGAIN = this.add.image(619, 423, "TRY_AGAIN");
+		tRY_AGAIN.scaleX = 0.47737796937816135;
+		tRY_AGAIN.scaleY = 0.48460807997325583;
 
 		// scp5153 (components)
 		const scp5153PushOnClick = new PushOnClick(scp5153);
@@ -55,6 +54,10 @@ class GameOver extends Phaser.Scene {
 		// scp173 (components)
 		const scp173PushOnClick = new PushOnClick(scp173);
 		scp173PushOnClick.sceneToStartKey = "url_173";
+
+		// tRY_AGAIN (components)
+		const tRY_AGAINPushOnClick = new PushOnClick(tRY_AGAIN);
+		tRY_AGAINPushOnClick.sceneToStartKey = "Level";
 
 		this.events.emit("scene-awake");
 	}
@@ -72,10 +75,10 @@ class GameOver extends Phaser.Scene {
 		console.log('totalScore', data?.totalScore)
 
 		// totalScoreLabel
-		const totalScoreLabel = this.add.text(292, 250, "", {});
-		totalScoreLabel.scaleX = 0.8212460957415846;
-		totalScoreLabel.scaleY = 0.632575333378406;
-		totalScoreLabel.text = data?.totalScore;
+		const totalScoreLabel = this.add.text(375, 215, "", {});
+		totalScoreLabel.scaleX = 0.5;
+		totalScoreLabel.scaleY = 0.41445688211003173;
+		totalScoreLabel.text = data?.totalScore
 		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Audiowide", "fontSize": "150px", "fontStyle": "bold" });
 
 	}
