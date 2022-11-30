@@ -70,11 +70,12 @@ class GameOver extends Phaser.Scene {
 		console.log('totalScore', data?.totalScore)
 
 		// totalScoreLabel
-		const totalScoreLabel = this.add.text(281, 237, "", {});
-		totalScoreLabel.scaleX = 4.211768384817183;
-		totalScoreLabel.scaleY = 6.336770485036885;
+		const totalScoreLabel = this.add.text(292, 250, "", {});
+		totalScoreLabel.scaleX = 8.05431924021206;
+		totalScoreLabel.scaleY = 6.081476326303379;
 		totalScoreLabel.text = data.totalScore
-		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
+		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Audiowide", "fontStyle": "bold" });
+
 	}
 
 	/* END-USER-CODE */
