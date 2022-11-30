@@ -298,7 +298,13 @@ class Meteor extends Phaser.Scene {
 
         let sound
         if (!gameover) { sound = this.sound.add('levelcomplete') }
-        else { sound = this.sound.add('explosion') }
+        else { 
+			sound = this.sound.add('explosion');
+			console.log(
+				"%c  GAME OVER!!  ",
+				"background: #063970; color: #47d2a7; font-family:sans-serif; font-size: 40px; padding: 5px 10px"
+			) 
+		}
         sound.play()
 		
 		setTimeout(() => {
@@ -516,7 +522,7 @@ class Meteor extends Phaser.Scene {
 		laser.erase();
 		enemy.explode();
 
-		console.log("bang!")
+		// console.log("bang!")
 	  }
 
 	update(time) {
@@ -539,7 +545,7 @@ class Meteor extends Phaser.Scene {
 		enemy.explode();
 		const life = +this.life.text.replace("%","")
 		this.progress_bar.scaleX = life * 23* 0.01;
-		console.log(life);
+		// console.log(life);
 		if (life > 0)
 		this.life.text = (life - 5)+"%";
 	}

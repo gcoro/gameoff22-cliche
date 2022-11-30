@@ -387,7 +387,7 @@ class Scp173 extends Phaser.Scene {
 
     createPoors() {
         // hack to avoid createPoors not finished when player dies
-        console.log("createPoors")
+        // console.log("createPoors")
         if (
             this.status !== this.GAME_STATUS.STARTED &&
             this.status !== this.GAME_STATUS.FIGHTING

@@ -32,7 +32,7 @@ class PushOnClick extends UserComponent {
     awake() {
         if (this.sceneToStartKey) {
             this.gameObject.setInteractive().on("pointerdown", () => {
-                console.log('clicked', this.sceneToStartKey)
+                // console.log('clicked', this.sceneToStartKey)
 
                 if (this.sceneToStartKey === 'url_173') {
                     open('https://scp-wiki.wikidot.com/scp-173')
@@ -42,7 +42,7 @@ class PushOnClick extends UserComponent {
                     this.scene.scene.start(Level.name, { restart: true })
                 } else { // minigames
                     if (this.scene.activeScp === this.sceneToStartKey) {
-                        console.log("start scene", this.sceneToStartKey)
+                        // console.log("start scene", this.sceneToStartKey)
 
                         this.scene.activeScp = null
                         this.scene.bgMusic?.pause()
@@ -54,7 +54,7 @@ class PushOnClick extends UserComponent {
                             this.scene.scene.start(this.sceneToStartKey)
                         }, 1000)
                     } else {
-                        console.log("scp not enabled")
+                        // console.log("scp not enabled")
 
                         const doorLocked = this.scene.sound.add('door_locked')
                         doorLocked.play()

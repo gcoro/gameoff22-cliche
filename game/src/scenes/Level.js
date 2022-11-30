@@ -127,7 +127,7 @@ class Level extends Phaser.Scene {
     lastMinigame
 
     init(data) {
-        console.log('init', data)
+        // console.log('init', data)
 
         if (data.restart) { // first scene
             this.bgMusic?.stop()
@@ -180,7 +180,7 @@ class Level extends Phaser.Scene {
     }
 
     create() {
-        console.log('create main scene')
+        // console.log('create main scene')
 
         this.editorCreate()
         this.alienSprite
@@ -191,7 +191,7 @@ class Level extends Phaser.Scene {
     }
 
     onWorldBounds(body, up, down, left, right) {
-        console.log('onWorldBounds')
+        // console.log('onWorldBounds')
 
         if (this.isAnimatingTurn) return
         this.isAnimatingTurn = true
@@ -220,7 +220,7 @@ class Level extends Phaser.Scene {
     }
 
     initAlienInteraction(mode) { // mode is 'gameOver' 'restart' 'minigame'
-        console.log('initAlienInteraction', mode)
+        // console.log('initAlienInteraction', mode)
 
         // stops
         this.alienSprite.anims.pause()
@@ -246,7 +246,7 @@ class Level extends Phaser.Scene {
     }
 
     talkAboutScp() {
-        console.log('start speech')
+        // console.log('start speech')
 
         // randomly choose scp
         const items = [Scp173.name, Meteor.name]
@@ -273,7 +273,7 @@ class Level extends Phaser.Scene {
     }
 
     talkIntro() {
-        console.log('intro')
+        // console.log('intro')
 
         this.createSpeechBubble(this.strings.intro[0], null, null, 400, 220)
 
@@ -293,7 +293,7 @@ class Level extends Phaser.Scene {
     }
 
     talkAboutGameOver() {
-        console.log('game over!!')
+        // console.log('game over!!')
 
         const index = 0
         let discourse = this.strings.gameOver
@@ -324,7 +324,7 @@ class Level extends Phaser.Scene {
                 this.nextLine(discourse, index + 1, scp, gameOver)
             })
         } else { // speech ended
-            console.log('end speech')
+            // console.log('end speech')
 
             // walk again
             this.alienSprite.anims.pause()
@@ -334,7 +334,7 @@ class Level extends Phaser.Scene {
             if (scp) {
                 this.alienSprite.body.velocity.x = this.originalVelocity
                 // enable scp 
-                console.log('enabling scp', scp)
+                // console.log('enabling scp', scp)
                 this.activeScp = scp
             } else { // game over
                 this.alienSprite.body.velocity.x = 400 // sprit away

@@ -73,7 +73,7 @@ class GameOver extends Phaser.Scene {
 	}
 
 	init(data) {
-		console.log('game over', data)
+		console.log('totalScore', data?.totalScore)
 
 		// totalScoreLabel
 		const totalScoreLabel = this.add.text(281, 237, "", {});
