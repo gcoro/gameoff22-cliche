@@ -22,12 +22,6 @@ class GameOver extends Phaser.Scene {
 		// guapen
 		const guapen = this.add.image(612, 236, "guapen");
 
-		// totalScoreLabel
-		const totalScoreLabel = this.add.text(281, 237, "", {});
-		totalScoreLabel.scaleX = 4.211768384817183;
-		totalScoreLabel.scaleY = 6.336770485036885;
-		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
-
 		// scp5153
 		const scp5153 = this.add.text(56, 519, "", {});
 		scp5153.scaleX = 2.3;
@@ -70,17 +64,19 @@ class GameOver extends Phaser.Scene {
 
 	create() {
 		this.editorCreate();
+		window.iteration = 0;
 	}
 
 	init(data) {
 		console.log('totalScore', data?.totalScore)
 
 		// totalScoreLabel
-		const totalScoreLabel = this.add.text(281, 237, "", {});
-		totalScoreLabel.scaleX = 4.211768384817183;
-		totalScoreLabel.scaleY = 6.336770485036885;
+		const totalScoreLabel = this.add.text(292, 250, "", {});
+		totalScoreLabel.scaleX = 8.05431924021206;
+		totalScoreLabel.scaleY = 6.081476326303379;
 		totalScoreLabel.text = data.totalScore
-		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
+		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Audiowide", "fontStyle": "bold" });
+
 	}
 
 	/* END-USER-CODE */

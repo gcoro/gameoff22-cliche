@@ -38,12 +38,13 @@
             "id": "172df1f7-232b-4dbe-92ef-4514c32ec5a6",
             "label": "totalScoreLabel",
             "components": [],
-            "x": 281,
-            "y": 237,
-            "scaleX": 4.211768384817183,
-            "scaleY": 6.336770485036885,
+            "x": 292,
+            "y": 250,
+            "scaleX": 8.05431924021206,
+            "scaleY": 6.081476326303379,
+            "text": "000",
             "align": "center",
-            "fontFamily": "Arial",
+            "fontFamily": "Audiowide",
             "fontStyle": "bold"
         },
         {
