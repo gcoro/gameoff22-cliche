@@ -40,11 +40,12 @@
             "components": [],
             "x": 292,
             "y": 250,
-            "scaleX": 8.05431924021206,
-            "scaleY": 6.081476326303379,
+            "scaleX": 0.8212460957415846,
+            "scaleY": 0.632575333378406,
             "text": "000",
             "align": "center",
             "fontFamily": "Audiowide",
+            "fontSize": "150px",
             "fontStyle": "bold"
         },
         {
@@ -57,10 +58,11 @@
             "PushOnClick.sceneToStartKey": "url_5153",
             "x": 56,
             "y": 519,
-            "scaleX": 2.3,
-            "scaleY": 2.2,
+            "scaleX": 0.3760838598274091,
+            "scaleY": 0.3716149444636929,
             "text": "> SCP-5153",
-            "fontFamily": "Audiowide"
+            "fontFamily": "Audiowide",
+            "fontSize": "100px"
         },
         {
             "type": "Text",
@@ -71,11 +73,12 @@
             ],
             "PushOnClick.sceneToStartKey": "url_173",
             "x": 56,
-            "y": 474,
-            "scaleX": 2.3,
-            "scaleY": 2.2,
+            "y": 477,
+            "scaleX": 0.3840085700348167,
+            "scaleY": 0.36339845822816014,
             "text": "> SCP-173",
-            "fontFamily": "Audiowide"
+            "fontFamily": "Audiowide",
+            "fontSize": "100px"
         },
         {
             "type": "Text",
@@ -83,11 +86,12 @@
             "label": "labelReadAbout",
             "components": [],
             "x": 56,
-            "y": 426,
-            "scaleX": 2.3,
-            "scaleY": 2.2,
+            "y": 428,
+            "scaleX": 0.44077484023557145,
+            "scaleY": 0.4272955886621027,
             "text": "More info:",
-            "fontFamily": "Audiowide"
+            "fontFamily": "Audiowide",
+            "fontSize": "100px"
         }
     ],
     "plainObjects": [],

@@ -22,26 +22,27 @@ class GameOver extends Phaser.Scene {
 		// guapen
 		const guapen = this.add.image(612, 236, "guapen");
 
+
 		// scp5153
 		const scp5153 = this.add.text(56, 519, "", {});
-		scp5153.scaleX = 2.3;
-		scp5153.scaleY = 2.2;
+		scp5153.scaleX = 0.3760838598274091;
+		scp5153.scaleY = 0.3716149444636929;
 		scp5153.text = "> SCP-5153";
-		scp5153.setStyle({ "fontFamily": "Audiowide" });
+		scp5153.setStyle({ "fontFamily": "Audiowide", "fontSize": "100px" });
 
 		// scp173
-		const scp173 = this.add.text(56, 474, "", {});
-		scp173.scaleX = 2.3;
-		scp173.scaleY = 2.2;
+		const scp173 = this.add.text(56, 477, "", {});
+		scp173.scaleX = 0.3840085700348167;
+		scp173.scaleY = 0.36339845822816014;
 		scp173.text = "> SCP-173";
-		scp173.setStyle({ "fontFamily": "Audiowide" });
+		scp173.setStyle({ "fontFamily": "Audiowide", "fontSize": "100px" });
 
 		// labelReadAbout
-		const labelReadAbout = this.add.text(56, 426, "", {});
-		labelReadAbout.scaleX = 2.3;
-		labelReadAbout.scaleY = 2.2;
+		const labelReadAbout = this.add.text(56, 428, "", {});
+		labelReadAbout.scaleX = 0.44077484023557145;
+		labelReadAbout.scaleY = 0.4272955886621027;
 		labelReadAbout.text = "More info:";
-		labelReadAbout.setStyle({ "fontFamily": "Audiowide" });
+		labelReadAbout.setStyle({ "fontFamily": "Audiowide", "fontSize": "100px" });
 
 		// guapen (components)
 		const guapenPushOnClick = new PushOnClick(guapen);
@@ -72,10 +73,10 @@ class GameOver extends Phaser.Scene {
 
 		// totalScoreLabel
 		const totalScoreLabel = this.add.text(292, 250, "", {});
-		totalScoreLabel.scaleX = 8.05431924021206;
-		totalScoreLabel.scaleY = 6.081476326303379;
-		totalScoreLabel.text = data.totalScore
-		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Audiowide", "fontStyle": "bold" });
+		totalScoreLabel.scaleX = 0.8212460957415846;
+		totalScoreLabel.scaleY = 0.632575333378406;
+		totalScoreLabel.text = data?.totalScore;
+		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Audiowide", "fontSize": "150px", "fontStyle": "bold" });
 
 	}
 
