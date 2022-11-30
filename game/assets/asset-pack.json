@@ -105,6 +105,20 @@
             },
             {
                 "url": [
+                    "assets/sfx/countdown-a.ogg"
+                ],
+                "type": "audio",
+                "key": "countdown-a"
+            },
+            {
+                "url": [
+                    "assets/sfx/countdown-b.ogg"
+                ],
+                "type": "audio",
+                "key": "countdown-b"
+            },
+            {
+                "url": [
                     "assets/sfx/death-monster-sound.ogg"
                 ],
                 "type": "audio",
