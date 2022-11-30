@@ -71,7 +71,6 @@ class Scp173 extends Phaser.Scene {
         this.MAP_CONFIG = MAP_LAYOUT["small"]
 
         // local variables
-        this.currentPoors = []
         this.container = {}
         this.currentScore = 0
         this.player = undefined
@@ -119,6 +118,7 @@ class Scp173 extends Phaser.Scene {
         this.countdown = undefined
         this.createPoorsTimeout = undefined
         this.scp173bgMusic = undefined
+        this.monsterRubbishGroup = undefined
         this.eventEmitter = EventDispatcher.getInstance()
     }
 
@@ -233,6 +233,15 @@ class Scp173 extends Phaser.Scene {
         this.createPlayerAllies()
         this.createTimer()
         this.createCollidersAndBounds()
+        this.monsterRubbishGroup = this.physics.add.group()
+        this.monsterRubbishGroup.enableBody = true
+        this.physics.add.overlap(
+            this.player,
+            this.monsterRubbishGroup,
+            this.handlePoopOverlap,
+            null,
+            this
+        )
 
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
             this.createPoors()
@@ -380,6 +389,7 @@ class Scp173 extends Phaser.Scene {
 
     createPoors() {
         // hack to avoid createPoors not finished when player dies
+        console.log("createPoors")
         if (
             this.status !== this.GAME_STATUS.STARTED &&
             this.status !== this.GAME_STATUS.FIGHTING
@@ -420,15 +430,6 @@ class Scp173 extends Phaser.Scene {
                 const selecedObjectToThrow = Utils.generateRandomEnemyObject(
                     this.stuffToThrow
                 )
-                const loopImage = this.physics.add.image(
-                    coords.x,
-                    coords.y,
-                    selecedObjectToThrow.name
-                )
-                loopImage.setVisible(false)
-                loopImage.setDepth(1)
-                loopImage.setScale(selecedObjectToThrow.scale)
-                this.currentPoors.push({ image: loopImage, ...coords })
 
                 const sourceImage = this.physics.add.sprite(
                     this.enemy.x,
@@ -440,20 +441,22 @@ class Scp173 extends Phaser.Scene {
                 sourceImage.setDepth(0)
                 sourceImage.anims.play(selecedObjectToThrow.anim)
 
-                this.physics.moveToObject(sourceImage, loopImage, 200)
+                const currObject = this.monsterRubbishGroup.create(
+                    coords.x,
+                    coords.y,
+                    selecedObjectToThrow.name
+                )
+                currObject.setVisible(false)
+                currObject.setScale(selecedObjectToThrow.scale)
+                this.physics.moveToObject(sourceImage, currObject, 200)
+
                 const throwCollider = this.physics.add.overlap(
                     sourceImage,
-                    loopImage,
+                    currObject,
                     (source, dest) => {
                         source.body.stop()
-                        dest.setVisible(true)
+                        currObject.setVisible(true)
                         source.destroy()
-                        this.physics.add.overlap(
-                            this.player,
-                            loopImage,
-                            (player, image) =>
-                                this.handlePoorOverlap(player, image)
-                        )
                         this.physics.world.removeCollider(throwCollider)
                     }
                 )
@@ -462,7 +465,9 @@ class Scp173 extends Phaser.Scene {
         if (!this.missingEscrementsLabel.visible) {
             this.missingEscrementsLabel.setVisible(true)
         }
-        this.missingEscrementsLabel.setData(this.currentPoors.length)
+        this.missingEscrementsLabel.setData(
+            this.monsterRubbishGroup.getTotalUsed()
+        )
 
         if (this.currentLevel > 0) {
             this.createPoorsTimeout = setTimeout(
@@ -472,13 +477,9 @@ class Scp173 extends Phaser.Scene {
         }
     }
 
-    /**
-     * handle player overlap poor
-     * @param {*} player
-     * @param {*} image
-     */
-    handlePoorOverlap(player, image) {
-        if (this.cursors.space.isDown && this.checkPoorToClean(player, image)) {
+    handlePoopOverlap(player, poop) {
+        if (this.cursors.space.isDown) {
+            poop.disableBody(true, true)
             const music = this.sound.add("gushing-flesh")
             music.play()
 
@@ -488,33 +489,9 @@ class Scp173 extends Phaser.Scene {
                 this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
             } else this.scoreLabel.setScore(this.MAX_SCORE)
         }
-        this.missingEscrementsLabel.setData(this.currentPoors.length)
-    }
-
-    /**
-     * check if player is on a poor and eventually clean it
-     */
-    checkPoorToClean(player) {
-        const posPlayerX = player.x
-        const posPlayerY = player.y
-        let selIdx = -1
-        const selPoor = this.currentPoors.find((p, idx) => {
-            const res = Utils.areObjectsOverlapping(
-                p,
-                {
-                    x: posPlayerX,
-                    y: posPlayerY,
-                },
-                this.OVERLAP_RANGE
-            )
-            if (res) selIdx = idx
-            return res
-        })
-        if (selPoor) {
-            selPoor.image.destroy()
-            this.currentPoors.splice(selIdx, 1)
-            return true
-        } else return false
+        this.missingEscrementsLabel.setData(
+            this.monsterRubbishGroup.getTotalUsed()
+        )
     }
 
     win() {
@@ -552,7 +529,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     checkExitDoor() {
-        if (this.currentPoors.length === 0) {
+        if (this.monsterRubbishGroup.getTotalUsed() === 0) {
             this.exit_door.anims.play("open")
         } else {
             this.exit_door.anims.play("close")
