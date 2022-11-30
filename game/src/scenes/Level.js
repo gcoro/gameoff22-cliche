@@ -288,7 +288,7 @@ class Level extends Phaser.Scene {
 
             setTimeout(() => {
                 this.initAlienInteraction('minigame')
-            }, 15000)
+            }, 2500)
         })
     }
 

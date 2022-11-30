@@ -44,6 +44,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
         this.setDepth(6)
+        this.setCircle(115, -5, 15)
+
         this.eventEmitter = EventDispatcher.getInstance()
         if (this.level > 0) {
             this.eventEmitter.once(PLAYER_EVENTS.WIN, () => {
