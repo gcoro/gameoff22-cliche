@@ -313,7 +313,7 @@ class Scp173 extends Phaser.Scene {
                         
                         clearInterval(this.openEyeCountdownInterval)
                         this.openEyeCountdownInterval = undefined
-                    } else {
+                    } else if(this.openEyeCountdown <= 2) { // only last 3 plin
                         const cd1 = this.sound.add('countdown-b')
                         cd1.play()
                     }
