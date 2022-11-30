@@ -17,32 +17,49 @@ class GameOver extends Phaser.Scene {
 	editorCreate() {
 
 		// background
-		this.add.image(442, 188, "background");
+		this.add.image(399, 305, "background");
 
 		// guapen
 		const guapen = this.add.image(612, 236, "guapen");
 
-		// scp173
-		const scp173 = this.add.image(470, 520, "scp173");
-		scp173.scaleX = 1.4;
-		scp173.scaleY = 1.5;
+		// totalScoreLabel
+		const totalScoreLabel = this.add.text(281, 237, "", {});
+		totalScoreLabel.scaleX = 4.211768384817183;
+		totalScoreLabel.scaleY = 6.336770485036885;
+		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
 
 		// scp5153
-		const scp5153 = this.add.image(655, 520, "scp5153");
-		scp5153.scaleX = 1.4;
-		scp5153.scaleY = 1.5;
+		const scp5153 = this.add.text(56, 519, "", {});
+		scp5153.scaleX = 2.3;
+		scp5153.scaleY = 2.2;
+		scp5153.text = "> SCP-5153";
+		scp5153.setStyle({ "fontFamily": "Audiowide" });
+
+		// scp173
+		const scp173 = this.add.text(56, 474, "", {});
+		scp173.scaleX = 2.3;
+		scp173.scaleY = 2.2;
+		scp173.text = "> SCP-173";
+		scp173.setStyle({ "fontFamily": "Audiowide" });
+
+		// labelReadAbout
+		const labelReadAbout = this.add.text(56, 426, "", {});
+		labelReadAbout.scaleX = 2.3;
+		labelReadAbout.scaleY = 2.2;
+		labelReadAbout.text = "More info:";
+		labelReadAbout.setStyle({ "fontFamily": "Audiowide" });
 
 		// guapen (components)
 		const guapenPushOnClick = new PushOnClick(guapen);
 		guapenPushOnClick.sceneToStartKey = "Level";
 
-		// scp173 (components)
-		const scp173PushOnClick = new PushOnClick(scp173);
-		scp173PushOnClick.sceneToStartKey = "url_173";
-
 		// scp5153 (components)
 		const scp5153PushOnClick = new PushOnClick(scp5153);
 		scp5153PushOnClick.sceneToStartKey = "url_5153";
+
+		// scp173 (components)
+		const scp173PushOnClick = new PushOnClick(scp173);
+		scp173PushOnClick.sceneToStartKey = "url_173";
 
 		this.events.emit("scene-awake");
 	}
@@ -51,18 +68,19 @@ class GameOver extends Phaser.Scene {
 
 	// Write your code here
 
-	// score to show
-	score
-
 	create() {
 		this.editorCreate();
 	}
 
 	init(data) {
-		console.log('game over', data)
+		console.log('totalScore', data?.totalScore)
 
-		this.score = data.totalScore
-
+		// totalScoreLabel
+		const totalScoreLabel = this.add.text(281, 237, "", {});
+		totalScoreLabel.scaleX = 4.211768384817183;
+		totalScoreLabel.scaleY = 6.336770485036885;
+		totalScoreLabel.text = data.totalScore
+		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
 	}
 
 	/* END-USER-CODE */

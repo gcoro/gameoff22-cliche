@@ -35,21 +35,19 @@ class Scp173 extends Phaser.Scene {
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
                 "If you touch the monster you'll die too.",
+                "When the red door opens, you can exit",
                 "",
                 "- ARROWS / WASD to move",
                 "- SPACE BAR to collect items",
-                "- MOUSE POINTER to keep eye contact",
-                "   with the monster:",
-                "  you have to keep your mouse pointer ",
-                "  OVER the monster after it opens its eyes",
-                "- ESCAPE from the container",
-                "   when the red door opens",
+                "- ⚠️⚠️⚠️⚠️⚠️ MOUSE POINTER ⚠️⚠️⚠️⚠️⚠️:",
+                "  keep the mouse pointer OVER THE MONSTER",
+                "  while his eye is open",
                 "",
                 "Click to start the game!",
             ],
         ]
-        this.GAME_OVER_TEXT = ["You're so useless...."]
-        this.WINNER_TEXT = ["Enclosure cleaned successfully"]
+        this.GAME_OVER_TEXT = ["", "", "", "You're so useless...."]
+        this.WINNER_TEXT = ["", "", "", "Enclosure cleaned successfully"]
         // map layout configuration
         this.MAP_CONFIG = {
             layout: "small_map.json",

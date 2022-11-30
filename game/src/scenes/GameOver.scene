@@ -16,8 +16,8 @@
             "texture": {
                 "key": "background"
             },
-            "x": 442,
-            "y": 188
+            "x": 399,
+            "y": 305
         },
         {
             "type": "Image",
@@ -34,36 +34,59 @@
             "y": 236
         },
         {
-            "type": "Image",
-            "id": "aa932c66-6d60-4de6-a037-cf5096ef38a2",
-            "label": "scp173",
-            "components": [
-                "PushOnClick"
-            ],
-            "PushOnClick.sceneToStartKey": "url_173",
-            "texture": {
-                "key": "scp173"
-            },
-            "x": 470,
-            "y": 520,
-            "scaleX": 1.4,
-            "scaleY": 1.5
+            "type": "Text",
+            "id": "172df1f7-232b-4dbe-92ef-4514c32ec5a6",
+            "label": "totalScoreLabel",
+            "components": [],
+            "x": 281,
+            "y": 237,
+            "scaleX": 4.211768384817183,
+            "scaleY": 6.336770485036885,
+            "align": "center",
+            "fontFamily": "Arial",
+            "fontStyle": "bold"
         },
         {
-            "type": "Image",
-            "id": "093bee3d-f82b-4cf3-b074-3fff9660516b",
+            "type": "Text",
+            "id": "c9b70179-b890-4b87-aed0-daad64c5baa6",
             "label": "scp5153",
             "components": [
                 "PushOnClick"
             ],
             "PushOnClick.sceneToStartKey": "url_5153",
-            "texture": {
-                "key": "scp5153"
-            },
-            "x": 655,
-            "y": 520,
-            "scaleX": 1.4,
-            "scaleY": 1.5
+            "x": 56,
+            "y": 519,
+            "scaleX": 2.3,
+            "scaleY": 2.2,
+            "text": "> SCP-5153",
+            "fontFamily": "Audiowide"
+        },
+        {
+            "type": "Text",
+            "id": "c91b84e9-5389-4a6f-b5e9-ceaac79df96f",
+            "label": "scp173",
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "url_173",
+            "x": 56,
+            "y": 474,
+            "scaleX": 2.3,
+            "scaleY": 2.2,
+            "text": "> SCP-173",
+            "fontFamily": "Audiowide"
+        },
+        {
+            "type": "Text",
+            "id": "d4e5aff4-65f0-4694-ab3a-258ce8db7f5e",
+            "label": "labelReadAbout",
+            "components": [],
+            "x": 56,
+            "y": 426,
+            "scaleX": 2.3,
+            "scaleY": 2.2,
+            "text": "More info:",
+            "fontFamily": "Audiowide"
         }
     ],
     "plainObjects": [],
