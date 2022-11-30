@@ -47,7 +47,7 @@ class Scp173 extends Phaser.Scene {
                 "Click to start the game!",
             ],
             [
-                `LEVEL ${this.currentLevel}`,
+                `LEVEL ${+this.currentLevel + 1}`,
                 "",
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
