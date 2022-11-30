@@ -71,7 +71,6 @@ class Scp173 extends Phaser.Scene {
         this.MAP_CONFIG = MAP_LAYOUT["small"]
 
         // local variables
-        this.currentPoors = []
         this.container = {}
         this.currentScore = 0
         this.player = undefined
@@ -418,14 +417,6 @@ class Scp173 extends Phaser.Scene {
                 const selecedObjectToThrow = Utils.generateRandomEnemyObject(
                     this.stuffToThrow
                 )
-                const loopImage = this.physics.add.image(
-                    coords.x,
-                    coords.y,
-                    selecedObjectToThrow.name
-                )
-                loopImage.setVisible(false)
-                loopImage.setDepth(1)
-                loopImage.setScale(selecedObjectToThrow.scale)
 
                 const sourceImage = this.physics.add.sprite(
                     this.enemy.x,
@@ -451,7 +442,6 @@ class Scp173 extends Phaser.Scene {
                     currObject,
                     (source, dest) => {
                         source.body.stop()
-                        //dest.setVisible(true)
                         currObject.setVisible(true)
                         source.destroy()
                         this.physics.world.removeCollider(throwCollider)
@@ -473,7 +463,6 @@ class Scp173 extends Phaser.Scene {
     }
 
     handlePoopOverlap(player, poop) {
-        console.log('collect poop')
         if (this.cursors.space.isDown) {
             poop.disableBody(true, true)
             const music = this.sound.add('gushing-flesh')
@@ -486,32 +475,6 @@ class Scp173 extends Phaser.Scene {
             } else this.scoreLabel.setScore(this.MAX_SCORE)
         }
         this.missingEscrementsLabel.setData(this.group.countActive(true))
-    }
-
-    /**
-     * check if player is on a poor and eventually clean it
-     */
-    checkPoorToClean(player) {
-        const posPlayerX = player.x
-        const posPlayerY = player.y
-        let selIdx = -1
-        const selPoor = this.currentPoors.find((p, idx) => {
-            const res = Utils.areObjectsOverlapping(
-                p,
-                {
-                    x: posPlayerX,
-                    y: posPlayerY,
-                },
-                this.OVERLAP_RANGE
-            )
-            if (res) selIdx = idx
-            return res
-        })
-        if (selPoor) {
-            selPoor.image.destroy()
-            this.currentPoors.splice(selIdx, 1)
-            return true
-        } else return false
     }
 
     win() {
