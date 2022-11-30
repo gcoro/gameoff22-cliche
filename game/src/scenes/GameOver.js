@@ -22,27 +22,41 @@ class GameOver extends Phaser.Scene {
 		// guapen
 		const guapen = this.add.image(612, 236, "guapen");
 
-		// scp173
-		const scp173 = this.add.image(470, 520, "scp173");
-		scp173.scaleX = 1.4;
-		scp173.scaleY = 1.5;
+		// totalScoreLabel
+		const totalScoreLabel = this.add.text(281, 237, "", {});
+		totalScoreLabel.scaleX = 4.211768384817183;
+		totalScoreLabel.scaleY = 6.336770485036885;
+		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
 
 		// scp5153
-		const scp5153 = this.add.image(655, 520, "scp5153");
-		scp5153.scaleX = 1.4;
-		scp5153.scaleY = 1.5;
+		const scp5153 = this.add.text(55, 519, "", {});
+		scp5153.scaleX = 2.3279779502355633;
+		scp5153.scaleY = 2.2082101808047416;
+		scp5153.text = "> SCP-5153";
+
+		// scp173
+		const scp173 = this.add.text(56, 474, "", {});
+		scp173.scaleX = 2.3279779502355633;
+		scp173.scaleY = 2.2082101808047416;
+		scp173.text = "> SCP-173";
+
+		// labelReadAbout
+		const labelReadAbout = this.add.text(55, 426, "", {});
+		labelReadAbout.scaleX = 2.3279779502355633;
+		labelReadAbout.scaleY = 2.2082101808047416;
+		labelReadAbout.text = "More info:";
 
 		// guapen (components)
 		const guapenPushOnClick = new PushOnClick(guapen);
 		guapenPushOnClick.sceneToStartKey = "Level";
 
-		// scp173 (components)
-		const scp173PushOnClick = new PushOnClick(scp173);
-		scp173PushOnClick.sceneToStartKey = "url_173";
-
 		// scp5153 (components)
 		const scp5153PushOnClick = new PushOnClick(scp5153);
 		scp5153PushOnClick.sceneToStartKey = "url_5153";
+
+		// scp173 (components)
+		const scp173PushOnClick = new PushOnClick(scp173);
+		scp173PushOnClick.sceneToStartKey = "url_173";
 
 		this.events.emit("scene-awake");
 	}
