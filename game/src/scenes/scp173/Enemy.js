@@ -72,7 +72,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
                 this.anims.play(ENEMY_ANIMS.CLOSE_EYE)
             }
         } else if(anim.key === ENEMY_ANIMS.CLOSE_EYE && this.level === 0){
-            setTimeout(() => {
+            this.scene.createPoorsTimeout = setTimeout(() => {
                 this.anims.play(ENEMY_ANIMS.OPEN_EYE)
             }, this.scene.ENEMY_CREATE_POORS_MILLIS)
         }
