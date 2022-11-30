@@ -119,6 +119,7 @@ class Scp173 extends Phaser.Scene {
         this.countdown = undefined
         this.createPoorsTimeout = undefined
         this.scp173bgMusic = undefined
+        this.group = undefined
         this.eventEmitter = EventDispatcher.getInstance()
     }
 
@@ -228,11 +229,17 @@ class Scp173 extends Phaser.Scene {
         this.createCollidersAndBounds()
 
         this.eventEmitter.on(ENEMY_EVENTS.EYE_OPENED, () => {
-            this.createPoors()
+           this.createPoors()
         })
 
         this.eventEmitter.once(PLAYER_EVENTS.DIED, () => this.endGame(false))
         this.eventEmitter.once(PLAYER_EVENTS.WIN, () => this.win())
+
+        this.group = this.physics.add.group()
+        this.group.enableBody = true;
+        this.physics.add.overlap(this.player, this.group, this.handlePoopOverlap, null, this);
+
+        this.res = this.group.getFirstDead(true, 100, 100, "poor");
     }
 
     createTimer() {
@@ -439,14 +446,15 @@ class Scp173 extends Phaser.Scene {
                     loopImage,
                     (source, dest) => {
                         source.body.stop()
-                        dest.setVisible(true)
+                        //dest.setVisible(true)
+                        const currObject = this.group.getFirstDead(
+                            true, 
+                            coords.x, 
+                            coords.y, 
+                            selecedObjectToThrow.name
+                        );
+                        currObject.setScale(selecedObjectToThrow.scale)
                         source.destroy()
-                        this.physics.add.overlap(
-                            this.player,
-                            loopImage,
-                            (player, image) =>
-                                this.handlePoorOverlap(player, image)
-                        )
                         this.physics.world.removeCollider(throwCollider)
                     }
                 )
@@ -463,6 +471,22 @@ class Scp173 extends Phaser.Scene {
                 this.ENEMY_CREATE_POORS_MILLIS - 2 * this.currentLevel
             )
         }
+    }
+
+    handlePoopOverlap(player, poop) {
+        console.log('collect poop')
+        if (this.cursors.space.isDown) {
+            poop.disableBody(true, true)
+            const music = this.sound.add('gushing-flesh')
+            music.play()
+
+            this.currentScore += this.SCORES_OVERLAP_POOR
+            const currentScore = this.scoreLabel.getScore()
+            if (currentScore + this.SCORES_OVERLAP_POOR < this.MAX_SCORE) {
+                this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
+            } else this.scoreLabel.setScore(this.MAX_SCORE)
+        }
+        this.missingEscrementsLabel.setData(this.currentPoors.length)
     }
 
     /**
