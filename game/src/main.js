@@ -16,7 +16,7 @@ window.addEventListener("load", function () {
         physics: {
             default: "arcade",
             arcade: {
-                debug: true,
+                debug: false,
             },
         },
     })
@@ -27,6 +27,7 @@ window.addEventListener("load", function () {
     game.scene.add("Menu", Menu)
     game.scene.add("Scp173", Scp173)
     game.scene.add("GameOver", GameOver)
+    game.scene.add("Instructions", Instructions)
     game.scene.add("Boot", Boot, true)
 })
 

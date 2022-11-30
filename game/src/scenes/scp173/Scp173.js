@@ -45,7 +45,7 @@ class Scp173 extends Phaser.Scene {
                 "Click to start the game!",
             ],
         ]
-        this.GAME_OVER_TEXT = ["", "", "", "You're so useless...."]
+        this.GAME_OVER_TEXT = ["", "", "", "You're so useless..."]
         this.WINNER_TEXT = ["", "", "", "Enclosure cleaned successfully"]
         // map layout configuration
         this.MAP_CONFIG = {

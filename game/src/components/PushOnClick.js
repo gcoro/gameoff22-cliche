@@ -38,6 +38,10 @@ class PushOnClick extends UserComponent {
                     open('https://scp-wiki.wikidot.com/scp-173')
                 } else if (this.sceneToStartKey === 'url_5153') {
                     open('https://scp-wiki.wikidot.com/scp-5153')
+                } else if (this.sceneToStartKey === 'Menu') {
+                    this.scene.scene.start(Menu.name)
+                } else if (this.sceneToStartKey === 'Instructions') {
+                    this.scene.scene.start(Instructions.name)
                 } else if (this.sceneToStartKey === 'Level') { // main scene
                     this.scene.scene.start(Level.name, { restart: true })
                 } else { // minigames

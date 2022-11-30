@@ -35,6 +35,10 @@ class Menu extends Phaser.Scene {
 		const sTARTPushOnClick = new PushOnClick(sTART);
 		sTARTPushOnClick.sceneToStartKey = "Level";
 
+		// iNSTRUCTIONS (components)
+		const iNSTRUCTIONSPushOnClick = new PushOnClick(iNSTRUCTIONS);
+		iNSTRUCTIONSPushOnClick.sceneToStartKey = "Instructions";
+
 		this.events.emit("scene-awake");
 	}
 
