@@ -325,13 +325,14 @@ class Meteor extends Phaser.Scene {
 		this.countdown = new CountdownController(this)
 		this.showMessage([`LEVEL ${window.iteration ?? 0}`,"","Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","- ARROWS / WASD to move","-SPACE BAR to shoot","-SHIFT to boost ","","","Press any key to start game!"])
 		const resume = (event) => {
-			console.log(event)
 			this.hideMessage()
 			this.scene.resume(Meteor.name)
-			document.removeEventListener("keyup", resume)
+			document.removeEventListener("keyup", resume);
+			document.removeEventListener("mouseup", resume);
 			this.countdown.start(50000)
 		}
 		document.addEventListener("keyup", resume);
+		document.addEventListener("mouseup", resume);
 		this.life.text = "0%";
 		const iteration = window.iteration||0;
 		this.speed = this.speed + 20*iteration;
