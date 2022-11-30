@@ -29,22 +29,25 @@ class GameOver extends Phaser.Scene {
 		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
 
 		// scp5153
-		const scp5153 = this.add.text(55, 519, "", {});
-		scp5153.scaleX = 2.3279779502355633;
-		scp5153.scaleY = 2.2082101808047416;
+		const scp5153 = this.add.text(56, 519, "", {});
+		scp5153.scaleX = 2.3;
+		scp5153.scaleY = 2.2;
 		scp5153.text = "> SCP-5153";
+		scp5153.setStyle({ "fontFamily": "Audiowide" });
 
 		// scp173
 		const scp173 = this.add.text(56, 474, "", {});
-		scp173.scaleX = 2.3279779502355633;
-		scp173.scaleY = 2.2082101808047416;
+		scp173.scaleX = 2.3;
+		scp173.scaleY = 2.2;
 		scp173.text = "> SCP-173";
+		scp173.setStyle({ "fontFamily": "Audiowide" });
 
 		// labelReadAbout
-		const labelReadAbout = this.add.text(55, 426, "", {});
-		labelReadAbout.scaleX = 2.3279779502355633;
-		labelReadAbout.scaleY = 2.2082101808047416;
+		const labelReadAbout = this.add.text(56, 426, "", {});
+		labelReadAbout.scaleX = 2.3;
+		labelReadAbout.scaleY = 2.2;
 		labelReadAbout.text = "More info:";
+		labelReadAbout.setStyle({ "fontFamily": "Audiowide" });
 
 		// guapen (components)
 		const guapenPushOnClick = new PushOnClick(guapen);

@@ -54,11 +54,12 @@
                 "PushOnClick"
             ],
             "PushOnClick.sceneToStartKey": "url_5153",
-            "x": 55,
+            "x": 56,
             "y": 519,
-            "scaleX": 2.3279779502355633,
-            "scaleY": 2.2082101808047416,
-            "text": "> SCP-5153"
+            "scaleX": 2.3,
+            "scaleY": 2.2,
+            "text": "> SCP-5153",
+            "fontFamily": "Audiowide"
         },
         {
             "type": "Text",
@@ -70,20 +71,22 @@
             "PushOnClick.sceneToStartKey": "url_173",
             "x": 56,
             "y": 474,
-            "scaleX": 2.3279779502355633,
-            "scaleY": 2.2082101808047416,
-            "text": "> SCP-173"
+            "scaleX": 2.3,
+            "scaleY": 2.2,
+            "text": "> SCP-173",
+            "fontFamily": "Audiowide"
         },
         {
             "type": "Text",
             "id": "d4e5aff4-65f0-4694-ab3a-258ce8db7f5e",
             "label": "labelReadAbout",
             "components": [],
-            "x": 55,
+            "x": 56,
             "y": 426,
-            "scaleX": 2.3279779502355633,
-            "scaleY": 2.2082101808047416,
-            "text": "More info:"
+            "scaleX": 2.3,
+            "scaleY": 2.2,
+            "text": "More info:",
+            "fontFamily": "Audiowide"
         }
     ],
     "plainObjects": [],
