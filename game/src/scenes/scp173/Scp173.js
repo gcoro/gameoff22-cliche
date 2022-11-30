@@ -1,24 +1,7 @@
-const MAP_LAYOUT = {
-    small: {
-        layout: "small_map.json",
-        tilesW: 65,
-        tilesH: 55,
-    },
-    medium: {
-        layout: "medium_map.json",
-        tilesW: 72,
-        tilesH: 60,
-    },
-    large: {
-        layout: "large_map.json",
-        tilesW: 90,
-        tilesH: 75,
-    },
-}
-
 class Scp173 extends Phaser.Scene {
     constructor() {
         super("Scp173")
+        console.log("set current level 0")
         this.currentLevel = 0
 
         // constants
@@ -34,7 +17,7 @@ class Scp173 extends Phaser.Scene {
         this.ENEMY_CREATE_POORS_MILLIS = 30 * 1000
         this.HOW_IT_WORKS_TEXT = [
             [
-                `LEVEL ${+this.currentLevel + 1}`,
+                `LEVEL ${this.currentLevel}`,
                 "",
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
@@ -47,7 +30,7 @@ class Scp173 extends Phaser.Scene {
                 "Click to start the game!",
             ],
             [
-                `LEVEL ${+this.currentLevel + 1}`,
+                `LEVEL ${this.currentLevel}`,
                 "",
                 "Collect all the rubbish the monster produces",
                 "before the time is up or you will die.",
@@ -68,7 +51,11 @@ class Scp173 extends Phaser.Scene {
         this.GAME_OVER_TEXT = ["You're so useless...."]
         this.WINNER_TEXT = ["Enclosure cleaned successfully"]
         // map layout configuration
-        this.MAP_CONFIG = MAP_LAYOUT["small"]
+        this.MAP_CONFIG = {
+            layout: "small_map.json",
+            tilesW: 65,
+            tilesH: 55,
+        }
 
         // local variables
         this.container = {}
@@ -114,11 +101,12 @@ class Scp173 extends Phaser.Scene {
         this.player_alien_ally2 = undefined
         this.exit_door = undefined
         this.cursors = undefined
-        this.scoreLabel = undefined
         this.countdown = undefined
         this.createPoorsTimeout = undefined
         this.scp173bgMusic = undefined
         this.monsterRubbishGroup = undefined
+        this.openEyeCountdownTimeout = undefined
+        this.openEyeCountdownInterval = undefined
         this.eventEmitter = EventDispatcher.getInstance()
     }
 
@@ -213,6 +201,8 @@ class Scp173 extends Phaser.Scene {
             repeat: -1,
         })
 
+        this.currentScore = 0
+
         this.player = new Player(this, 100, 250)
         this.exit_door = new ExitDoor(this, 15, 80)
         this.enemy = new Enemy(
@@ -221,11 +211,12 @@ class Scp173 extends Phaser.Scene {
             this.mapHeight / 2,
             this.currentLevel
         )
-        this.scoreLabel = new ScoreLabel(
+
+        this.countDownLabel = new CountdownLabel(
             this,
-            this.cameras.main.worldView.width - 200,
             0,
-            this.currentScore
+            0,
+            "Move your mouse over the enemy before %s seconds"
         ).setVisible(false)
 
         this.missingEscrementsLabel = new MissingEscrements(this, 0, 0, 0)
@@ -296,7 +287,6 @@ class Scp173 extends Phaser.Scene {
     startGame() {
         this.status = this.GAME_STATUS.STARTED
         this.startingText.destroy()
-        //this.scoreLabel.setVisible(true)
         this.countdown.label.setVisible(true)
         this.countdown.start(this.gameDuration)
         if (this.currentLevel > 0) {
@@ -309,6 +299,20 @@ class Scp173 extends Phaser.Scene {
             () => this.enemy.anims.play(ENEMY_ANIMS.OPEN_EYE),
             10000
         )
+        if (this.currentLevel > 0) {
+            this.openEyeCountdownTimeout = setTimeout(() => {
+                this.openEyeCountdown = 5
+                this.openEyeCountdownInterval = setInterval(() => {
+                    console.log(this.openEyeCountdown)
+                    this.countDownLabel.setValue(this.openEyeCountdown)
+                    if (this.openEyeCountdown === 0) {
+                        clearInterval(this.openEyeCountdownInterval)
+                        this.openEyeCountdownInterval = undefined
+                    }
+                    this.openEyeCountdown -= 1
+                }, 1000)
+            }, 5000)
+        }
     }
 
     createBackgrounds() {
@@ -389,7 +393,6 @@ class Scp173 extends Phaser.Scene {
 
     createPoors() {
         // hack to avoid createPoors not finished when player dies
-        console.log("createPoors")
         if (
             this.status !== this.GAME_STATUS.STARTED &&
             this.status !== this.GAME_STATUS.FIGHTING
@@ -465,9 +468,6 @@ class Scp173 extends Phaser.Scene {
         if (!this.missingEscrementsLabel.visible) {
             this.missingEscrementsLabel.setVisible(true)
         }
-        this.missingEscrementsLabel.setData(
-            this.monsterRubbishGroup.getTotalUsed()
-        )
 
         if (this.currentLevel > 0) {
             this.createPoorsTimeout = setTimeout(
@@ -475,6 +475,11 @@ class Scp173 extends Phaser.Scene {
                 this.ENEMY_CREATE_POORS_MILLIS - 2 * this.currentLevel
             )
         }
+        setTimeout(() => {
+            this.missingEscrementsLabel.setData(
+                this.monsterRubbishGroup.getTotalUsed()
+            )
+        }, 500)
     }
 
     handlePoopOverlap(player, poop) {
@@ -483,11 +488,9 @@ class Scp173 extends Phaser.Scene {
             const music = this.sound.add("gushing-flesh")
             music.play()
 
-            this.currentScore += this.SCORES_OVERLAP_POOR
-            const currentScore = this.scoreLabel.getScore()
-            if (currentScore + this.SCORES_OVERLAP_POOR < this.MAX_SCORE) {
-                this.scoreLabel.add(this.SCORES_OVERLAP_POOR)
-            } else this.scoreLabel.setScore(this.MAX_SCORE)
+            if (this.currentScore + this.SCORES_OVERLAP_POOR < this.MAX_SCORE) {
+                this.currentScore += this.SCORES_OVERLAP_POOR
+            } else this.currentScore = this.MAX_SCORE
         }
         this.missingEscrementsLabel.setData(
             this.monsterRubbishGroup.getTotalUsed()
@@ -571,6 +574,7 @@ class Scp173 extends Phaser.Scene {
 
     gameOver() {
         this.status = this.GAME_STATUS.LOADED
+        console.log("set current level to 0")
         this.currentLevel = 0
         this.playerDeath()
         console.log(
@@ -580,7 +584,8 @@ class Scp173 extends Phaser.Scene {
     }
 
     endGame(hasWin) {
-        this.currentLevel++
+        this.currentLevel += 1
+        console.log("new level ", this.currentLevel)
         this.status = this.GAME_STATUS.LOADED
         this.missingEscrementsLabel.setVisible(false)
         if (this.createPoorsTimeout) {
@@ -591,6 +596,13 @@ class Scp173 extends Phaser.Scene {
             clearTimeout(this.openEyeTimeout)
             this.openEyeTimeout = undefined
         }
+        if (this.openEyeCountdownInterval) {
+            clearInterval(this.openEyeCountdownInterval)
+        }
+        if (this.openEyeCountdownTimeout) {
+            clearTimeout(this.openEyeCountdownTimeout)
+        }
+
         this.input.setDefaultCursor("default")
 
         let sound
@@ -605,7 +617,7 @@ class Scp173 extends Phaser.Scene {
             this.createResultText({
                 partialScore: hasWin
                     ? this.MAX_SCORE
-                    : Math.min(this.scoreLabel.getScore(), this.MAX_SCORE - 80),
+                    : Math.min(this.currentScore, this.MAX_SCORE - 80),
                 gameOver: !hasWin,
             })
         }, 1000)

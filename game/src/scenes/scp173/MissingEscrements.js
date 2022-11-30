@@ -1,5 +1,3 @@
-const formatData = (data) => `Still ${data} feces and blood to clean`
-
 class MissingEscrements extends Phaser.GameObjects.Text {
     constructor(scene, x, y, score) {
         const style = {
@@ -21,12 +19,18 @@ class MissingEscrements extends Phaser.GameObjects.Text {
         this.scene.add.existing(this)
     }
 
+    formatData(data) {
+        return `Still ${data} feces and blood to clean`
+    }
+
     setData(data) {
         if (data === 0) this.style.fixedWidth = 400
         else this.style.fixedWidth = 500
-        this.setText(data === 0 ? "Run to the door to exit" : formatData(data))
-        if(data === 0) {
-            const music = this.scene.sound.add('win_sound')
+        this.setText(
+            data === 0 ? "Run to the door to exit" : this.formatData(data)
+        )
+        if (data === 0) {
+            const music = this.scene.sound.add("win_sound")
             music.play()
         }
     }
