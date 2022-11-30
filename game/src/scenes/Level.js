@@ -28,7 +28,9 @@ class Level extends Phaser.Scene {
 		door_blue.scaleY = 2.094852315770696;
 
 		// scp173
-		this.add.image(622, 298, "scp173");
+		const scp173 = this.add.image(622, 298, "scp173");
+		scp173.scaleX = 0.14740992422156196;
+		scp173.scaleY = 0.13025592697256438;
 
 		// back_structures
 		const back_structures = this.add.image(451, 262, "back-structures");
@@ -65,7 +67,9 @@ class Level extends Phaser.Scene {
         armor_idle_1.body.setSize(500, 420, false)
 
 		// scp5153
-		this.add.image(213, 298, "scp5153");
+		const scp5153 = this.add.image(211, 298, "scp5153");
+		scp5153.scaleX = 0.14877386980667096;
+		scp5153.scaleY = 0.12490280986096958;
 
 		// collider
 		this.physics.add.collider(armor_idle_1, floor);
