@@ -16,15 +16,24 @@ class Menu extends Phaser.Scene {
 	/** @returns {void} */
 	editorCreate() {
 
-		// background_scifi_interior
-		this.add.image(465, 145, "background_scifi_interior");
+		// menu
+		const menu = this.add.image(403, 303, "menu");
+		menu.scaleX = 0.6247507816474632;
+		menu.scaleY = 0.620708002526914;
 
-		// guapen
-		const guapen = this.add.image(567, 326, "guapen");
+		// sTART
+		const sTART = this.add.image(528, 282, "START");
+		sTART.scaleX = 0.430575587907373;
+		sTART.scaleY = 0.44385729973978577;
 
-		// guapen (components)
-		const guapenPushOnClick = new PushOnClick(guapen);
-		guapenPushOnClick.sceneToStartKey = "Level";
+		// iNSTRUCTIONS
+		const iNSTRUCTIONS = this.add.image(583, 377, "INSTRUCTIONS");
+		iNSTRUCTIONS.scaleX = 0.42816716827252266;
+		iNSTRUCTIONS.scaleY = 0.4809246572773558;
+
+		// sTART (components)
+		const sTARTPushOnClick = new PushOnClick(sTART);
+		sTARTPushOnClick.sceneToStartKey = "Level";
 
 		this.events.emit("scene-awake");
 	}

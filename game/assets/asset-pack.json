@@ -118,6 +118,11 @@
                 "key": "countdown-b"
             },
             {
+                "url": "assets/original_graphics/cover.jpg",
+                "type": "image",
+                "key": "cover"
+            },
+            {
                 "url": [
                     "assets/sfx/death-monster-sound.ogg"
                 ],
@@ -175,6 +180,11 @@
                 "key": "game_over_2"
             },
             {
+                "url": "assets/original_graphics/gameover.png",
+                "type": "image",
+                "key": "gameover"
+            },
+            {
                 "url": "assets/Green moss and rocky walls.png",
                 "type": "image",
                 "key": "Green moss and rocky walls"
@@ -206,6 +216,11 @@
                 "key": "hit20"
             },
             {
+                "url": "assets/original_graphics/buttons/INSTRUCTIONS.png",
+                "type": "image",
+                "key": "INSTRUCTIONS"
+            },
+            {
                 "url": "assets/laser.png",
                 "frameConfig": {
                     "frameWidth": 16,
@@ -231,11 +246,41 @@
                 "key": "levelcomplete"
             },
             {
+                "url": "assets/original_graphics/menu.jpg",
+                "type": "image",
+                "key": "menu"
+            },
+            {
                 "url": [
                     "assets/music/meteor_fight.ogg"
                 ],
                 "type": "audio",
                 "key": "meteor_fight"
+            },
+            {
+                "url": "assets/original_graphics/buttons/MOUSE.png",
+                "type": "image",
+                "key": "MOUSE"
+            },
+            {
+                "url": "assets/original_graphics/buttons/movement_A.png",
+                "type": "image",
+                "key": "movement_A"
+            },
+            {
+                "url": "assets/original_graphics/buttons/movement_D.png",
+                "type": "image",
+                "key": "movement_D"
+            },
+            {
+                "url": "assets/original_graphics/buttons/movement_S.png",
+                "type": "image",
+                "key": "movement_S"
+            },
+            {
+                "url": "assets/original_graphics/buttons/movement_W.png",
+                "type": "image",
+                "key": "movement_W"
             },
             {
                 "url": "assets/scp2020/pavement.png",
@@ -271,6 +316,21 @@
                 "key": "ship"
             },
             {
+                "url": "assets/original_graphics/buttons/SKIP.png",
+                "type": "image",
+                "key": "SKIP"
+            },
+            {
+                "url": "assets/original_graphics/buttons/SPACEBAR.png",
+                "type": "image",
+                "key": "SPACEBAR"
+            },
+            {
+                "url": "assets/original_graphics/buttons/START.png",
+                "type": "image",
+                "key": "START"
+            },
+            {
                 "url": "src/components/StartAnimation.js",
                 "type": "script",
                 "key": "StartAnimation"
@@ -281,6 +341,11 @@
                 ],
                 "type": "audio",
                 "key": "text-blip"
+            },
+            {
+                "url": "assets/original_graphics/buttons/TRY_AGAIN.png",
+                "type": "image",
+                "key": "TRY_AGAIN"
             },
             {
                 "url": [
