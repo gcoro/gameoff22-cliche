@@ -21,6 +21,14 @@ class GameOver extends Phaser.Scene {
 		gameover.scaleX = 0.1932161208510199;
 		gameover.scaleY = 0.19119029385330585;
 
+		// totalScoreLabel
+		const totalScoreLabel = this.add.text(375, 215, "", {});
+		totalScoreLabel.scaleX = 0.5;
+		totalScoreLabel.scaleY = 0.41445688211003173;
+		totalScoreLabel.text = "000";
+		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Audiowide", "fontSize": "150px", "fontStyle": "bold" });
+		totalScoreLabel.text = this.totalScore
+
 		// scp5153
 		const scp5153 = this.add.text(56, 519, "", {});
 		scp5153.scaleX = 0.3760838598274091;
@@ -65,6 +73,8 @@ class GameOver extends Phaser.Scene {
 	/* START-USER-CODE */
 
 	// Write your code here
+	// number 
+	totalScore
 
 	create() {
 		this.editorCreate();
@@ -72,15 +82,8 @@ class GameOver extends Phaser.Scene {
 	}
 
 	init(data) {
-		console.log('totalScore', data?.totalScore)
-
-		// totalScoreLabel
-		const totalScoreLabel = this.add.text(375, 215, "", {});
-		totalScoreLabel.scaleX = 0.5;
-		totalScoreLabel.scaleY = 0.41445688211003173;
-		totalScoreLabel.text = data?.totalScore
-		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Audiowide", "fontSize": "150px", "fontStyle": "bold" });
-
+		console.log('totalScore', data.totalScore)
+		this.totalScore = data.totalScore
 	}
 
 	/* END-USER-CODE */
