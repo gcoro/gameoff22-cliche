@@ -22,12 +22,6 @@ class GameOver extends Phaser.Scene {
 		// guapen
 		const guapen = this.add.image(612, 236, "guapen");
 
-		// totalScoreLabel
-		const totalScoreLabel = this.add.text(281, 237, "", {});
-		totalScoreLabel.scaleX = 4.211768384817183;
-		totalScoreLabel.scaleY = 6.336770485036885;
-		totalScoreLabel.setStyle({ "align": "center", "fontFamily": "Arial", "fontStyle": "bold" });
-
 		// scp5153
 		const scp5153 = this.add.text(56, 519, "", {});
 		scp5153.scaleX = 2.3;
