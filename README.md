@@ -26,7 +26,7 @@ SCPs we referenced in the game:
 
 ## Team
 
-- Game development > gcoro , wiulma, ale958, trexy94, nadenadenade
+- Game development > gcoro, wiulma, ale958, trexy94, nadenadenade
 - Game design > Alessandro Marani 
 - Original menu graphics > Giulia Garulli 
 

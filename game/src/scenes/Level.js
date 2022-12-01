@@ -4,98 +4,98 @@
 
 class Level extends Phaser.Scene {
 
-	constructor() {
-		super("Level");
+    constructor() {
+        super("Level");
 
-		/* START-USER-CTR-CODE */
+        /* START-USER-CTR-CODE */
 
         this.totalScore = 0
 
         /* END-USER-CTR-CODE */
-	}
+    }
 
-	/** @returns {void} */
-	editorCreate() {
+    /** @returns {void} */
+    editorCreate() {
 
-		// background_scifi_interior
-		const background_scifi_interior = this.add.image(392, 236, "background_scifi_interior");
-		background_scifi_interior.scaleX = 3.961963856772153;
-		background_scifi_interior.scaleY = 4.659316663023215;
+        // background_scifi_interior
+        const background_scifi_interior = this.add.image(392, 236, "background_scifi_interior");
+        background_scifi_interior.scaleX = 3.961963856772153;
+        background_scifi_interior.scaleY = 4.659316663023215;
 
-		// door_blue
-		const door_blue = this.add.image(616, 406, "door_blue").setInteractive({ cursor: "pointer" });
-		door_blue.scaleX = 2.0268395681818867;
-		door_blue.scaleY = 2.094852315770696;
+        // door_blue
+        const door_blue = this.add.image(616, 406, "door_blue").setInteractive({ cursor: "pointer" });
+        door_blue.scaleX = 2.0268395681818867;
+        door_blue.scaleY = 2.094852315770696;
 
-		// scp173
-		const scp173 = this.add.image(622, 298, "scp173");
-		scp173.scaleX = 0.14740992422156196;
-		scp173.scaleY = 0.13025592697256438;
+        // scp173
+        const scp173 = this.add.image(622, 298, "scp173");
+        scp173.scaleX = 0.14740992422156196;
+        scp173.scaleY = 0.13025592697256438;
 
-		// back_structures
-		const back_structures = this.add.image(451, 262, "back-structures");
-		back_structures.scaleX = 2.490125549146286;
-		back_structures.scaleY = 3.1615983195492015;
+        // back_structures
+        const back_structures = this.add.image(451, 262, "back-structures");
+        back_structures.scaleX = 2.490125549146286;
+        back_structures.scaleY = 3.1615983195492015;
 
-		// door0
-		const door0 = this.add.image(208, 406, "door0").setInteractive({ cursor: "pointer" });
-		door0.scaleX = 2.0268395681818867;
-		door0.scaleY = 2.094852315770696;
+        // door0
+        const door0 = this.add.image(208, 406, "door0").setInteractive({ cursor: "pointer" });
+        door0.scaleX = 2.0268395681818867;
+        door0.scaleY = 2.094852315770696;
 
-		// floor
-		/** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
-		const floor = this.add.image(399, 527, "pavement_full");
-		floor.scaleX = 1.2962686223732702;
-		this.physics.add.existing(floor, false);
-		floor.body.moves = false;
-		floor.body.allowGravity = false;
-		floor.body.setOffset(0, 17);
-		floor.body.setSize(726, 141, false);
+        // floor
+        /** @type {Phaser.GameObjects.Image & { body: Phaser.Physics.Arcade.Body }} */
+        const floor = this.add.image(399, 527, "pavement_full");
+        floor.scaleX = 1.2962686223732702;
+        this.physics.add.existing(floor, false);
+        floor.body.moves = false;
+        floor.body.allowGravity = false;
+        floor.body.setOffset(0, 17);
+        floor.body.setSize(726, 141, false);
 
-		// armor_idle_1
-		/** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
-		const armor_idle_1 = this.add.sprite(168, 400, "armor_idle_1");
-		armor_idle_1.scaleX = 0.3;
-		armor_idle_1.scaleY = 0.28;
-		this.physics.add.existing(armor_idle_1, false);
-		armor_idle_1.body.velocity.x = 70;
-		armor_idle_1.body.velocity.y = 70;
-		armor_idle_1.body.bounce.x = 1;
-		armor_idle_1.body.bounce.y = 1;
-		armor_idle_1.body.collideWorldBounds = true;
-		armor_idle_1.body.setOffset(-150, 0);
+        // armor_idle_1
+        /** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
+        const armor_idle_1 = this.add.sprite(168, 400, "armor_idle_1");
+        armor_idle_1.scaleX = 0.3;
+        armor_idle_1.scaleY = 0.28;
+        this.physics.add.existing(armor_idle_1, false);
+        armor_idle_1.body.velocity.x = 70;
+        armor_idle_1.body.velocity.y = 70;
+        armor_idle_1.body.bounce.x = 1;
+        armor_idle_1.body.bounce.y = 1;
+        armor_idle_1.body.collideWorldBounds = true;
+        armor_idle_1.body.setOffset(-150, 0);
         armor_idle_1.body.setSize(500, 420, false)
 
-		// scp5153
-		const scp5153 = this.add.image(211, 298, "scp5153");
-		scp5153.scaleX = 0.14877386980667096;
-		scp5153.scaleY = 0.12490280986096958;
+        // scp5153
+        const scp5153 = this.add.image(211, 298, "scp5153");
+        scp5153.scaleX = 0.14877386980667096;
+        scp5153.scaleY = 0.12490280986096958;
 
-		// collider
-		this.physics.add.collider(armor_idle_1, floor);
+        // collider
+        this.physics.add.collider(armor_idle_1, floor);
 
-		// door_blue (components)
-		const door_bluePushOnClick = new PushOnClick(door_blue);
-		door_bluePushOnClick.sceneToStartKey =  Scp173.name
+        // door_blue (components)
+        const door_bluePushOnClick = new PushOnClick(door_blue);
+        door_bluePushOnClick.sceneToStartKey = Scp173.name
 
-		// door0 (components)
-		const door0PushOnClick = new PushOnClick(door0);
-		door0PushOnClick.sceneToStartKey = Meteor.name
+        // door0 (components)
+        const door0PushOnClick = new PushOnClick(door0);
+        door0PushOnClick.sceneToStartKey = Meteor.name
 
-		// armor_idle_1 (components)
-		const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1);
-		armor_idle_1StartAnimation.animationKey = "armor_walk";
-		new PushOnClick(armor_idle_1);
+        // armor_idle_1 (components)
+        const armor_idle_1StartAnimation = new StartAnimation(armor_idle_1);
+        armor_idle_1StartAnimation.animationKey = "armor_walk";
+        new PushOnClick(armor_idle_1);
 
-		this.alienSprite = armor_idle_1;
+        this.alienSprite = armor_idle_1;
 
-		this.events.emit("scene-awake");
-	}
+        this.events.emit("scene-awake");
+    }
 
-	/* START-USER-CODE */
+    /* START-USER-CODE */
 
     /** @type {Phaser.GameObjects.Sprite & { body: Phaser.Physics.Arcade.Body }} */
-	alienSprite
+    alienSprite
 
     // user strings
     strings = {}
@@ -330,19 +330,23 @@ class Level extends Phaser.Scene {
         } else { // speech ended
             // console.log('end speech')
 
-            // walk again
-            this.alienSprite.anims.pause()
-            this.alienSprite.anims.play("armor_walk")
-            this.alienSprite.isAnimatingTurn = false
-
             if (scp) {
                 this.alienSprite.body.velocity.x = this.originalVelocity
+                // walk again
+                this.alienSprite.anims.pause()
+                this.alienSprite.anims.play("armor_walk")
+                this.alienSprite.isAnimatingTurn = false
+
                 // enable scp 
                 // console.log('enabling scp', scp)
                 this.activeScp = scp
             } else { // game over
                 this.alienSprite.body.velocity.x = 400 // sprit away
                 this.alienSprite.body.collideWorldBounds = false // go out of room
+                // walk again
+                this.alienSprite.anims.pause()
+                this.alienSprite.anims.play("armor_walk")
+                this.alienSprite.isAnimatingTurn = false
 
                 setTimeout(() => { // time of animation
                     this.scene.start(GameOver.name, { totalScore: this.totalScore })

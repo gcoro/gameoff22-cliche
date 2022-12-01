@@ -326,7 +326,7 @@ class Meteor extends Phaser.Scene {
 		this.shootMusic = this.sound.add('arcade-shoot')
 		this.hitMusic = this.sound.add('hit20')
 		this.countdown = new CountdownController(this)
-		this.showMessage([`LEVEL ${window.iteration ?? 0}`,"","Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","- ARROWS / WASD to move","- SPACE BAR to shoot","- SHIFT to boost ","","","Click to start the game!"])
+		this.showMessage([`LEVEL ${window.iterationMeteor ?? 0}`,"","Defend the SCP-2000 until it","is fully charged to save humanity,","but do it before the meteor","collides with the Earth!","Every metorite falling on the structure","will compromise it and decrease its charge","","- ARROWS / WASD to move","- SPACE BAR to shoot","- SHIFT to boost ","","","Click to start the game!"])
 		const resume = (event) => {
 			this.hideMessage()
 			this.scene.resume(Meteor.name)
@@ -337,11 +337,11 @@ class Meteor extends Phaser.Scene {
 		document.addEventListener("keyup", resume);
 		document.addEventListener("mouseup", resume);
 		this.life.text = "0%";
-		const iteration = window.iteration||0;
+		const iteration = window.iterationMeteor||0;
 		this.speed = this.speed + 20*iteration;
 		const cometVelocity = (10);
 		this.enemySpeed = this.enemySpeed + 20*iteration;
-		window.iteration = +iteration + 1
+		window.iterationMeteor = +iteration + 1
 		this.date.text = actualDate;
 		this.arcadesprite_1.body.velocity.y = cometVelocity;
 		this.arcadesprite_1.body.maxSpeed = cometVelocity;

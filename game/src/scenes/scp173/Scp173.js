@@ -127,6 +127,8 @@ class Scp173 extends Phaser.Scene {
         this.scp173bgMusic = this.sound.add("meteor_fight", { volume: 0.4 })
         if (musicActive) this.scp173bgMusic.play()
 
+        this.currentLevel = +window.iterationMonster||0;
+
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
         this.createStartingText()
@@ -540,7 +542,6 @@ class Scp173 extends Phaser.Scene {
 
     gameOver() {
         this.status = this.GAME_STATUS.LOADED
-        this.currentLevel = 0
         this.playerDeath()
         console.log(
             "%c  GAME OVER!!  ",
@@ -549,7 +550,9 @@ class Scp173 extends Phaser.Scene {
     }
 
     endGame(hasWin) {
-        if (hasWin) this.currentLevel += 1
+        if (hasWin) {
+            window.iterationMonster = this.currentLevel + 1
+        }
         this.status = this.GAME_STATUS.LOADED
         this.missingEscrementsLabel.setVisible(false)
         if (this.createPoorsTimeout) {
