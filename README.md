@@ -66,7 +66,7 @@ SCPs we referenced in the game:
 -   [cursor](https://opengameart.org/content/%E2%80%9Calien%E2%80%9D-crosshairs)
 -   [tiles](https://foozlecc.itch.io/sci-fi-lab-tileset-decor-traps)
 
-### SCP-2000
+### SCP-5153
 
 -   [background](https://pxhere.com/it/photo/1460581)
 -   [guns](https://twitter.com/hashashaaaa)
