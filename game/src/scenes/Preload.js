@@ -15,22 +15,23 @@ class Preload extends Phaser.Scene {
 
 	/** @returns {void} */
 	editorPreload() {
+
 		this.load.pack("asset-pack", "assets/asset-pack.json");
 	}
 
 	/** @returns {void} */
 	editorCreate() {
 
-		// guapen
-		const guapen = this.add.image(400, 219, "guapen");
-		guapen.scaleX = 0.5915891440784282;
-		guapen.scaleY = 0.5915891440784282;
-
 		// progress
-		const progress = this.add.text(400, 349, "", {});
+		const progress = this.add.text(435, 351, "", {});
 		progress.setOrigin(0.5, 0.5);
 		progress.text = "0%";
 		progress.setStyle({ "fontSize": "30px" });
+
+		// alien
+		const alien = this.add.image(286, 345, "alien");
+		alien.scaleX = 0.23840287175498232;
+		alien.scaleY = 0.23265305872685693;
 
 		// progress (components)
 		new PreloadText(progress);
@@ -46,7 +47,7 @@ class Preload extends Phaser.Scene {
 
 		this.editorCreate();
 		this.editorPreload();
-		
+
 		//TODO: put back main scene
 		this.load.on(Phaser.Loader.Events.COMPLETE, () => this.scene.start("Menu"));
 	}
