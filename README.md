@@ -1,5 +1,10 @@
 # Cliche, right?
 
+<div style="display: flex; justify-content: center;">
+	<img src="cover.jpg" height="300" width="400">
+</div>
+
+
 Our take on the "cliche" theme revolves around the iconic catchphrase of this character, SCP-2020. In the shape of alien, this "entity" wishes to be a scifi novel writer, and always comes up with some cliche story plots.
 
 In this game, each story is a playable minigame (at the moment for a total of 2 _to be expanded, maybe_) which, if completed, will give you points up to an amount of 100 every time. The game goes on, with increasing difficult, until you fail.
