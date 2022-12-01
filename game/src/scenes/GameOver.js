@@ -55,6 +55,13 @@ class GameOver extends Phaser.Scene {
 		tRY_AGAIN.scaleX = 0.47737796937816135;
 		tRY_AGAIN.scaleY = 0.48460807997325583;
 
+		// labelScore
+		const labelScore = this.add.text(358, 187, "", {});
+		labelScore.scaleX = 0.3441871684140159;
+		labelScore.scaleY = 0.33239186084327976;
+		labelScore.text = "YOUR SCORE";
+		labelScore.setStyle({ "fontFamily": "Audiowide", "fontSize": "100px" });
+
 		// scp5153 (components)
 		const scp5153PushOnClick = new PushOnClick(scp5153);
 		scp5153PushOnClick.sceneToStartKey = "url_5153";

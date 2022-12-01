@@ -96,6 +96,19 @@
             "y": 423,
             "scaleX": 0.47737796937816135,
             "scaleY": 0.48460807997325583
+        },
+        {
+            "type": "Text",
+            "id": "8cc2191b-e828-43df-aa0a-5d5c8c43515c",
+            "label": "labelScore",
+            "components": [],
+            "x": 358,
+            "y": 187,
+            "scaleX": 0.3441871684140159,
+            "scaleY": 0.33239186084327976,
+            "text": "YOUR SCORE",
+            "fontFamily": "Audiowide",
+            "fontSize": "100px"
         }
     ],
     "plainObjects": [],
