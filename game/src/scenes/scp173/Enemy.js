@@ -41,7 +41,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.handleEnemyAnimationEnd(anim)
         )
 
-        this.GAME_OVER_DEBOUNCE = 500
+        this.GAME_OVER_DEBOUNCE = 2000
         this.gameOverDebounceTimeout = undefined
 
         this.scene.add.existing(this)

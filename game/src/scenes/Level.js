@@ -23,7 +23,7 @@ class Level extends Phaser.Scene {
 		background_scifi_interior.scaleY = 4.659316663023215;
 
 		// door_blue
-		const door_blue = this.add.image(616, 406, "door_blue");
+		const door_blue = this.add.image(616, 406, "door_blue").setInteractive({ cursor: "pointer" });
 		door_blue.scaleX = 2.0268395681818867;
 		door_blue.scaleY = 2.094852315770696;
 
@@ -38,7 +38,7 @@ class Level extends Phaser.Scene {
 		back_structures.scaleY = 3.1615983195492015;
 
 		// door0
-		const door0 = this.add.image(208, 406, "door0");
+		const door0 = this.add.image(208, 406, "door0").setInteractive({ cursor: "pointer" });
 		door0.scaleX = 2.0268395681818867;
 		door0.scaleY = 2.094852315770696;
 
@@ -416,6 +416,7 @@ class Level extends Phaser.Scene {
             fontSize: 20,
             color: "#000000",
             align: "center",
+            fontWeight: 'bold',
             wordWrap: { width: bubbleWidth - bubblePadding * 2 },
         })
 

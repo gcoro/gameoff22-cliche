@@ -83,9 +83,6 @@ class Meteor extends Phaser.Scene {
 	/** @returns {void} */
 	preload() {
 
-		this.load.pack("asset-pack-explosion", "assets/explosions/asset-pack-explosion.json");
-		this.load.pack("asset-pack", "assets/asset-pack.json");
-		this.load.pack("comet-pck", "assets/comet/comet-pck.json");
 	}
 
 	/** @returns {void} */

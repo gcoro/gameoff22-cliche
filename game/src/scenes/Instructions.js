@@ -22,12 +22,12 @@ class Instructions extends Phaser.Scene {
 		porte.scaleY = 0.11025782874521506;
 
 		// about
-		const about = this.add.image(408, 294, "about");
-		about.scaleX = 0.1945529608050578;
-		about.scaleY = 0.19679084024642202;
+		const about = this.add.image(404, 301, "about");
+		about.scaleX = 0.19038840096818868;
+		about.scaleY = 0.18981223316641246;
 
 		// sKIP
-		const sKIP = this.add.image(745, 490, "SKIP");
+		const sKIP = this.add.image(735, 491, "SKIP");
 		sKIP.scaleX = 0.5250938221939377;
 		sKIP.scaleY = 0.4758199030761969;
 
