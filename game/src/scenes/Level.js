@@ -416,6 +416,7 @@ class Level extends Phaser.Scene {
             fontSize: 20,
             color: "#000000",
             align: "center",
+            fontWeight: 'bold',
             wordWrap: { width: bubbleWidth - bubblePadding * 2 },
         })
 
