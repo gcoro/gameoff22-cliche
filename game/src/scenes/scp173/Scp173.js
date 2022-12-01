@@ -549,7 +549,7 @@ class Scp173 extends Phaser.Scene {
     }
 
     endGame(hasWin) {
-        this.currentLevel += 1
+        if (hasWin) this.currentLevel += 1
         this.status = this.GAME_STATUS.LOADED
         this.missingEscrementsLabel.setVisible(false)
         if (this.createPoorsTimeout) {
@@ -576,8 +576,8 @@ class Scp173 extends Phaser.Scene {
             sound = this.sound.add("death-monster-sound")
         }
         sound.play()
-        this.player.setVelocity(0,0)
-        
+        this.player.setVelocity(0, 0)
+
         setTimeout(() => {
             this.createResultText({
                 partialScore: hasWin
