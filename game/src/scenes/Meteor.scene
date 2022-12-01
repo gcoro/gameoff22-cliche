@@ -3,9 +3,6 @@
     "sceneType": "SCENE",
     "settings": {
         "preloadPackFiles": [
-            "game/assets/explosions/asset-pack-explosion.json",
-            "game/assets/asset-pack.json",
-            "game/assets/comet/comet-pck.json"
         ],
         "createMethodName": "editorCreate",
         "sceneKey": "Meteor"

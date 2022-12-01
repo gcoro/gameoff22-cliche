@@ -4,7 +4,10 @@
     "settings": {
         "preloadMethodName": "editorPreload",
         "preloadPackFiles": [
-            "starter-template-basic-typescript/assets/asset-pack.json"
+            "starter-template-basic-typescript/assets/asset-pack.json",
+            "game/assets/asset-pack.json",
+            "game/assets/explosions/asset-pack-explosion.json",
+            "game/assets/comet/comet-pck.json"
         ],
         "createMethodName": "editorCreate",
         "sceneKey": "Preload"
