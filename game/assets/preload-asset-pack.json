@@ -4,7 +4,7 @@
             {
                 "url": "assets/alien.png",
                 "type": "image",
-                "key": "alien"
+                "key": "alien_preload"
             }
         ]
     },

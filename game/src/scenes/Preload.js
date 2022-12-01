@@ -29,7 +29,7 @@ class Preload extends Phaser.Scene {
 		progress.setStyle({ "fontSize": "30px" });
 
 		// alien
-		const alien = this.add.image(286, 345, "alien");
+		const alien = this.add.image(286, 345, "alien_preload");
 		alien.scaleX = 0.23840287175498232;
 		alien.scaleY = 0.23265305872685693;
 
