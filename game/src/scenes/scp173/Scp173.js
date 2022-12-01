@@ -108,52 +108,9 @@ class Scp173 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("base_tiles", "assets/scp173/level_tileset.png")
         this.load.tilemapTiledJSON(
             "tilemap",
             `assets/scp173/${this.MAP_CONFIG.layout}`
-        )
-        this.load.image("poor", "assets/scp173/poor/splat.png")
-
-        this.load.atlas(
-            "skull",
-            "assets/scp173/blood/blood.png",
-            "assets/scp173/blood/blood.json"
-        )
-
-        //poops
-        this.load.atlas(
-            "throw_poor",
-            "assets/scp173/poor/poops.png",
-            "assets/scp173/poor/poops.json"
-        )
-
-        //player allies
-        this.load.atlas(
-            "alien_ally",
-            "assets/scp173/alien_ally.png",
-            "assets/scp173/alien_ally.json"
-        )
-
-        //player
-        this.load.atlas(
-            "alien",
-            "assets/scp173/alien_repack.png",
-            "assets/scp173/alien_repack.json"
-        )
-
-        //enemy
-        this.load.atlas(
-            "enemy",
-            "assets/scp173/eye_monster/covid_spritesheet.png",
-            "assets/scp173/eye_monster/covid_spritesheet.json"
-        )
-
-        //exit door
-        this.load.atlas(
-            "exit_door",
-            "assets/scp173/door.png",
-            "assets/scp173/door.json"
         )
 
         this.events.once("shutdown", () => {
