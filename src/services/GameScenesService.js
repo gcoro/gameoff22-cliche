@@ -1,5 +1,5 @@
-export const preload = () => console.log("scene preload");
+export const preload = () => console.log("scene preload")
 
-export const create = () => console.log("scene create");
+export const create = () => console.log("scene create")
 
-export const update = () => console.log("scene update");
+export const update = () => console.log("scene update")

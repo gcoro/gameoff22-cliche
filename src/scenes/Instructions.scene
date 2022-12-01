@@ -1,0 +1,61 @@
+{
+    "id": "b1a83c09-b5c2-421b-a2ce-eacd682f6bbd",
+    "sceneType": "SCENE",
+    "settings": {
+        "javaScriptInitFieldsInConstructor": true,
+        "preloadPackFiles": [],
+        "createMethodName": "editorCreate",
+        "sceneKey": "Instructions"
+    },
+    "displayList": [
+        {
+            "type": "Image",
+            "id": "6512f64c-12dd-4848-8f1c-7291eb4be653",
+            "label": "porte",
+            "components": [],
+            "texture": {
+                "key": "porte"
+            },
+            "x": 404,
+            "y": 305,
+            "scaleX": 0.10330948278164731,
+            "scaleY": 0.11025782874521506
+        },
+        {
+            "type": "Image",
+            "id": "ee41b5e5-fa85-40b0-a5bb-165f9320f5f1",
+            "label": "about",
+            "components": [],
+            "texture": {
+                "key": "about"
+            },
+            "x": 404,
+            "y": 301,
+            "scaleX": 0.19038840096818868,
+            "scaleY": 0.18981223316641246
+        },
+        {
+            "type": "Image",
+            "id": "306a7f86-abd9-4008-b1b7-cfb94b8c3750",
+            "label": "sKIP",
+            "components": [
+                "PushOnClick"
+            ],
+            "PushOnClick.sceneToStartKey": "Menu",
+            "texture": {
+                "key": "SKIP"
+            },
+            "x": 735,
+            "y": 491,
+            "scaleX": 0.5250938221939377,
+            "scaleY": 0.4758199030761969
+        }
+    ],
+    "plainObjects": [],
+    "meta": {
+        "app": "Phaser Editor 2D - Scene Editor",
+        "url": "https://phasereditor2d.com",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 3
+    }
+}
