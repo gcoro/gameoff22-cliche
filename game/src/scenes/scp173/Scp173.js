@@ -209,7 +209,7 @@ class Scp173 extends Phaser.Scene {
             this.currentLevel
         )
 
-        this.countDownLabel = new CountdownLabel(
+        this.countdownLabel = new CountdownLabel(
             this,
             0,
             0,
@@ -305,7 +305,7 @@ class Scp173 extends Phaser.Scene {
             this.openEyeCountdownTimeout = setTimeout(() => {
                 this.openEyeCountdown = 5
                 this.openEyeCountdownInterval = setInterval(() => {
-                    this.countDownLabel.setValue(this.openEyeCountdown)
+                    this.countdownLabel.setValue(this.openEyeCountdown)
 
                     if (this.openEyeCountdown === 0) {
                         const cd2 = this.sound.add("countdown-a")
