@@ -619,7 +619,8 @@ class Scp173 extends Phaser.Scene {
             sound = this.sound.add("death-monster-sound")
         }
         sound.play()
-
+        this.player.setVelocity(0,0)
+        
         setTimeout(() => {
             this.createResultText({
                 partialScore: hasWin
