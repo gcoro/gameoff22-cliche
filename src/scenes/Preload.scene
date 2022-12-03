@@ -4,25 +4,15 @@
     "settings": {
         "preloadMethodName": "editorPreload",
         "preloadPackFiles": [
-            "starter-template-basic-typescript/assets/asset-pack.json"
+            "starter-template-basic-typescript/assets/asset-pack.json",
+            "../static/assets/asset-pack.json",
+            "../static/assets/explosions/asset-pack-explosion.json",
+            "../static/assets/comet/comet-pck.json"
         ],
         "createMethodName": "editorCreate",
         "sceneKey": "Preload"
     },
     "displayList": [
-        {
-            "type": "Image",
-            "id": "e413cbbf-ce25-4dad-a117-b7cf0791f655",
-            "label": "guapen",
-            "components": [],
-            "texture": {
-                "key": "guapen"
-            },
-            "x": 400,
-            "y": 219,
-            "scaleX": 0.5915891440784282,
-            "scaleY": 0.5915891440784282
-        },
         {
             "type": "Text",
             "id": "2ce42443-5227-4c9b-b498-e81f9a21cde3",
@@ -30,10 +20,25 @@
             "components": [
                 "PreloadText"
             ],
-            "x": 400,
-            "y": 349,
+            "x": 435,
+            "y": 351,
+            "originX": 0.5,
+            "originY": 0.5,
             "text": "0%",
             "fontSize": "30px"
+        },
+        {
+            "type": "Image",
+            "id": "36777ba9-a2ae-40d3-985a-618f62fa38e8",
+            "label": "alien",
+            "components": [],
+            "texture": {
+                "key": "alien"
+            },
+            "x": 286,
+            "y": 345,
+            "scaleX": 0.23840287175498232,
+            "scaleY": 0.23265305872685693
         }
     ],
     "plainObjects": [],
@@ -41,6 +46,6 @@
         "app": "Phaser Editor 2D - Scene Editor",
         "url": "https://phasereditor2d.com",
         "contentType": "phasereditor2d.core.scene.SceneContentType",
-        "version": 2
+        "version": 3
     }
 }

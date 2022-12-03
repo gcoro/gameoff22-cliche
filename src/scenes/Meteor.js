@@ -1,8 +1,79 @@
-// You can write more code here
 import Phaser from "phaser"
-import { StartAnimation } from "../components/StartAnimation"
+import { StartAnimation } from "./../components/StartAnimation"
 import { Level } from "./Level"
-import { CountdownController } from "./scp173/CountDownController"
+import { CountdownController } from "./../components/CountDownController"
+// You can write more code here
+class FallingObject extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, texture, config) {
+        super(scene, x, y, texture)
+        this.scene = scene
+        this.speed = config.speed
+        this.rotationVal = config.rotation
+    }
+
+    spawn(x) {
+        const positionY = Phaser.Math.Between(-50, -70)
+        this.setPosition(x, positionY)
+        this.setActive(true)
+        this.setVisible(true)
+    }
+
+    explode() {
+        this.speed = 0
+        this.rotation = 0
+        this.rotationVal = 0
+        this.scale = 0.5
+        this.y = this.y + 30
+        this.anims.play("explosion")
+        this.once(
+            "animationcomplete",
+            function () {
+                this.die()
+            },
+            this
+        )
+    }
+
+    die() {
+        this.destroy()
+    }
+
+    update() {
+        this.setVelocityY(this.speed)
+        this.rotation += this.rotationVal
+        const gameHeight = this.scene.scale.height
+
+        if (this.y > gameHeight + 5) {
+            this.die()
+        }
+    }
+}
+
+class Laser extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, texture) {
+        super(scene, x, y, texture)
+        this.setScale(2)
+        this.speed = 200
+    }
+
+    fire(x, y) {
+        this.setPosition(x, y - 50)
+        this.setActive(true)
+        this.setVisible(true)
+    }
+
+    erase() {
+        this.destroy()
+    }
+
+    update() {
+        this.setVelocityY(this.speed * -1)
+        if (this.y < -10) {
+            this.erase()
+        }
+    }
+}
+
 /* START OF COMPILED CODE */
 
 export class Meteor extends Phaser.Scene {
@@ -15,14 +86,7 @@ export class Meteor extends Phaser.Scene {
     }
 
     /** @returns {void} */
-    preload() {
-        this.load.pack(
-            "asset-pack-explosion",
-            "assets/explosions/asset-pack-explosion.json"
-        )
-        this.load.pack("asset-pack", "assets/asset-pack.json")
-        this.load.pack("comet-pck", "assets/comet/comet-pck.json")
-    }
+    preload() {}
 
     /** @returns {void} */
     editorCreate() {
@@ -296,7 +360,7 @@ export class Meteor extends Phaser.Scene {
         this.hitMusic = this.sound.add("hit20")
         this.countdown = new CountdownController(this)
         this.showMessage([
-            `LEVEL ${window.iteration ?? 0}`,
+            `LEVEL ${window.iterationMeteor ?? 0}`,
             "",
             "Defend the SCP-2000 until it",
             "is fully charged to save humanity,",
@@ -322,11 +386,11 @@ export class Meteor extends Phaser.Scene {
         document.addEventListener("keyup", resume)
         document.addEventListener("mouseup", resume)
         this.life.text = "0%"
-        const iteration = window.iteration || 0
+        const iteration = window.iterationMeteor || 0
         this.speed = this.speed + 20 * iteration
         const cometVelocity = 10
         this.enemySpeed = this.enemySpeed + 20 * iteration
-        window.iteration = +iteration + 1
+        window.iterationMeteor = +iteration + 1
         this.date.text = actualDate
         this.arcadesprite_1.body.velocity.y = cometVelocity
         this.arcadesprite_1.body.maxSpeed = cometVelocity
@@ -537,76 +601,5 @@ export class Meteor extends Phaser.Scene {
 }
 
 /* END OF COMPILED CODE */
-
-export class FallingObject extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, config) {
-        super(scene, x, y, texture)
-        this.scene = scene
-        this.speed = config.speed
-        this.rotationVal = config.rotation
-    }
-
-    spawn(x) {
-        const positionY = Phaser.Math.Between(-50, -70)
-        this.setPosition(x, positionY)
-        this.setActive(true)
-        this.setVisible(true)
-    }
-
-    explode() {
-        this.speed = 0
-        this.rotation = 0
-        this.rotationVal = 0
-        this.scale = 0.5
-        this.y = this.y + 30
-        this.anims.play("explosion")
-        this.once(
-            "animationcomplete",
-            function () {
-                this.die()
-            },
-            this
-        )
-    }
-
-    die() {
-        this.destroy()
-    }
-
-    update() {
-        this.setVelocityY(this.speed)
-        this.rotation += this.rotationVal
-        const gameHeight = this.scene.scale.height
-
-        if (this.y > gameHeight + 5) {
-            this.die()
-        }
-    }
-}
-
-export class Laser extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture) {
-        super(scene, x, y, texture)
-        this.setScale(2)
-        this.speed = 200
-    }
-
-    fire(x, y) {
-        this.setPosition(x, y - 50)
-        this.setActive(true)
-        this.setVisible(true)
-    }
-
-    erase() {
-        this.destroy()
-    }
-
-    update() {
-        this.setVelocityY(this.speed * -1)
-        if (this.y < -10) {
-            this.erase()
-        }
-    }
-}
 
 // You can write more code here

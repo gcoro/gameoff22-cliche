@@ -7,7 +7,7 @@
     "watch": "rollup --bundleConfigAsCjs -c -w",
     "dev": "npm run format && npm-run-all -l -p start watch",
     "dev_fast": "npm-run-all -l -p start watch",
-    "start": "serve dist",
+    "start": "serve build",
     "start-prod": "npm run build && npm start",
     "lint": "eslint src --fix",
     "prettier": "prettier src --write",
@@ -15,8 +15,9 @@
     "editor": "phasereditor2d-launcher -project . -port 1959",
     "editor-remote": "phasereditor2d-launcher -project . -disable-open-browser -public -port 1959"
   },
-    "dependencies": {
-    "phaser": "^3.55.2"
+  "dependencies": {
+    "phaser": "^3.55.2",
+    "rollup-plugin-delete": "^2.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^23.0.2",
@@ -28,7 +29,6 @@
     "phasereditor2d-launcher": "^3.36.0",
     "prettier": "^2.7.1",
     "rollup": "^3.2.5",
-    "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-generate-html-template": "^1.7.0",
     "rollup-plugin-html": "^0.2.1",

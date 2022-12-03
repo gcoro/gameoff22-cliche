@@ -8,7 +8,7 @@ import { ExitDoor } from "./ExitDoor"
 import { Enemy } from "./Enemy"
 import { CountdownLabel } from "./CountdownLabel"
 import { MissingEscrements } from "./MissingEscrements"
-import { CountdownController } from "./CountDownController"
+import { CountdownController } from "../../components/CountDownController"
 import { Level } from "../Level"
 import { AlienAlly } from "./AlienAlly"
 
@@ -124,52 +124,9 @@ export class Scp173 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("base_tiles", "assets/scp173/level_tileset.png")
         this.load.tilemapTiledJSON(
             "tilemap",
             `assets/scp173/${this.MAP_CONFIG.layout}`
-        )
-        this.load.image("poor", "assets/scp173/poor/splat.png")
-
-        this.load.atlas(
-            "skull",
-            "assets/scp173/blood/blood.png",
-            "assets/scp173/blood/blood.json"
-        )
-
-        //poops
-        this.load.atlas(
-            "throw_poor",
-            "assets/scp173/poor/poops.png",
-            "assets/scp173/poor/poops.json"
-        )
-
-        //player allies
-        this.load.atlas(
-            "alien_ally",
-            "assets/scp173/alien_ally.png",
-            "assets/scp173/alien_ally.json"
-        )
-
-        //player
-        this.load.atlas(
-            "alien",
-            "assets/scp173/alien_repack.png",
-            "assets/scp173/alien_repack.json"
-        )
-
-        //enemy
-        this.load.atlas(
-            "enemy",
-            "assets/scp173/eye_monster/covid_spritesheet.png",
-            "assets/scp173/eye_monster/covid_spritesheet.json"
-        )
-
-        //exit door
-        this.load.atlas(
-            "exit_door",
-            "assets/scp173/door.png",
-            "assets/scp173/door.json"
         )
 
         this.events.once("shutdown", () => {
@@ -185,6 +142,8 @@ export class Scp173 extends Phaser.Scene {
 
         this.scp173bgMusic = this.sound.add("meteor_fight", { volume: 0.4 })
         if (window.musicActive) this.scp173bgMusic.play()
+
+        this.currentLevel = +window.iterationMonster || 0
 
         this.createBackgrounds()
         this.cursors = this.input.keyboard.createCursorKeys()
@@ -225,7 +184,7 @@ export class Scp173 extends Phaser.Scene {
             this.currentLevel
         )
 
-        this.countDownLabel = new CountdownLabel(
+        this.countdownLabel = new CountdownLabel(
             this,
             0,
             0,
@@ -321,7 +280,7 @@ export class Scp173 extends Phaser.Scene {
             this.openEyeCountdownTimeout = setTimeout(() => {
                 this.openEyeCountdown = 5
                 this.openEyeCountdownInterval = setInterval(() => {
-                    this.countDownLabel.setValue(this.openEyeCountdown)
+                    this.countdownLabel.setValue(this.openEyeCountdown)
 
                     if (this.openEyeCountdown === 0) {
                         const cd2 = this.sound.add("countdown-a")
@@ -599,7 +558,6 @@ export class Scp173 extends Phaser.Scene {
 
     gameOver() {
         this.status = this.GAME_STATUS.LOADED
-        this.currentLevel = 0
         this.playerDeath()
         console.log(
             "%c  GAME OVER!!  ",
@@ -608,7 +566,9 @@ export class Scp173 extends Phaser.Scene {
     }
 
     endGame(hasWin) {
-        this.currentLevel += 1
+        if (hasWin) {
+            window.iterationMonster = this.currentLevel + 1
+        }
         this.status = this.GAME_STATUS.LOADED
         this.missingEscrementsLabel.setVisible(false)
         if (this.createPoorsTimeout) {
@@ -635,6 +595,7 @@ export class Scp173 extends Phaser.Scene {
             sound = this.sound.add("death-monster-sound")
         }
         sound.play()
+        this.player.setVelocity(0, 0)
 
         setTimeout(() => {
             this.createResultText({

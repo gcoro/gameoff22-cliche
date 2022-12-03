@@ -2,20 +2,22 @@ import copy from "rollup-plugin-copy"
 import html from "rollup-plugin-html"
 import htmlTemplate from "rollup-plugin-generate-html-template"
 import commonjs from "@rollup/plugin-commonjs"
-import clear from "rollup-plugin-clear"
+import del from "rollup-plugin-delete"
 import postcss from "rollup-plugin-postcss"
 import resolve from "@rollup/plugin-node-resolve"
 import { terser } from "rollup-plugin-terser"
 // TODO import css from 'rollup-plugin-css-chunks';
+
+const TARGET_DIR = "build"
 
 const production = !process.env.ROLLUP_WATCH
 
 export default {
     input: "src/main.js",
     output: {
-        dir: "dist",
+        dir: TARGET_DIR,
         format: "es",
-        sourcemap: true,
+        sourcemap: !production,
         manualChunks: (id) => {
             if (id.includes("node_modules")) {
                 return "vendor"
@@ -24,13 +26,13 @@ export default {
     },
     preserveEntrySignatures: false,
     plugins: [
-        clear({
-            targets: ["dist"],
-            watch: true,
-        }),
+        del({ targets: `${TARGET_DIR}/*` }),
         resolve(),
         commonjs(),
-        // production && terser(),
+        production &&
+            terser({
+                keep_classnames: true,
+            }),
         html({
             include: "src/**/*.html",
             exclude: "src/index.html",
@@ -60,11 +62,13 @@ export default {
       }),
       */
         copy({
-            targets: [{ src: "static/assets/**/*", dest: "dist/assets" }],
+            targets: [
+                { src: "static/assets/**/*", dest: `${TARGET_DIR}/assets` },
+            ],
         }),
         htmlTemplate({
             template: "src/index.html",
-            target: "dist/index.html",
+            target: `${TARGET_DIR}/index.html`,
             attrs: ["type='module'"],
         }),
     ],

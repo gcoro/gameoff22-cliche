@@ -40,16 +40,4 @@ window.addEventListener("load", function () {
     })
 
     window.game.scene.start("Boot")
-
-    /*window.game.scene.add("Boot", Boot, true)
-    window.game.scene.add("Preload", Preload)
-    window.game.scene.add("Level", Level)
-    /*
-    window.game.scene.add("Meteor", Meteor)
-    window.game.scene.add("Menu", Menu)
-    window.game.scene.add("Scp173", Scp173)
-    window.game.scene.add("GameOver", GameOver)
-    window.game.scene.add("Instructions", Instructions)
-    
-    */
 })
